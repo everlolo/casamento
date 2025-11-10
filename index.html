@@ -3,17 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nosso Casamento</title>
+  <title>Everton & Caroline</title>
 
-  <!-- Fonts elegantes -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header class="hero">
+  <!-- Navegação fixa -->
+  <nav class="topbar">
+    <a href="#home">Home</a>
+    <a href="#cerimonia">Cerimônia e Festa</a>
+    <a href="#presentes">Lista de Presentes</a>
+    <a href="#rsvp">Confirmar Presença</a>
+  </nav>
+
+  <!-- HERO / HOME -->
+  <header id="home" class="hero">
     <h1 class="noivos">Everton &amp; Caroline</h1>
     <p class="frase">28 de dezembro de 2025 — 18:00</p>
 
@@ -26,8 +33,69 @@
   </header>
 
   <main class="conteudo">
+
+    <!-- CERIMÔNIA E FESTA -->
+    <section id="cerimonia" class="card">
+      <h2 class="titulo-secao">Cerimônia e Festa</h2>
+
+      <div class="grid-2">
+        <div class="local-card">
+          <h3>Capela Santa Terezinha</h3>
+          <p class="sub">Às 09:30</p>
+          <p>R. Hermenegildo Bianchi, 559 — Santa Terezinha, Nova Andradina/MS</p>
+          <a class="btn btn-laranja" target="_blank" href="https://maps.google.com/?q=R.+Hermenegildo+Bianchi,+559,+Nova+Andradina,+MS">
+            Ver no Google Maps
+          </a>
+        </div>
+
+        <div class="local-card">
+          <h3>Pesqueiro Campestre</h3>
+          <p class="sub">A partir das 11:30</p>
+          <p>BR-473, Estrada Nova Andradina sentido Angelica, km 1,5 — Nova Andradina/MS</p>
+          <a class="btn btn-roxo" target="_blank" href="https://maps.google.com/?q=Pesqueiro+Campestre+Nova+Andradina+MS">
+            Ver no Google Maps
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- LISTA DE PRESENTES -->
+    <section id="presentes" class="card">
+      <h2 class="titulo-secao">Lista de Presentes</h2>
+
+      <details class="lista-detalhes">
+        <summary>Clique aqui para ver nossas sugestões e cotas</summary>
+        <p class="subtle">
+          Preparamos algumas sugestões com muito carinho para quem quiser nos presentear!
+        </p>
+      </details>
+
+      <div class="carrossel">
+        <div class="presente">
+          <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=640&auto=format&fit=crop" alt="Liquidificador">
+          <h4>Liquidificador</h4>
+          <p class="valor">Valor referência: R$ 199,00</p>
+          <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
+        </div>
+
+        <div class="presente">
+          <img src="https://images.unsplash.com/photo-1601447182659-722fdce0f7b2?q=80&w=640&auto=format&fit=crop" alt="Jogo de Jantar">
+          <h4>Jogo de Jantar</h4>
+          <p class="valor">Valor referência: R$ 349,00</p>
+          <a class="btn btn-amarelo" href="#" target="_blank">Comprar na Loja</a>
+        </div>
+
+        <div class="presente">
+          <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
+          <h4>Panela</h4>
+          <p class="valor">Valor referência: R$ 259,00</p>
+          <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
+        </div>
+      </div>
+    </section>
+
     <!-- RSVP -->
-    <section class="card">
+    <section id="rsvp" class="card">
       <h2 class="titulo-secao">Confirme sua presença</h2>
 
       <div class="rsvp-linha">
@@ -46,15 +114,12 @@
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="rodape">
     <p>Com carinho, esperamos por você 💛</p>
   </footer>
-
-  <!-- Moldura floral desenhada por cima do #faf8f5 (sem faixas) -->
-  <!-- A imagem deve estar em /public/assets/fundo-casamento.png -->
-  <!-- O CSS aplica no html::before -->
 
   <!-- Acessibilidade: região para leitores de tela -->
   <div id="aria-live" aria-live="polite" class="sr-only"></div>
@@ -62,7 +127,6 @@
   <!-- Confete -->
   <div id="confetti-container" aria-hidden="true"></div>
 
-  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
