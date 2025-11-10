@@ -1,7 +1,31 @@
-// ================== CONFIG ==================
-const WEBHOOK_URL_GAS = '/api/rsvp'; // proxy da Vercel para o Apps Script
+/* ================== ENDPOINT ==================
+   1) Se você usa proxy da Vercel, mantenha '/api/rsvp'.
+   2) Se preferir chamar direto o GAS, coloque a URL do GAS em GAS_FALLBACK_URL.
+*/
+const WEBHOOK_URL_PROXY = '/api/rsvp';
+const GAS_FALLBACK_URL  = ''; // opcional: cole aqui a URL do seu Web App do GAS
 
-// ================== CONTADOR ==================
+async function postRSVP(payload){
+  // tenta proxy primeiro; se falhar, tenta GAS fallback (se houver)
+  try {
+    const r = await fetch(WEBHOOK_URL_PROXY, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error('proxy');
+    return await r.json();
+  } catch {
+    if (!GAS_FALLBACK_URL) throw new Error('Falha no proxy e sem fallback configurado.');
+    const r = await fetch(GAS_FALLBACK_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error('fallback');
+    return await r.json();
+  }
+}
+
+/* ================== CONTADOR ================== */
 const diasEl = document.getElementById('dias');
 const horasEl = document.getElementById('horas');
 const minutosEl = document.getElementById('minutos');
@@ -17,20 +41,30 @@ function countdown() {
   const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
   const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-  if (diasEl)    diasEl.innerHTML    = dias    < 10 ? '0' + dias    : dias;
-  if (horasEl)   horasEl.innerHTML   = horas   < 10 ? '0' + horas   : horas;
-  if (minutosEl) minutosEl.innerHTML = minutos < 10 ? '0' + minutos : minutos;
-  if (segundosEl)segundosEl.innerHTML= segundos< 10 ? '0' + segundos: segundos;
+  if (diasEl)    diasEl.textContent    = dias    < 10 ? '0' + dias    : String(dias);
+  if (horasEl)   horasEl.textContent   = horas   < 10 ? '0' + horas   : String(horas);
+  if (minutosEl) minutosEl.textContent = minutos < 10 ? '0' + minutos : String(minutos);
+  if (segundosEl)segundosEl.textContent= segundos< 10 ? '0' + segundos: String(segundos);
 
   if (distancia < 0) {
-      clearInterval(x);
-      const c = document.getElementById("contador");
-      if (c) c.innerHTML = "O GRANDE DIA CHEGOU!";
+    clearInterval(x);
+    const c = document.getElementById("contador");
+    if (c) c.innerHTML = "O GRANDE DIA CHEGOU!";
   }
 }
 const x = setInterval(countdown, 1000);
 
-// ================== ELEMENTOS RSVP ==================
+/* ================== SMOOTH SCROLL NAV ================== */
+document.querySelectorAll('.topbar a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const id = a.getAttribute('href');
+    const el = document.querySelector(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+/* ================== RSVP ================== */
 const checkNomeBtn = document.getElementById('checkNomeBtn');
 const nomeInput = document.getElementById('nomeInput');
 const rsvpMessage = document.getElementById('rsvp-message');
@@ -41,8 +75,17 @@ const btnNao = document.getElementById('btnNao');
 
 if (confirmationArea) confirmationArea.style.display = 'none';
 
-// ================== HELPERS VISUAIS ==================
-function launchConfetti(pieces = 90, durationMs = 1800){
+function detectarOrigem(){
+  const ua = navigator.userAgent.toLowerCase();
+  return /iphone|android|ipad|ipod/.test(ua) ? 'Site - Mobile' : 'Site - Desktop';
+}
+
+function live(msg){
+  const live = document.getElementById('aria-live');
+  if (live) live.textContent = msg;
+}
+
+function confetti(pieces = 120, durationMs = 2200){
   const colors = ["#ff6b6b","#ffd166","#06d6a0","#4dabf7","#f78da7"];
   const cont = document.getElementById("confetti-container");
   if (!cont) return;
@@ -62,130 +105,93 @@ function launchConfetti(pieces = 90, durationMs = 1800){
   }
 }
 
-function setAriaLive(msg){
-  const live = document.getElementById("aria-live");
-  if (live) live.textContent = msg;
-}
-
-function detectarOrigem(){
-  const ua = navigator.userAgent.toLowerCase();
-  const isMobile = /iphone|android|ipad|ipod/.test(ua);
-  return isMobile ? 'Site - Mobile' : 'Site - Desktop';
-}
-
-// ================== LÓGICA DE CHAMADA ==================
 async function processarRSVP(resposta) {
   const nome = (nomeInput?.value || '').trim();
   if (!rsvpMessage) return;
 
   rsvpMessage.textContent = '⏳ Processando sua resposta...';
   rsvpMessage.className = 'rsvp-message loading';
-  if (checkNomeBtn) checkNomeBtn.disabled = true;
-  if (btnSim) btnSim.disabled = true;
-  if (btnNao) btnNao.disabled = true;
+  checkNomeBtn && (checkNomeBtn.disabled = true);
+  btnSim && (btnSim.disabled = true);
+  btnNao && (btnNao.disabled = true);
 
   try {
-    const response = await fetch(WEBHOOK_URL_GAS, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome,
-        resposta,
-        origem: detectarOrigem()
-      })
-    });
+    const data = await postRSVP({ nome, resposta, origem: detectarOrigem() });
 
-    const raw = await response.text();
-    let data;
-    try { data = JSON.parse(raw); } catch { data = { status: 'texto', message: raw }; }
-
-    if (!response.ok) {
-      throw new Error(data && data.message ? data.message : `HTTP ${response.status}`);
-    }
-
-    // === Controle total via resposta do GAS ===
     if (data.status === 'nao_encontrado') {
       rsvpMessage.innerHTML = '🔎 Nome não encontrado. Verifique a ortografia ou contate os noivos.';
       rsvpMessage.className = 'rsvp-message error';
-      if (nomeInput) nomeInput.disabled = false;
-      if (checkNomeBtn) { checkNomeBtn.disabled = false; checkNomeBtn.style.display = ''; }
-      if (confirmationArea) confirmationArea.style.display = 'none';
-      setAriaLive('Nome não encontrado.');
+      nomeInput && (nomeInput.disabled = false);
+      checkNomeBtn && (checkNomeBtn.disabled = false, checkNomeBtn.style.display = '');
+      confirmationArea && (confirmationArea.style.display = 'none');
+      live('Nome não encontrado.');
       return;
     }
 
     if (data.status === 'nome_encontrado') {
-      // Só agora mostramos a área de confirmação
-      if (rsvpMessage){
-        rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
-        rsvpMessage.className = 'rsvp-message info';
-      }
-      if (confirmationArea) confirmationArea.style.display = 'block';
-      if (checkNomeBtn) checkNomeBtn.style.display = 'none';
-      if (nomeInput) nomeInput.disabled = true;
+      rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
+      rsvpMessage.className = 'rsvp-message info';
+      confirmationArea && (confirmationArea.style.display = 'block');
+      checkNomeBtn && (checkNomeBtn.style.display = 'none');
+      nomeInput && (nomeInput.disabled = true);
 
-      if (btnSim) { btnSim.disabled = false; btnSim.onclick = () => processarRSVP('Confirmado'); }
-      if (btnNao) { btnNao.disabled = false; btnNao.onclick = () => processarRSVP('Recusado'); }
-      setAriaLive('Nome verificado. Confirme sua presença.');
+      btnSim && (btnSim.disabled = false, btnSim.onclick = () => processarRSVP('Confirmado'));
+      btnNao && (btnNao.disabled = false, btnNao.onclick = () => processarRSVP('Recusado'));
+
+      live('Nome verificado. Confirme sua presença.');
       return;
     }
 
     if (data.status === 'bloqueado') {
       rsvpMessage.innerHTML = `ℹ️ ${data.message || 'Resposta já registrada.'}`;
       rsvpMessage.className = 'rsvp-message info';
-      if (confirmationArea) confirmationArea.style.display = 'block';
-      setAriaLive('Resposta já registrada anteriormente.');
+      confirmationArea && (confirmationArea.style.display = 'block');
+      live('Resposta já registrada anteriormente.');
       return;
     }
 
     if (data.status === 'sucesso') {
       const confirmou = (resposta === 'Confirmado');
       rsvpMessage.innerHTML = confirmou
-        ? '🎉 <span class="heart-pulse">Presença confirmada!</span> Que alegria ter você(s) lá!'
-        : '💌 Sua resposta foi registrada. Lamentamos sua ausência.';
+        ? '🎉 <strong>Presença confirmada!</strong> Que alegria ter você conosco! 💚'
+        : '💌 <strong>Resposta registrada.</strong> Agradecemos o carinho e desejamos o melhor!';
+
       rsvpMessage.className = 'rsvp-message success';
+      confirmationArea && (confirmationArea.innerHTML =
+        `<p class="rsvp-boas-vindas" style="font-size:1.3rem;margin:.5rem 0 0">
+           ${confirmou ? 'Nos vemos no grande dia! ✨' : 'Obrigado por nos avisar com antecedência 🙏'}
+         </p>`);
 
-      if (confirmationArea) {
-        confirmationArea.innerHTML = `<p class="rsvp-boas-vindas" style="font-size:1.5rem;margin:.5rem 0 0">
-          ${confirmou ? 'Nos vemos no grande dia! ✨' : 'Obrigado por responder com antecedência 🙏'}
-        </p>`;
-      }
-
-      setAriaLive(confirmou ? 'Presença confirmada com sucesso.' : 'Ausência registrada com sucesso.');
-      if (confirmou) launchConfetti(100, 2000);
-      rsvpMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      live(confirmou ? 'Presença confirmada.' : 'Ausência registrada.');
+      if (confirmou) confetti(140, 2400);
+      rsvpMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
-    // fallback quando o servidor mandar texto/HTML
+    // fallback
     rsvpMessage.textContent = 'Recebemos sua resposta.';
     rsvpMessage.className = 'rsvp-message info';
 
-  } catch (error) {
+  } catch (e) {
     rsvpMessage.textContent = 'Erro de conexão ou servidor. Tente novamente.';
     rsvpMessage.className = 'rsvp-message error';
-    if (checkNomeBtn) checkNomeBtn.disabled = false;
-
   } finally {
-    if (btnSim) btnSim.disabled = false;
-    if (btnNao) btnNao.disabled = false;
+    checkNomeBtn && (checkNomeBtn.disabled = false);
+    btnSim && (btnSim.disabled = false);
+    btnNao && (btnNao.disabled = false);
   }
 }
 
-// botão “verificar”
+// Clique do "Verificar"
 if (checkNomeBtn) {
   checkNomeBtn.addEventListener('click', async () => {
     const nome = (nomeInput?.value || '').trim();
     if (!nome) {
-      if (rsvpMessage){
-        rsvpMessage.textContent = 'Por favor, digite seu nome.';
-        rsvpMessage.className = 'rsvp-message error';
-      }
+      rsvpMessage && (rsvpMessage.textContent = 'Por favor, digite seu nome.',
+                      rsvpMessage.className = 'rsvp-message error');
       return;
     }
-    if (convidadoNomeEl) convidadoNomeEl.textContent = nome;
-
-    // Espera a resposta do servidor (não escreve mensagens aqui)
-    await processarRSVP('Verificar');
+    convidadoNomeEl && (convidadoNomeEl.textContent = nome);
+    await processarRSVP('Verificar'); // espera retorno do servidor
   });
 }
