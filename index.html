@@ -1,197 +1,68 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caroline & Everton | Nosso Casamento</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nosso Casamento</title>
+
+  <!-- Fonts elegantes -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <nav class="menu">
-        <a href="#home">Home</a>
-        <a href="#cerimonia">Cerimônia e Festa</a>
-        <a href="#presentes">Lista de Presentes</a>
-        <a href="#rsvp">Confirmar Presença</a>
-    </nav>
+  <header class="hero">
+    <h1 class="noivos">Everton &amp; Caroline</h1>
+    <p class="frase">28 de dezembro de 2025 — 18:00</p>
 
-    <main class="container">
-        
-        <section id="home" class="card">
-            
-            <div class="ponto-focal-topo">
-                <h1 class="monograma">C <span class="monograma-coracao">♡</span> E</h1>
-                <p class="nomes-cursivos">Caroline & Everton</p>
-                <p class="nossos-dias">Nossos Dias | Nossa História</p>
-            </div>
+    <div id="contador" class="contador">
+      <div class="timebox"><span id="dias">00</span><small>dias</small></div>
+      <div class="timebox"><span id="horas">00</span><small>horas</small></div>
+      <div class="timebox"><span id="minutos">00</span><small>min</small></div>
+      <div class="timebox"><span id="segundos">00</span><small>seg</small></div>
+    </div>
+  </header>
 
-            <div class="card-calendario">
-                
-                <div class="calendario-col info-lateral">
-                    Para
-                </div>
-                
-                <div class="calendario-col data-principal">
-                    <span class="mes">Julho</span>
-                    <span class="dia">25</span>
-                    <span class="ano">2026</span>
-                </div>
-                
-                <div class="calendario-col info-lateral">
-                    Sempre
-                </div>
+  <main class="conteudo">
+    <!-- RSVP -->
+    <section class="card">
+      <h2 class="titulo-secao">Confirme sua presença</h2>
 
-            </div>
+      <div class="rsvp-linha">
+        <label for="nomeInput" class="label">Seu nome na lista</label>
+        <input id="nomeInput" type="text" class="input" placeholder="Digite seu nome completo" />
+        <button id="checkNomeBtn" class="btn btn-principal">Verificar nome</button>
+      </div>
 
-            <h2>Faltam...</h2>
-            <div id="countdown" class="countdown-container">
-                
-                <div class="countdown-item">
-                    <span id="dias" class="countdown-numero">00</span>
-                    <span class="countdown-label">Dias</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="horas" class="countdown-numero">00</span>
-                    <span class="countdown-label">Horas</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="minutos" class="countdown-numero">00</span>
-                    <span class="countdown-label">Minutos</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="segundos" class="countdown-numero">00</span>
-                    <span class="countdown-label">Segundos</span>
-                </div>
+      <p id="rsvp-message" class="rsvp-message"></p>
 
-            </div>
-        </section>
+      <div id="rsvp-confirmation-area" class="confirm-area">
+        <p class="confirm-pergunta">Olá, <strong id="convidado-nome"></strong> — você poderá comparecer?</p>
+        <div class="botoes">
+          <button id="btnSim" class="btn btn-sucesso" disabled>Sim, estarei presente</button>
+          <button id="btnNao" class="btn btn-contraste" disabled>Não poderei ir</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        <section id="cerimonia" class="card">
-            <h2>Cerimônia e Recepção</h2>
-            
-            <div class="local-container">
-                
-                <div class="local-coluna">
-                    <h3>Cerimônia</h3>
-                    <p class="local-nome">Capela Santa Terezinha</p>
-                    <p>Às 09:30</p>
-                    <p class="local-endereco">
-                        R. Hermenegildo Bianchi, 559 - Santa Terezinha<br>
-                        Nova Andradina, MS
-                    </p>
-                    <a href="#" class="botao" target="_blank">Ver no Google Maps</a>
-                </div>
-                
-                <div class="local-coluna">
-                    <h3>Recepção</h3>
-                    <p class="local-nome">Pesqueiro Campestre</p>
-                    <p>A partir das 11:30</p>
-                    <p class="local-endereco">
-                        BR 473, Estrada Nova Andradina sentido Angelica, km 1, 5<br>
-                        Nova Andradina, MS
-                    </p>
-                    <a href="#" class="botao" target="_blank">Ver no Google Maps</a>
-                </div>
+  <footer class="rodape">
+    <p>Com carinho, esperamos por você 💛</p>
+  </footer>
 
-            </div> </section>
+  <!-- Moldura floral desenhada por cima do #faf8f5 (sem faixas) -->
+  <!-- A imagem deve estar em /public/assets/fundo-casamento.png -->
+  <!-- O CSS aplica no html::before -->
 
-        <section id="presentes" class="card">
-            <h2>Lista de Presentes</h2>
+  <!-- Acessibilidade: região para leitores de tela -->
+  <div id="aria-live" aria-live="polite" class="sr-only"></div>
 
-            <details class="sanfona-presentes">
-                
-                <summary class="sanfona-titulo">
-                    Clique aqui para ver nossas sugestões e cotas
-                </summary>
-                
-                <div class="sanfona-conteudo">
-                    <p class="subtitulo-secao" style="margin-top: 1.5rem;">Preparamos algumas sugestões com muito carinho para quem quiser nos presentear!</p>
+  <!-- Confete -->
+  <div id="confetti-container" aria-hidden="true"></div>
 
-                    <div class="presentes-container">
-                        <div class="presente-item">
-                            <img src="liquidificador.jpg" alt="Liquidificador" class="presente-img">
-                            <h3>Liquidificador</h3>
-                            <p class="presente-preco">Valor referência: R$ 199,00</p>
-                            <a href="#" class="botao" target="_blank">Comprar na Loja</a> 
-                        </div>
-                        <div class="presente-item">
-                            <img src="jogo-jantar.jpg" alt="Jogo de Jantar" class="presente-img">
-                            <h3>Jogo de Jantar</h3>
-                            <p class="presente-preco">Valor referência: R$ 349,00</p>
-                            <a href="#" class="botao" target="_blank">Comprar na Loja</a>
-                        </div>
-                        <div class="presente-item">
-                            <img src="liquidificador.jpg" alt="Liquidificador" class="presente-img">
-                            <h3>Liquidificador</h3>
-                            <p class="presente-preco">Valor referência: R$ 199,00</p>
-                            <a href="#" class="botao" target="_blank">Comprar na Loja</a> 
-                        </div>
-                        <div class="presente-item">
-                            <img src="liquidificador.jpg" alt="Liquidificador" class="presente-img">
-                            <h3>Liquidificador</h3>
-                            <p class="presente-preco">Valor referência: R$ 199,00</p>
-                            <a href="#" class="botao" target="_blank">Comprar na Loja</a> 
-                        </div>
-                    </div>
-            
-                    <div class="pix-container">
-                        <h3>Cotas para a Lua de Mel</h3>
-                        <p>Se preferir, você também pode nos ajudar a realizar nosso sonho da lua de mel!</p>
-                        <p class="pix-chave"><strong>Chave PIX (Celular):</strong> (xx) 99999-9999</p>
-                        <p>(Everton A Azevedo)</p>
-                    </div>
-                </div>
-                </details>
-            </section>
-
-        <section id="rsvp" class="card">
-            <h2>Confirme sua Presença</h2>
-            <p class="subtitulo-secao">Por favor, digite seu nome completo (como no convite) para confirmar.</p>
-            
-            <div id="rsvp-form" class="rsvp-container">
-                <label for="nomeInput">Nome do Convidado:</label>
-                <input type="text" id="nomeInput" class="rsvp-input" placeholder="Digite seu nome completo...">
-                
-                <button id="checkNomeBtn" class="botao">Verificar Nome</button>
-                
-                <div id="rsvp-message" class="rsvp-message"></div>
-            </div>
-
-            <div id="rsvp-confirmation-area" class="rsvp-confirmation" style="display: none;">
-                <hr>
-                <p class="rsvp-boas-vindas">Olá, <span id="convidado-nome"></span>! Encontramos você!</p>
-                <p>Você(s) irá(ão) ao nosso casamento?</p>
-                
-                <button id="btnSim" class="botao">Sim, com certeza!</button>
-                <button id="btnNao" class="botao botao-secundario">Não poderei ir.</button>
-            </div>
-
-        </section>
-
-    </main>
-
-    <footer>
-        <p>Feito com ❤️ por Caroline e Everton</p>
-    </footer>
-
-    <script src="script.js"></script>
-
-   <!-- Moldura floral nas quatro bordas -->
-<div id="floral-frame" aria-hidden="true">
-  <div class="floral side left"></div>
-  <div class="floral side right"></div>
-  <div class="floral edge top"></div>
-  <div class="floral edge bottom"></div>
-</div>
-
-<!-- Região para leitores de tela (acessibilidade) -->
-<div id="aria-live" aria-live="polite" class="sr-only"></div>
-
-<!-- Contêiner do confete -->
-<div id="confetti-container" aria-hidden="true"></div>
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>
