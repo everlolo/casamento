@@ -9,7 +9,7 @@ const diasEl = document.getElementById('dias');
 const horasEl = document.getElementById('horas');
 const minutosEl = document.getElementById('minutos');
 const segundosEl = document.getElementById('segundos');
-const dataFinal = new Date('December 28, 2025 18:00:00').getTime();
+const dataFinal = new Date('July 25, 2025 09:30:00').getTime();
 
 // Funções do Contador (Mantidas)
 function countdown() {
@@ -133,4 +133,5 @@ checkNomeBtn.addEventListener('click', () => {
     btnSim.disabled = false;
     btnNao.disabled = false;
 });
+
 
