@@ -1,631 +1,37 @@
-/* --- :root são as nossas "Variáveis" de Design --- */
-/* --- PALETA TROPICAL-CHIQUE (VERSÃO DESIGNER) --- */
-:root {
-    --cor-fundo: #FDFBF8;      /* FUNDO MARFIM (QUENTE) */
-    --cor-texto: #4B4B4B;      /* Texto (Grafite, mais quente) */
-    --cor-verde: #00796B;      /* Verde (Informação/Números) */
-    --cor-laranja: #FF7F50;    /* Laranja (Líder/Botões) */
-    --cor-rosa: #C71585;       /* Rosa (Romance/Subtítulos) */
-    --cor-amarelo: #FFC107;     /* Amarelo (Destaque Sutil) */
-    --cor-roxo: #9B59B6;        /* ROXO (Acento Surpresa) */
-    --cor-branco: #FFFFFF;
-
-    --fonte-titulo: 'Playfair Display', serif;
-    --fonte-corpo: 'Montserrat', sans-serif;
-}
-
-/* --- FUNDO FLORAL FIXO (VERSÃO MELHORADA) --- */
-html {
-    background-color: #faf8f5; /* tom off-white suave */
-    background-image: url('/assets/fundo-casamento.png'); /* sua nova imagem */
-    background-repeat: repeat-y; /* repete verticalmente na rolagem */
-    background-position: center top;
-    background-size: cover; /* cobre toda a largura */
-    background-attachment: fixed; /* flores paradas, conteúdo rola */
-}
-
-/* --- Estilos Globais --- */
-body {
-    font-family: var(--fonte-corpo);
-    color: var(--cor-texto);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    
-    background-color: transparent; /* CORRIGIDO: O body não tem cor, o HTML tem */
-}
-
-/* O .container AGORA VAI CENTRALIZAR! */
-.container {
-    max-width: 900px; /* Sua largura preferida */
-    margin: 20px auto; /* O 'auto' VOLTA a funcionar */
-    padding: 0 20px;
-    position: relative;
-    z-index: 1;
-    background-color: transparent; /* O container também não tem cor (ver passo abaixo) */
-}
-
-/* Agora, damos COR BRANCA APENAS aos cards (a área central) */
-.card {
-    background-color: var(--cor-branco);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-/* Removido o H1 genérico, pois não o usamos mais no topo */
-h2 {
-    font-family: var(--fonte-titulo);
-}
-
-h2 {
-    font-size: 2.5rem;
-    border-bottom: 2px solid var(--cor-amarelo);
-    display: inline-block;
-    padding-bottom: 5px;
-    color: var(--cor-laranja);
-}
-
-/* --- Menu de Navegação (NÃO-FIXO) --- */
-.menu {
-    background-color: var(--cor-branco);
-    text-align: center;
-    padding: 1rem 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    
-    /* Esta é a primeira coisa na página agora */
-    position: relative; 
-    z-index: 1000;
-}
-
-.menu a {
-    font-family: var(--fonte-corpo);
-    text-decoration: none;
-    color: var(--cor-verde);
-    margin: 0 1.5rem;
-    font-weight: 700;
-    font-size: 1rem;
-}
-
-.menu a:hover {
-    color: var(--cor-rosa);
-}
-
-/* --- SEÇÃO DA CAPA (HERO) REMOVIDA --- */
-
-/* --- Rodapé --- */
-footer {
-    text-align: center;
-    padding: 2rem 0;
-    margin-top: 2rem;
-    color: #777;
-    border-top: 1px solid #eee;
-    background-color: var(--cor-marfim); /* Damos cor ao rodapé */
-}
-
-/* Estilos de Locais, Presentes, Calendário, etc. */
-/* (O código a partir daqui é o mesmo da sua última versão, garantindo os estilos) */
-
-/* --- Estilos da Seção de Locais --- */
-.local-container {
-    display: flex;
-    justify-content: space-around;
-    text-align: left;
-    margin-top: 2.5rem;
-}
-.local-coluna {
-    width: 45%;
-    padding: 0 1rem;
-}
-.local-coluna h3 {
-    font-family: var(--fonte-titulo);
-    font-size: 1.8rem;
-    color: var(--cor-rosa);
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-.local-nome {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--cor-verde);
-}
-.local-endereco {
-    font-size: 0.95rem;
-    color: var(--cor-texto);
-    line-height: 1.5;
-}
-
-/* --- Estilo Geral de Botão --- */
-.botao {
-    display: inline-block;
-    background-color: var(--cor-laranja);
-    color: var(--cor-branco);
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-family: var(--fonte-corpo);
-    font-weight: 700;
-    margin-top: 1rem;
-    transition: background-color 0.2s ease;
-}
-.botao:hover {
-    background-color: var(--cor-roxo);
-}
-
-/* --- Estilos da Seção de Presentes (Esteira) --- */
-.subtitulo-secao {
-    font-size: 1.1rem;
-    color: #555;
-    max-width: 600px;
-    margin: -1rem auto 2.5rem auto;
-}
-.presentes-container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 1.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: #ccc var(--cor-fundo);
-}
-.presentes-container::-webkit-scrollbar { height: 8px; }
-.presentes-container::-webkit-scrollbar-track { background: #f1f1f1; }
-.presentes-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-.presente-item {
-    border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: left;
-    transition: box-shadow 0.2s ease;
-    flex: 0 0 300px;
-    width: 300px;
-    margin-right: 1.5rem;
-}
-.presente-item:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
-.presente-item h3 {
-    font-family: var(--fonte-titulo);
-    font-size: 1.3rem;
-    color: var(--cor-texto);
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-}
-.presente-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-.presente-preco {
-    font-size: 0.9rem;
-    color: #777;
-    margin-bottom: 1.5rem;
-}
-.presente-item .botao {
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-/* --- Seção PIX --- */
-.pix-container {
-    border-top: 1px dashed #ddd;
-    margin-top: 3rem;
-    padding-top: 2.5rem;
-}
-.pix-container h3 {
-    font-family: var(--fonte-titulo);
-    font-size: 1.8rem;
-    color: var(--cor-verde);
-}
-.pix-qrcode { max-width: 200px; margin: 1rem auto; }
-.pix-chave {
-    font-size: 1.2rem;
-    color: var(--cor-amarelo);
-    font-weight: 700;
-}
-
-/* --- Estilos do Bloco de Calendário --- */
-.card-calendario {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid #eee;  
-}
-.calendario-col { padding: 0 2rem; }
-.calendario-col.info-lateral {
-    font-family: var(--fonte-corpo);
-    font-size: 1.1rem;
-    color: var(--cor-texto);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1.2;
-}
-.calendario-col.data-principal {
-    border-left: 2px solid var(--cor-roxo);
-    border-right: 2px solid var(--cor-roxo);
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-}
-.data-principal .mes {
-    display: block;
-    font-family: var(--fonte-corpo);
-    font-size: 1rem;
-    color: var(--cor-texto);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.data-principal .dia {
-    display: block;
-    font-family: var(--fonte-titulo);
-    font-size: 4.5rem;
-    color: var(--cor-verde);
-    line-height: 1;
-    margin: 0.5rem 0;
-}
-.data-principal .ano {
-    display: block;
-    font-family: var(--fonte-corpo);
-    font-size: 1.2rem;
-    color: var(--cor-texto);
-}
-
-/* --- Estilos do Contador Regressivo --- */
-.countdown-container {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 1.5rem;
-}
-.countdown-item { text-align: center; }
-.countdown-numero {
-    font-family: var(--fonte-titulo);
-    font-size: 3rem;
-    color: var(--cor-verde);
-    display: block;
-    line-height: 1.1;
-}
-.countdown-label {
-    font-family: var(--fonte-corpo);
-    font-size: 0.8rem;
-    color: var(--cor-texto);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.countdown-finalizado {
-    font-family: var(--fonte-titulo);
-    font-size: 3rem;
-    color: var(--cor-rosa);
-}
-
-/* ============================================== */
-/* --- AJUSTES FINAIS PARA O CELULAR (BLOCO UNICO) --- */
-/* ============================================== */
-@media (max-width: 600px) {
-
-    /* No celular, remove o fundo floral */
-    html {
-        background-image: none;
-    }
-    
-    /* O Menu ROLA no celular */
-    .menu {
-        padding: 0.5rem 0;
-    }
-    .menu a {
-        display: block;
-        font-size: 0.95rem;
-        margin: 0.1rem 0; /* Mais compacto */
-    }
-
-    /* Ajuste Locais */
-    .local-container { flex-direction: column; }
-    .local-coluna { width: 100%; margin-bottom: 2rem; text-align: center; }
-    
-    /* FIX Calendário */
-    .calendario-col.info-lateral { display: none; }
-    .card-calendario { flex-direction: row; justify-content: center; }
-    .calendario-col.data-principal {
-        border-left: none;
-        border-right: none;
-        border-top: 2px solid var(--cor-roxo);
-        border-bottom: 2px solid var(--cor-roxo);
-        padding: 1.5rem 2.5rem;
-        margin: 0;
-    }
-    .data-principal .dia { font-size: 3.5rem; }
-
-    /* FIX Contador 2x2 */
-    .countdown-container { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
-    .countdown-item { width: 40%; text-align: center; }
-    .countdown-numero { font-size: 2.5rem; }
-
-    /* FIX Esteira */
-    .presente-item { flex: 0 0 80vw; width: 80vw; }
-}
-
-/* ============================================== */
-/* --- Estilos da Sanfona (Collapsible) de Presentes --- */
-/* ============================================== */
-.sanfona-presentes {
-    border-top: 1px solid #eee;
-    margin-top: 2rem;
-}
-.sanfona-titulo::-webkit-details-marker { display: none; }
-.sanfona-titulo { display: block; list-style: none; }
-.sanfona-titulo {
-    display: block;
-    padding: 1.5rem 1rem;
-    cursor: pointer;
-    font-family: var(--fonte-corpo);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-laranja);
-    background-color: #fdfdfd;
-    border: 1px solid #f0f0f0;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
-    position: relative;
-}
-.sanfona-titulo:hover { background-color: #f5f5ff; }
-.sanfona-titulo::after {
-    content: '+';
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.8rem;
-    font-weight: 300;
-    color: var(--cor-roxo);
-}
-.sanfona-presentes[open] > .sanfona-titulo::after { content: '–'; }
-.sanfona-conteudo { padding: 1rem 0 0 0; }
-
-/* ============================================== */
-/* --- Estilos da Seção RSVP (ETAPA 1) --- */
-/* ============================================== */
-.rsvp-container {
-    max-width: 500px;
-    margin: 2rem auto 0 auto;
-    text-align: left;
-}
-.rsvp-container label {
-    font-weight: 700;
-    color: var(--cor-verde);
-}
-.rsvp-input {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    font-family: var(--fonte-corpo);
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    box-sizing: border-box;
-}
-#rsvp-form .botao {
-    width: 100%;
-}
-.rsvp-message {
-    margin-top: 1rem;
-    font-weight: 700;
-    text-align: center;
-    visibility: hidden; 
-}
-.rsvp-message.loading {
-    visibility: visible;
-    color: #555;
-}
-.rsvp-message.error {
-    visibility: visible;
-    color: #D32F2F; /* Vermelho */
-}
-.rsvp-message.success {
-    visibility: visible;
-    color: var(--cor-verde);
-}
-.rsvp-confirmation {
-    margin-top: 2rem;
-    text-align: center;
-}
-.rsvp-boas-vindas {
-    font-size: 1.3rem;
-    color: var(--cor-texto);
-}
-.rsvp-boas-vindas span {
-    font-weight: 700;
-    color: var(--cor-rosa);
-}
-.botao-secundario {
-    background-color: #777;
-}
-.botao-secundario:hover {
-    background-color: #555;
-}
-/* No bloco :root */
-:root {
-    /* ... o resto das suas variáveis ... */
-    --fonte-cursiva: 'Dancing Script', cursive; /* NOVO: Adicione isto */
-}
-/* ============================================== */
-/* --- Estilos do Ponto Focal (Topo) --- */
-/* ============================================== */
-
-.ponto-focal-topo {
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-}
-
-.monograma {
-    font-family: var(--fonte-corpo); /* NOVO: Fonte simples e elegante (Montserrat) */
-    font-size: 1.5rem; /* NOVO: Tamanho menor para ser um acento */
-    color: var(--cor-texto); /* NOVO: Cor Grafite suave */
-    line-height: 1;
-    margin-bottom: 0.2rem;
-}
-
-.monograma-coracao {
-    color: var(--cor-rosa); /* Coração em Rosa (Romance) */
-}
-
-.nomes-cursivos {
-    font-family: var(--fonte-titulo); /* NOVO: Usa a Playfair Display (a fonte do H2) */
-    font-size: 3rem; /* NOVO: Tamanho GIGANTE para chamar a atenção */
-    color: var(--cor-laranja); /* Laranja para o nome principal */
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-}
-
-.nossos-dias {
-    font-family: var(--fonte-corpo);
-    font-size: 0.9rem;
-    color: var(--cor-texto);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-/* --- Ajuste da Margem no Celular --- */
-@media (max-width: 600px) {
-    .monograma {
-        font-size: 1.2rem;
-    }
-    .nomes-cursivos {
-        font-size: 2rem; /* Menor no celular */
-    }
-
-}
-/* ======== MOLDURA FLORAL (topo + base + laterais) ======== */
+/* =========================
+   VARS & RESET
+========================= */
 :root{
-  --faixa-lateral: clamp(120px, 14vw, 200px);
-  --faixa-topo: clamp(100px, 12vw, 180px);
-  --flor-opacity: 0.9;
-  --fade-side: 26px;
-  --fade-top: 18px;
+  --cor-fundo: #faf8f5;
+  --cor-texto: #2b2b2b;
+
+  /* Paleta do casamento */
+  --verde: #2e7d32;
+  --rosa: #e76b83;
+  --amarelo: #f5c045;
+  --roxo: #6f42c1;
+  --laranja: #fb8c00;
+  --branco: #ffffff;
+
+  /* Largura das laterais florais (ajuste fino aqui) */
+  --largura-faixa: clamp(110px, 12vw, 220px);
 }
 
-/* contêiner fixo da moldura – fica por trás de tudo */
-#floral-frame{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+img { max-width:100%; display:block; }
+button { cursor:pointer; border:none; }
 
-/* laterais */
-.floral.side{
-  position: absolute;
-  top: 0; bottom: 0;
-  width: var(--faixa-lateral);
-  background-image: url("/assets/floral-frame.webp"); /* troque para .png se preferir */
-  background-repeat: repeat-y;
-  background-size: contain;
-  opacity: var(--flor-opacity);
-}
-
-.floral.side.left{
-  left: 0; background-position: left top;
-  -webkit-mask-image: linear-gradient(to right, #000 70%, transparent);
-          mask-image: linear-gradient(to right, #000 70%, transparent);
-  -webkit-mask-size: calc(100% - var(--fade-side)) 100%;
-          mask-size: calc(100% - var(--fade-side)) 100%;
-  -webkit-mask-position: left; mask-position: left;
-}
-
-.floral.side.right{
-  right: 0; background-position: right top;
-  transform: scaleX(-1);
-  -webkit-mask-image: linear-gradient(to left, #000 70%, transparent);
-          mask-image: linear-gradient(to left, #000 70%, transparent);
-  -webkit-mask-size: calc(100% - var(--fade-side)) 100%;
-          mask-size: calc(100% - var(--fade-side)) 100%;
-  -webkit-mask-position: right; mask-position: right;
-}
-
-/* topo / base (mesma arte rotacionada) */
-.floral.edge{
-  position: absolute;
-  left: 0; right: 0;
-  height: var(--faixa-topo);
-  background-image: url("/assets/floral-frame.webp");
-  background-repeat: repeat-x;
-  background-size: contain;
-  opacity: var(--flor-opacity);
-  transform-origin: center;
-}
-
-.floral.edge.top{
-  top: 0; transform: rotate(90deg);
-  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
-          mask-image: linear-gradient(to bottom, #000 70%, transparent);
-  -webkit-mask-size: 100% calc(100% - var(--fade-top));
-          mask-size: 100% calc(100% - var(--fade-top));
-  -webkit-mask-position: top; mask-position: top;
-}
-
-.floral.edge.bottom{
-  bottom: 0; transform: rotate(270deg);
-  -webkit-mask-image: linear-gradient(to top, #000 70%, transparent);
-          mask-image: linear-gradient(to top, #000 70%, transparent);
-  -webkit-mask-size: 100% calc(100% - var(--fade-top));
-          mask-size: 100% calc(100% - var(--fade-top));
-  -webkit-mask-position: bottom; mask-position: bottom;
-}
-
-/* responsividade */
-@media (max-width: 992px){
-  :root{
-    --faixa-lateral: clamp(40px, 6.2vw, 90px);
-    --faixa-topo: clamp(36px, 5vw, 72px);
-    --flor-opacity: 0.78;
-  }
-}
-@media (max-width: 640px){
-  #floral-frame .side{ display:none; }
-  :root{ --faixa-topo: 44px; }
-}
-
-/* ======== utilitários de acessibilidade e feedback RSVP ======== */
-.sr-only{
-  position:absolute!important; width:1px!important; height:1px!important;
-  padding:0!important; margin:-1px!important; overflow:hidden!important;
-  clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important;
-}
-
-.rsvp-message{
-  margin-top:.75rem; padding:.75rem 1rem; border-radius:12px; font-weight:600;
-}
-.rsvp-message.info{    background:#fff7e6; color:#a56300; border:1px solid #ffd59e; }
-.rsvp-message.success{ background:#eefcf1; color:#0f7a39; border:1px solid #b9ebc5; }
-.rsvp-message.error{   background:#feeeee; color:#a12626; border:1px solid #f5bcbc; }
-.rsvp-message.loading{ background:#eef4ff; color:#2f54eb; border:1px solid #adc6ff; }
-
-.heart-pulse{ display:inline-block; animation:pulse 1.1s ease-in-out 2; }
-@keyframes pulse{ 0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)} }
-
-#confetti-container{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:9999; }
-.confetti{ position:absolute; width:10px; height:14px; opacity:.92; animation:confetti-fall linear forwards; }
-@keyframes confetti-fall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.95; } }
-
-/* === FUNDO UNIFORME NO CENTRO + FLORES SÓ NAS LATERAIS === */
-:root{
-  --largura-faixa: clamp(110px, 12vw, 220px); /* ajuste fino da largura das laterais */
-}
-
-/* mantém o centro igual ao convite */
+/* =========================
+   FUNDO + MOLDURA FLORAL
+========================= */
 html{
-  background-color: #faf8f5 !important;
+  background-color: var(--cor-fundo) !important;
   position: relative;
+  min-height: 100%;
 }
 
-/* desenha as flores por cima, mas só nas laterais */
+/* Desenha a imagem floral APENAS nas laterais, por cima do fundo #faf8f5 */
 html::before{
   content: "";
   position: fixed;
@@ -633,14 +39,14 @@ html::before{
   pointer-events: none;
   z-index: 0;
 
-  /* sua imagem nova */
-  background-image: url('/assets/fundo-casamento-final.png');
+  /* Sua imagem gerada deve estar nesse caminho */
+  background-image: url('/assets/fundo-casamento.png');
   background-repeat: repeat-y;
   background-position: center top;
-  background-size: cover;
+  background-size: cover; /* cobre a largura e preserva proporções */
   opacity: 1;
 
-  /* máscara: mostra apenas as laterais e oculta o centro */
+  /* Máscara: mostra laterais e oculta o centro (sem faixas) */
   -webkit-mask-image: linear-gradient(
     to right,
     #000 0,
@@ -661,10 +67,167 @@ html::before{
   );
 }
 
-/* em telas pequenas, laterais mais estreitas */
+/* Em telas menores, afina as laterais */
 @media (max-width: 768px){
-  :root{ --largura-faixa: clamp(64px, 9vw, 110px); }
+  :root{ --largura-faixa: clamp(70px, 9vw, 120px); }
 }
 
+/* =========================
+   TIPOGRAFIA & LAYOUT
+========================= */
+body{
+  font-family: "Lora", serif;
+  color: var(--cor-texto);
+  background-color: transparent; /* centro fica no #faf8f5 do html */
+  line-height: 1.6;
+  position: relative;
+  z-index: 1; /* conteúdo acima da moldura */
+}
 
+.hero{
+  padding: 64px 20px 24px;
+  text-align: center;
+}
+.noivos{
+  font-family: "Playfair Display", serif;
+  font-size: clamp(36px, 5vw, 64px);
+  margin: 0 0 6px;
+  letter-spacing: .5px;
+}
+.frase{
+  margin: 0 auto 24px;
+  font-size: 16px;
+  opacity: .8;
+}
 
+.contador{
+  display:flex; gap:14px; justify-content:center; align-items:center;
+  flex-wrap: wrap;
+}
+.timebox{
+  background: #fff;
+  border: 1px solid #eee1cc;
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  border-radius: 14px;
+  padding: 12px 14px;
+  min-width: 86px;
+}
+.timebox span{
+  display:block; font-size: 28px; font-weight:700;
+  font-family: "Playfair Display", serif;
+}
+.timebox small{
+  opacity:.7; font-size:12px;
+}
+
+.conteudo{
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 16px 20px 56px;
+}
+.card{
+  background: #ffffff;
+  border: 1px solid #eee1cc;
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.06);
+  padding: 20px;
+}
+.titulo-secao{
+  font-family: "Playfair Display", serif;
+  margin: 4px 0 12px;
+  font-size: clamp(22px, 3.2vw, 30px);
+}
+
+.rsvp-linha{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+.label{ font-weight:600; margin-bottom:6px; }
+.input{
+  grid-column: 1 / span 1;
+  height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #e7d8bf;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 16px;
+  outline: none;
+}
+.input:focus{
+  border-color: #d8bf98;
+  box-shadow: 0 0 0 3px rgba(216,191,152,.25);
+}
+.rsvp-linha .btn{ grid-column: 2 / span 1; }
+
+.confirm-area{
+  display: none;
+  margin-top: 12px;
+}
+.confirm-pergunta{ margin: 0 0 10px; font-weight:600; }
+
+/* =========================
+   BOTÕES (paleta do casamento)
+========================= */
+.btn{
+  --bg: #2e7d32;     /* verde padrão */
+  --bg2: #3e8d42;    /* variação para hover */
+  --txt: #fff;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  color: var(--txt);
+  background: linear-gradient(180deg, var(--bg), var(--bg2));
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+  transition: transform .05s ease, box-shadow .2s ease, filter .2s;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.btn:hover{ filter: brightness(1.03); box-shadow: 0 10px 20px rgba(0,0,0,.10); }
+.btn:active{ transform: translateY(1px); }
+.btn:disabled{ opacity:.6; cursor:not-allowed; }
+
+.btn-principal{ --bg:#2e7d32; --bg2:#3e8d42; }      /* verde */
+.btn-sucesso{ --bg:#2e7d32; --bg2:#3e8d42; }        /* confirma: verde */
+.btn-contraste{ --bg:#e76b83; --bg2:#d55b72; }      /* recusa: rosa */
+.btn-roxo{ --bg:#6f42c1; --bg2:#5b34a6; }           /* roxo charmoso */
+.btn-amarelo{ --bg:#f5c045; --bg2:#e3ae35; color:#3b2f0a; } /* amarelo quente */
+.btn-laranja{ --bg:#fb8c00; --bg2:#e67d00; }        /* laranja vibrante */
+
+/* =========================
+   MENSAGENS RSVP + ANIMAÇÕES
+========================= */
+.rsvp-message{
+  margin-top:.6rem; padding:.8rem 1rem; border-radius:12px; font-weight:600;
+}
+.rsvp-message.info{    background:#fff7e6; color:#a56300; border:1px solid #ffd59e; }
+.rsvp-message.success{ background:#eefcf1; color:#0f7a39; border:1px solid #b9ebc5; }
+.rsvp-message.error{   background:#feeeee; color:#a12626; border:1px solid #f5bcbc; }
+.rsvp-message.loading{ background:#eef4ff; color:#2f54eb; border:1px solid #adc6ff; }
+
+.botoes{ display:flex; gap:10px; flex-wrap:wrap; }
+
+/* Coração pulsando ao confirmar */
+.heart-pulse{ display:inline-block; animation:pulse 1.1s ease-in-out 2; }
+@keyframes pulse{ 0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)} }
+
+/* Confete */
+#confetti-container{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:9999; }
+.confetti{ position:absolute; width:10px; height:14px; opacity:.92; animation:confetti-fall linear forwards; }
+@keyframes confetti-fall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.95; } }
+
+/* Acessibilidade: apenas leitores de tela */
+.sr-only{
+  position:absolute!important; width:1px!important; height:1px!important;
+  padding:0!important; margin:-1px!important; overflow:hidden!important;
+  clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important;
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+.rodape{
+  text-align:center; padding: 28px 16px; opacity:.75; font-size: 14px;
+}
