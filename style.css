@@ -504,9 +504,9 @@ footer {
 }
 /* ======== MOLDURA FLORAL (topo + base + laterais) ======== */
 :root{
-  --faixa-lateral: clamp(54px, 7.5vw, 120px);
-  --faixa-topo: clamp(48px, 6vw, 96px);
-  --flor-opacity: 0.80;
+  --faixa-lateral: clamp(120px, 14vw, 200px);
+  --faixa-topo: clamp(100px, 12vw, 180px);
+  --flor-opacity: 0.9;
   --fade-side: 26px;
   --fade-top: 18px;
 }
@@ -613,3 +613,4 @@ footer {
 #confetti-container{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:9999; }
 .confetti{ position:absolute; width:10px; height:14px; opacity:.92; animation:confetti-fall linear forwards; }
 @keyframes confetti-fall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.95; } }
+
