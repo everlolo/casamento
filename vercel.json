@@ -2,7 +2,8 @@
   "rewrites": [
     {
       "source": "/api/rsvp/:match*",
-      "destination": "https://everlolo-8nll.duckdns.org/webhook-test/:match*"
+      "destination": "https://everlolo-8nll.duckdns.org/webhook/:match*" 
+      // ^^^ Alterado de /webhook-test/ para /webhook/
     }
   ]
 }
