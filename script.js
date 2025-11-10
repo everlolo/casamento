@@ -3,9 +3,9 @@
     // --- VARIÁVEIS DO WEBHOOK (COLE SUAS URLs AQUI) ---
     // ==============================================
     // URL do Webhook 1 (Verificar Nome)
-    const WEBHOOK_URL_VERIFICAR = '/api/rsvp/webhook-test/verificar-nome-casamento'; 
+    const WEBHOOK_URL_VERIFICAR = '/api/rsvp/webhook/verificar-nome-casamento'; 
     // URL do Webhook 2 (Registrar Sim/Não)
-    const WEBHOOK_URL_REGISTRAR = '/api/rsvp/webhook-test/registrar-rsvp-casamento'; 
+    const WEBHOOK_URL_REGISTRAR = '/api/rsvp/webhook/registrar-rsvp-casamento'; 
 
     
     // ==============================================
@@ -150,5 +150,6 @@
             checkNomeBtn.disabled = false;
         }
     });
+
 
 })();
