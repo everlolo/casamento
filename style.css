@@ -614,4 +614,57 @@ footer {
 .confetti{ position:absolute; width:10px; height:14px; opacity:.92; animation:confetti-fall linear forwards; }
 @keyframes confetti-fall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.95; } }
 
+/* === FUNDO UNIFORME NO CENTRO + FLORES SÓ NAS LATERAIS === */
+:root{
+  --largura-faixa: clamp(110px, 12vw, 220px); /* ajuste fino da largura das laterais */
+}
+
+/* mantém o centro igual ao convite */
+html{
+  background-color: #faf8f5 !important;
+  position: relative;
+}
+
+/* desenha as flores por cima, mas só nas laterais */
+html::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  /* sua imagem nova */
+  background-image: url('/assets/fundo-casamento-final.png');
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: cover;
+  opacity: 1;
+
+  /* máscara: mostra apenas as laterais e oculta o centro */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0,
+    #000 var(--largura-faixa),
+    transparent var(--largura-faixa),
+    transparent calc(100% - var(--largura-faixa)),
+    #000 calc(100% - var(--largura-faixa)),
+    #000 100%
+  );
+          mask-image: linear-gradient(
+    to right,
+    #000 0,
+    #000 var(--largura-faixa),
+    transparent var(--largura-faixa),
+    transparent calc(100% - var(--largura-faixa)),
+    #000 calc(100% - var(--largura-faixa)),
+    #000 100%
+  );
+}
+
+/* em telas pequenas, laterais mais estreitas */
+@media (max-width: 768px){
+  :root{ --largura-faixa: clamp(64px, 9vw, 110px); }
+}
+
+
 
