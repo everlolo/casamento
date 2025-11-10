@@ -133,6 +133,30 @@ checkNomeBtn.addEventListener('click', () => {
     btnSim.disabled = false;
     btnNao.disabled = false;
 });
+function launchConfetti(pieces = 90, durationMs = 1800){
+  const colors = ["#ff6b6b","#ffd166","#06d6a0","#4dabf7","#f78da7"];
+  const cont = document.getElementById("confetti-container");
+  const W = window.innerWidth;
+
+  for (let i=0; i<pieces; i++){
+    const el = document.createElement("div");
+    el.className = "confetti";
+    el.style.background = colors[i % colors.length];
+    el.style.left = Math.random()*W + "px";
+    el.style.top  = "-20px";
+    el.style.transform = `translateY(0) rotate(${Math.random()*360}deg)`;
+    el.style.animationDuration = (1 + Math.random()*1.2) + "s";
+    el.style.borderRadius = Math.random() < .4 ? "2px" : "50%";
+    cont.appendChild(el);
+    setTimeout(()=> el.remove(), durationMs);
+  }
+}
+
+function setAriaLive(msg){
+  const live = document.getElementById("aria-live");
+  if (live) live.textContent = msg;
+}
+
 
 
 
