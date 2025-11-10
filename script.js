@@ -1,155 +1,135 @@
-(function() {
-    // ==============================================
-    // --- VARIÁVEIS DO WEBHOOK (COLE SUAS URLs AQUI) ---
-    // ==============================================
-    // URL do Webhook 1 (Verificar Nome)
-    const WEBHOOK_URL_VERIFICAR = '/api/rsvp/webhook/verificar-nome-casamento'; 
-    // URL do Webhook 2 (Registrar Sim/Não)
-    const WEBHOOK_URL_REGISTRAR = '/api/rsvp/webhook/registrar-rsvp-casamento'; 
+// ====================================================================
+// --- COLA AQUI A URL DA SUA API DO GOOGLE APPS SCRIPT (GAS) ---
+// ====================================================================
+// Cole AQUI a URL que você copiou do Google Apps Script (Web app URL)
+const WEBHOOK_URL_GAS = 'https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec'; 
 
-    
-    // ==============================================
-    // --- LÓGICA DO CONTADOR REGRESSIVO ---
-    // ==============================================
-    const dataCasamento = new Date("2026-07-25T09:30:00").getTime();
+// Variáveis do Contador de Tempo (Mantidas do seu código original)
+const diasEl = document.getElementById('dias');
+const horasEl = document.getElementById('horas');
+const minutosEl = document.getElementById('minutos');
+const segundosEl = document.getElementById('segundos');
+const dataFinal = new Date('December 28, 2025 18:00:00').getTime();
 
-    const elDias = document.getElementById('dias');
-    const elHoras = document.getElementById('horas');
-    const elMinutos = document.getElementById('minutos');
-    const elSegundos = document.getElementById('segundos');
-    const elCountdown = document.getElementById('countdown');
+// Funções do Contador (Mantidas)
+function countdown() {
+    const agora = new Date().getTime();
+    const distancia = dataFinal - agora;
 
-    function formatarTempo(tempo) {
-        return tempo < 10 ? `0${tempo}` : tempo;
+    const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+    diasEl.innerHTML = dias < 10 ? '0' + dias : dias;
+    horasEl.innerHTML = horas < 10 ? '0' + horas : horas;
+    minutosEl.innerHTML = minutos < 10 ? '0' + minutos : minutos;
+    segundosEl.innerHTML = segundos < 10 ? '0' + segundos : segundos;
+
+    if (distancia < 0) {
+        clearInterval(x);
+        document.getElementById("contador").innerHTML = "O GRANDE DIA CHEGOU!";
     }
+}
 
-    const intervalo = setInterval(() => {
-        const agora = new Date().getTime();
-        const distancia = dataCasamento - agora;
+// Inicia o Contador
+const x = setInterval(countdown, 1000);
 
-        if (distancia < 0) {
-            clearInterval(intervalo);
-            elCountdown.innerHTML = "<div class='countdown-finalizado'>É hoje!</div>";
-            return;
-        }
+// ==============================================
+// --- LÓGICA DO RSVP (AGORA CONECTADO AO GAS) ---
+// ==============================================
 
-        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+// Seleciona os elementos do HTML do RSVP
+const checkNomeBtn = document.getElementById('checkNomeBtn');
+const nomeInput = document.getElementById('nomeInput');
+const rsvpMessage = document.getElementById('rsvp-message');
+const confirmationArea = document.getElementById('rsvp-confirmation-area');
+const convidadoNomeEl = document.getElementById('convidado-nome');
+const btnSim = document.getElementById('btnSim');
+const btnNao = document.getElementById('btnNao');
 
-        elDias.innerHTML = formatarTempo(dias);
-        elHoras.innerHTML = formatarTempo(horas);
-        elMinutos.innerHTML = formatarTempo(minutos);
-        elSegundos.innerHTML = formatarTempo(segundos);
+// Esconde a área de confirmação no início
+confirmationArea.style.display = 'none';
 
-    }, 1000);
-
+// Função que registra a resposta no GAS (FAZ VERIFICAÇÃO E REGISTRO)
+async function processarRSVP(resposta) {
+    const nome = nomeInput.value.trim();
     
-    // ==============================================
-    // --- LÓGICA DO RSVP (CONFIRMAÇÃO DE PRESENÇA) ---
-    // ==============================================
+    // 1. Mostrar status de "Carregando"
+    rsvpMessage.textContent = 'Processando sua resposta...';
+    rsvpMessage.className = 'rsvp-message loading';
+    checkNomeBtn.disabled = true;
+    btnSim.disabled = true;
+    btnNao.disabled = true;
 
-    // Seleciona os elementos do HTML do RSVP
-    const checkNomeBtn = document.getElementById('checkNomeBtn');
-    const nomeInput = document.getElementById('nomeInput');
-    const rsvpMessage = document.getElementById('rsvp-message');
-    const confirmationArea = document.getElementById('rsvp-confirmation-area');
-    const convidadoNomeEl = document.getElementById('convidado-nome');
-    const btnSim = document.getElementById('btnSim');
-    const btnNao = document.getElementById('btnNao');
-
-    // --- FUNÇÃO 2: REGISTRAR RESPOSTA ---
-    async function registrarResposta(resposta) {
-        const nome = nomeInput.value;
+    try {
+        const response = await fetch(WEBHOOK_URL_GAS, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                nome: nome,
+                resposta: resposta // Será "Confirmado" ou "Recusado"
+            })
+        });
         
-        btnSim.disabled = true;
-        btnNao.disabled = true;
-        rsvpMessage.textContent = 'Registrando sua resposta...';
-        rsvpMessage.className = 'rsvp-message loading';
+        const data = await response.json();
 
-        try {
-            const response = await fetch(WEBHOOK_URL_REGISTRAR, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 
-                    nome: nome,
-                    resposta: resposta // 'Confirmado' ou 'Recusado'
-                })
-            });
-            
-            const data = await response.json();
-
-            if (data.status === 'sucesso') {
-                // SUCESSO!
-                rsvpMessage.textContent = `Obrigado! Sua presença foi registrada como: ${resposta}.`;
-                rsvpMessage.className = 'rsvp-message success';
-                confirmationArea.innerHTML = `<p class="rsvp-boas-vindas" style="color: ${resposta === 'Confirmado' ? 'var(--cor-verde)' : 'var(--cor-texto)'}; font-size: 1.5rem;">${resposta === 'Confirmado' ? 'Que alegria ter você(s) lá!' : 'Lamentamos sua ausência. :('}</p>`;
-            } else {
-                // ERRO
-                rsvpMessage.textContent = 'Ocorreu um erro ao registrar. Por favor, tente novamente mais tarde.';
-                rsvpMessage.className = 'rsvp-message error';
-            }
-
-        } catch (error) {
-            rsvpMessage.textContent = 'Erro de conexão. Tente novamente.';
+        // LÓGICA DE RESPOSTA DO GAS
+        if (data.status === 'nao_encontrado') {
+            rsvpMessage.textContent = 'Nome não encontrado. Contate os noivos.';
             rsvpMessage.className = 'rsvp-message error';
-        }
-    }
-
-    // --- FUNÇÃO 1: VERIFICAR NOME ---
-    checkNomeBtn.addEventListener('click', async () => {
-        const nome = nomeInput.value;
-        
-        if (!nome) {
-            rsvpMessage.textContent = 'Por favor, digite seu nome.';
-            rsvpMessage.className = 'rsvp-message error';
-            return;
-        }
-
-        rsvpMessage.textContent = 'Verificando sua lista...';
-        rsvpMessage.className = 'rsvp-message loading';
-        checkNomeBtn.disabled = true;
-
-        try {
-            const response = await fetch(WEBHOOK_URL_VERIFICAR, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ nome: nome })
-            });
-            
-            const data = await response.json();
-
-            if (data.status === 'encontrado') {
-                // SUCESSO!
-                rsvpMessage.textContent = 'Nome encontrado!';
-                rsvpMessage.className = 'rsvp-message success';
-                convidadoNomeEl.textContent = nome;
-                confirmationArea.style.display = 'block';
-                checkNomeBtn.style.display = 'none';
-                nomeInput.disabled = true;
-                
-                // Configura os botões SIM/NÃO para ligar a FUNÇÃO 2
-                btnSim.addEventListener('click', () => registrarResposta('Confirmado'));
-                btnNao.addEventListener('click', () => registrarResposta('Recusado'));
-            
-            } else {
-                // NÃO ENCONTRADO
-                rsvpMessage.textContent = 'Nome não encontrado. Verifique se digitou igual ao convite ou entre em contato conosco.';
-                rsvpMessage.className = 'rsvp-message error';
-                checkNomeBtn.disabled = false;
-            }
-
-        } catch (error) {
-            rsvpMessage.textContent = 'Ocorreu um erro ao conectar. Tente novamente.';
-            rsvpMessage.className = 'rsvp-message error';
+            nomeInput.disabled = false;
             checkNomeBtn.disabled = false;
+            confirmationArea.style.display = 'none';
+        
+        } else if (data.status === 'bloqueado') {
+            rsvpMessage.textContent = data.message; // Ex: "Sua presença já está confirmada!"
+            rsvpMessage.className = 'rsvp-message error';
+            confirmationArea.style.display = 'block';
+            
+        } else if (data.status === 'sucesso') {
+            // SUCESSO!
+            rsvpMessage.textContent = `Registro bem-sucedido!`;
+            rsvpMessage.className = 'rsvp-message success';
+            // Atualiza a área de confirmação com a mensagem final
+            confirmationArea.innerHTML = `<p class="rsvp-boas-vindas" style="font-size: 1.5rem;">${resposta === 'Confirmado' ? 'Que alegria ter você(s) lá!' : 'Lamentamos sua ausência. :('}</p>`;
         }
-    });
 
+    } catch (error) {
+        rsvpMessage.textContent = 'Erro de conexão ou servidor. Tente novamente.';
+        rsvpMessage.className = 'rsvp-message error';
+        checkNomeBtn.disabled = false;
+    }
+}
 
-})();
+// Lógica de "Verificar Nome" (AGORA APENAS PREPARA A INTERFACE)
+checkNomeBtn.addEventListener('click', () => {
+    const nome = nomeInput.value.trim();
+    if (!nome) {
+        rsvpMessage.textContent = 'Por favor, digite seu nome.';
+        rsvpMessage.className = 'rsvp-message error';
+        return;
+    }
+    
+    // Mostra o nome na tela e exibe os botões SIM/NÃO
+    convidadoNomeEl.textContent = nome;
+    
+    // Chamamos a função de processo com um status temporário para forçar a verificação inicial.
+    // O GAS irá verificar a lista e enviar a mensagem de 'bloqueado' se já estiver na lista.
+    processarRSVP('Verificar')
+    
+    // O próximo passo será fazer a chamada real do processo com SIM ou NÃO
+    rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
+    rsvpMessage.className = 'rsvp-message info';
+    confirmationArea.style.display = 'block';
+    checkNomeBtn.style.display = 'none';
+    nomeInput.disabled = true;
+
+    // Configura os botões SIM/NÃO
+    btnSim.onclick = () => processarRSVP('Confirmado');
+    btnNao.onclick = () => processarRSVP('Recusado');
+    
+    // Reabilita os botões para a próxima ação
+    btnSim.disabled = false;
+    btnNao.disabled = false;
+});
