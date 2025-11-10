@@ -14,16 +14,17 @@ export default async function handler(req, res) {
 
   if (allowed) res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Vary", "Origin");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
   if (req.method === "OPTIONS") return res.status(204).end();
+  if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
 
   try {
     const upstream = await fetch(GAS_URL, {
-      method: req.method,
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: req.method === "GET" ? undefined : JSON.stringify(req.body || {}),
+      body: JSON.stringify(req.body || {}),
     });
 
     const text = await upstream.text();
