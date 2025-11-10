@@ -1,12 +1,12 @@
-// ================== CONFIGURAÇÃO ==================
-const WEBHOOK_URL_GAS = '/api/rsvp'; // proxy da Vercel
+// ================== CONFIG ==================
+const WEBHOOK_URL_GAS = '/api/rsvp'; // proxy da Vercel para o Apps Script
 
 // ================== CONTADOR ==================
 const diasEl = document.getElementById('dias');
 const horasEl = document.getElementById('horas');
 const minutosEl = document.getElementById('minutos');
 const segundosEl = document.getElementById('segundos');
-const dataFinal = new Date('July 25, 2026 09:30:00').getTime();
+const dataFinal = new Date('December 28, 2025 18:00:00').getTime();
 
 function countdown() {
   const agora = new Date().getTime();
@@ -73,7 +73,7 @@ function detectarOrigem(){
   return isMobile ? 'Site - Mobile' : 'Site - Desktop';
 }
 
-// ================== LÓGICA PRINCIPAL ==================
+// ================== LÓGICA DE CHAMADA ==================
 async function processarRSVP(resposta) {
   const nome = (nomeInput?.value || '').trim();
   if (!rsvpMessage) return;
@@ -103,13 +103,30 @@ async function processarRSVP(resposta) {
       throw new Error(data && data.message ? data.message : `HTTP ${response.status}`);
     }
 
+    // === Controle total via resposta do GAS ===
     if (data.status === 'nao_encontrado') {
       rsvpMessage.innerHTML = '🔎 Nome não encontrado. Verifique a ortografia ou contate os noivos.';
       rsvpMessage.className = 'rsvp-message error';
       if (nomeInput) nomeInput.disabled = false;
-      if (checkNomeBtn) checkNomeBtn.disabled = false;
+      if (checkNomeBtn) { checkNomeBtn.disabled = false; checkNomeBtn.style.display = ''; }
       if (confirmationArea) confirmationArea.style.display = 'none';
       setAriaLive('Nome não encontrado.');
+      return;
+    }
+
+    if (data.status === 'nome_encontrado') {
+      // Só agora mostramos a área de confirmação
+      if (rsvpMessage){
+        rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
+        rsvpMessage.className = 'rsvp-message info';
+      }
+      if (confirmationArea) confirmationArea.style.display = 'block';
+      if (checkNomeBtn) checkNomeBtn.style.display = 'none';
+      if (nomeInput) nomeInput.disabled = true;
+
+      if (btnSim) { btnSim.disabled = false; btnSim.onclick = () => processarRSVP('Confirmado'); }
+      if (btnNao) { btnNao.disabled = false; btnNao.onclick = () => processarRSVP('Recusado'); }
+      setAriaLive('Nome verificado. Confirme sua presença.');
       return;
     }
 
@@ -136,6 +153,7 @@ async function processarRSVP(resposta) {
 
       setAriaLive(confirmou ? 'Presença confirmada com sucesso.' : 'Ausência registrada com sucesso.');
       if (confirmou) launchConfetti(100, 2000);
+      rsvpMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -156,7 +174,7 @@ async function processarRSVP(resposta) {
 
 // botão “verificar”
 if (checkNomeBtn) {
-  checkNomeBtn.addEventListener('click', () => {
+  checkNomeBtn.addEventListener('click', async () => {
     const nome = (nomeInput?.value || '').trim();
     if (!nome) {
       if (rsvpMessage){
@@ -167,20 +185,7 @@ if (checkNomeBtn) {
     }
     if (convidadoNomeEl) convidadoNomeEl.textContent = nome;
 
-    processarRSVP('Verificar');
-
-    if (rsvpMessage){
-      rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
-      rsvpMessage.className = 'rsvp-message info';
-    }
-    if (confirmationArea) confirmationArea.style.display = 'block';
-    if (checkNomeBtn) checkNomeBtn.style.display = 'none';
-    if (nomeInput) nomeInput.disabled = true;
-
-    if (btnSim) btnSim.onclick = () => processarRSVP('Confirmado');
-    if (btnNao) btnNao.onclick = () => processarRSVP('Recusado');
-
-    if (btnSim) btnSim.disabled = false;
-    if (btnNao) btnNao.disabled = false;
+    // Espera a resposta do servidor (não escreve mensagens aqui)
+    await processarRSVP('Verificar');
   });
 }
