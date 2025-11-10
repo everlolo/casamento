@@ -40,7 +40,7 @@ html::before{
   pointer-events: none;
   z-index: 0;
 
-  background-image: url('/assets/fundo-casamento.png'); /* sua imagem */
+  background-image: url('/assets/fundo-casamento.webp');
   background-repeat: repeat-y;
   background-position: center top;
   background-size: cover;
@@ -278,3 +278,4 @@ body{
 @media (max-width: 600px){
   .carrossel{ grid-template-columns: 1fr; }
 }
+
