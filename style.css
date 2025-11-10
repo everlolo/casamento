@@ -1,0 +1,503 @@
+/* --- :root são as nossas "Variáveis" de Design --- */
+/* --- PALETA TROPICAL-CHIQUE (VERSÃO DESIGNER) --- */
+:root {
+    --cor-fundo: #FDFBF8;      /* FUNDO MARFIM (QUENTE) */
+    --cor-texto: #4B4B4B;      /* Texto (Grafite, mais quente) */
+    --cor-verde: #00796B;      /* Verde (Informação/Números) */
+    --cor-laranja: #FF7F50;    /* Laranja (Líder/Botões) */
+    --cor-rosa: #C71585;       /* Rosa (Romance/Subtítulos) */
+    --cor-amarelo: #FFC107;     /* Amarelo (Destaque Sutil) */
+    --cor-roxo: #9B59B6;        /* ROXO (Acento Surpresa) */
+    --cor-branco: #FFFFFF;
+
+    --fonte-titulo: 'Playfair Display', serif;
+    --fonte-corpo: 'Montserrat', sans-serif;
+}
+
+/* --- O FUNDO FLORAL FIXO (O JEITO CORRETO) --- */
+html {
+    background-color: var(--cor-fundo); /* Fundo Marfim aplicado ao HTML */
+    background-image: url('flores-laterais.png');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover; /* Faz a imagem cobrir a tela */
+    background-attachment: fixed; /* AS FLORES FICAM PARADAS */
+}
+
+/* --- Estilos Globais --- */
+body {
+    font-family: var(--fonte-corpo);
+    color: var(--cor-texto);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    
+    background-color: transparent; /* CORRIGIDO: O body não tem cor, o HTML tem */
+}
+
+/* O .container AGORA VAI CENTRALIZAR! */
+.container {
+    max-width: 900px; /* Sua largura preferida */
+    margin: 20px auto; /* O 'auto' VOLTA a funcionar */
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+    background-color: transparent; /* O container também não tem cor (ver passo abaixo) */
+}
+
+/* Agora, damos COR BRANCA APENAS aos cards (a área central) */
+.card {
+    background-color: var(--cor-branco);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Removido o H1 genérico, pois não o usamos mais no topo */
+h2 {
+    font-family: var(--fonte-titulo);
+}
+
+h2 {
+    font-size: 2.5rem;
+    border-bottom: 2px solid var(--cor-amarelo);
+    display: inline-block;
+    padding-bottom: 5px;
+    color: var(--cor-laranja);
+}
+
+/* --- Menu de Navegação (NÃO-FIXO) --- */
+.menu {
+    background-color: var(--cor-branco);
+    text-align: center;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    
+    /* Esta é a primeira coisa na página agora */
+    position: relative; 
+    z-index: 1000;
+}
+
+.menu a {
+    font-family: var(--fonte-corpo);
+    text-decoration: none;
+    color: var(--cor-verde);
+    margin: 0 1.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.menu a:hover {
+    color: var(--cor-rosa);
+}
+
+/* --- SEÇÃO DA CAPA (HERO) REMOVIDA --- */
+
+/* --- Rodapé --- */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    color: #777;
+    border-top: 1px solid #eee;
+    background-color: var(--cor-marfim); /* Damos cor ao rodapé */
+}
+
+/* Estilos de Locais, Presentes, Calendário, etc. */
+/* (O código a partir daqui é o mesmo da sua última versão, garantindo os estilos) */
+
+/* --- Estilos da Seção de Locais --- */
+.local-container {
+    display: flex;
+    justify-content: space-around;
+    text-align: left;
+    margin-top: 2.5rem;
+}
+.local-coluna {
+    width: 45%;
+    padding: 0 1rem;
+}
+.local-coluna h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.8rem;
+    color: var(--cor-rosa);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+.local-nome {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cor-verde);
+}
+.local-endereco {
+    font-size: 0.95rem;
+    color: var(--cor-texto);
+    line-height: 1.5;
+}
+
+/* --- Estilo Geral de Botão --- */
+.botao {
+    display: inline-block;
+    background-color: var(--cor-laranja);
+    color: var(--cor-branco);
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: var(--fonte-corpo);
+    font-weight: 700;
+    margin-top: 1rem;
+    transition: background-color 0.2s ease;
+}
+.botao:hover {
+    background-color: var(--cor-roxo);
+}
+
+/* --- Estilos da Seção de Presentes (Esteira) --- */
+.subtitulo-secao {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 600px;
+    margin: -1rem auto 2.5rem auto;
+}
+.presentes-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc var(--cor-fundo);
+}
+.presentes-container::-webkit-scrollbar { height: 8px; }
+.presentes-container::-webkit-scrollbar-track { background: #f1f1f1; }
+.presentes-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+.presente-item {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: left;
+    transition: box-shadow 0.2s ease;
+    flex: 0 0 300px;
+    width: 300px;
+    margin-right: 1.5rem;
+}
+.presente-item:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
+.presente-item h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.3rem;
+    color: var(--cor-texto);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+.presente-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.presente-preco {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 1.5rem;
+}
+.presente-item .botao {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* --- Seção PIX --- */
+.pix-container {
+    border-top: 1px dashed #ddd;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+}
+.pix-container h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.8rem;
+    color: var(--cor-verde);
+}
+.pix-qrcode { max-width: 200px; margin: 1rem auto; }
+.pix-chave {
+    font-size: 1.2rem;
+    color: var(--cor-amarelo);
+    font-weight: 700;
+}
+
+/* --- Estilos do Bloco de Calendário --- */
+.card-calendario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #eee;  
+}
+.calendario-col { padding: 0 2rem; }
+.calendario-col.info-lateral {
+    font-family: var(--fonte-corpo);
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+.calendario-col.data-principal {
+    border-left: 2px solid var(--cor-roxo);
+    border-right: 2px solid var(--cor-roxo);
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+.data-principal .mes {
+    display: block;
+    font-family: var(--fonte-corpo);
+    font-size: 1rem;
+    color: var(--cor-texto);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.data-principal .dia {
+    display: block;
+    font-family: var(--fonte-titulo);
+    font-size: 4.5rem;
+    color: var(--cor-verde);
+    line-height: 1;
+    margin: 0.5rem 0;
+}
+.data-principal .ano {
+    display: block;
+    font-family: var(--fonte-corpo);
+    font-size: 1.2rem;
+    color: var(--cor-texto);
+}
+
+/* --- Estilos do Contador Regressivo --- */
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+.countdown-item { text-align: center; }
+.countdown-numero {
+    font-family: var(--fonte-titulo);
+    font-size: 3rem;
+    color: var(--cor-verde);
+    display: block;
+    line-height: 1.1;
+}
+.countdown-label {
+    font-family: var(--fonte-corpo);
+    font-size: 0.8rem;
+    color: var(--cor-texto);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.countdown-finalizado {
+    font-family: var(--fonte-titulo);
+    font-size: 3rem;
+    color: var(--cor-rosa);
+}
+
+/* ============================================== */
+/* --- AJUSTES FINAIS PARA O CELULAR (BLOCO UNICO) --- */
+/* ============================================== */
+@media (max-width: 600px) {
+
+    /* No celular, remove o fundo floral */
+    html {
+        background-image: none;
+    }
+    
+    /* O Menu ROLA no celular */
+    .menu {
+        padding: 0.5rem 0;
+    }
+    .menu a {
+        display: block;
+        font-size: 0.95rem;
+        margin: 0.1rem 0; /* Mais compacto */
+    }
+
+    /* Ajuste Locais */
+    .local-container { flex-direction: column; }
+    .local-coluna { width: 100%; margin-bottom: 2rem; text-align: center; }
+    
+    /* FIX Calendário */
+    .calendario-col.info-lateral { display: none; }
+    .card-calendario { flex-direction: row; justify-content: center; }
+    .calendario-col.data-principal {
+        border-left: none;
+        border-right: none;
+        border-top: 2px solid var(--cor-roxo);
+        border-bottom: 2px solid var(--cor-roxo);
+        padding: 1.5rem 2.5rem;
+        margin: 0;
+    }
+    .data-principal .dia { font-size: 3.5rem; }
+
+    /* FIX Contador 2x2 */
+    .countdown-container { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+    .countdown-item { width: 40%; text-align: center; }
+    .countdown-numero { font-size: 2.5rem; }
+
+    /* FIX Esteira */
+    .presente-item { flex: 0 0 80vw; width: 80vw; }
+}
+
+/* ============================================== */
+/* --- Estilos da Sanfona (Collapsible) de Presentes --- */
+/* ============================================== */
+.sanfona-presentes {
+    border-top: 1px solid #eee;
+    margin-top: 2rem;
+}
+.sanfona-titulo::-webkit-details-marker { display: none; }
+.sanfona-titulo { display: block; list-style: none; }
+.sanfona-titulo {
+    display: block;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    font-family: var(--fonte-corpo);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-laranja);
+    background-color: #fdfdfd;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+.sanfona-titulo:hover { background-color: #f5f5ff; }
+.sanfona-titulo::after {
+    content: '+';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--cor-roxo);
+}
+.sanfona-presentes[open] > .sanfona-titulo::after { content: '–'; }
+.sanfona-conteudo { padding: 1rem 0 0 0; }
+
+/* ============================================== */
+/* --- Estilos da Seção RSVP (ETAPA 1) --- */
+/* ============================================== */
+.rsvp-container {
+    max-width: 500px;
+    margin: 2rem auto 0 auto;
+    text-align: left;
+}
+.rsvp-container label {
+    font-weight: 700;
+    color: var(--cor-verde);
+}
+.rsvp-input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-family: var(--fonte-corpo);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+}
+#rsvp-form .botao {
+    width: 100%;
+}
+.rsvp-message {
+    margin-top: 1rem;
+    font-weight: 700;
+    text-align: center;
+    visibility: hidden; 
+}
+.rsvp-message.loading {
+    visibility: visible;
+    color: #555;
+}
+.rsvp-message.error {
+    visibility: visible;
+    color: #D32F2F; /* Vermelho */
+}
+.rsvp-message.success {
+    visibility: visible;
+    color: var(--cor-verde);
+}
+.rsvp-confirmation {
+    margin-top: 2rem;
+    text-align: center;
+}
+.rsvp-boas-vindas {
+    font-size: 1.3rem;
+    color: var(--cor-texto);
+}
+.rsvp-boas-vindas span {
+    font-weight: 700;
+    color: var(--cor-rosa);
+}
+.botao-secundario {
+    background-color: #777;
+}
+.botao-secundario:hover {
+    background-color: #555;
+}
+/* No bloco :root */
+:root {
+    /* ... o resto das suas variáveis ... */
+    --fonte-cursiva: 'Dancing Script', cursive; /* NOVO: Adicione isto */
+}
+/* ============================================== */
+/* --- Estilos do Ponto Focal (Topo) --- */
+/* ============================================== */
+
+.ponto-focal-topo {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.monograma {
+    font-family: var(--fonte-corpo); /* NOVO: Fonte simples e elegante (Montserrat) */
+    font-size: 1.5rem; /* NOVO: Tamanho menor para ser um acento */
+    color: var(--cor-texto); /* NOVO: Cor Grafite suave */
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.monograma-coracao {
+    color: var(--cor-rosa); /* Coração em Rosa (Romance) */
+}
+
+.nomes-cursivos {
+    font-family: var(--fonte-titulo); /* NOVO: Usa a Playfair Display (a fonte do H2) */
+    font-size: 3rem; /* NOVO: Tamanho GIGANTE para chamar a atenção */
+    color: var(--cor-laranja); /* Laranja para o nome principal */
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.nossos-dias {
+    font-family: var(--fonte-corpo);
+    font-size: 0.9rem;
+    color: var(--cor-texto);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* --- Ajuste da Margem no Celular --- */
+@media (max-width: 600px) {
+    .monograma {
+        font-size: 1.2rem;
+    }
+    .nomes-cursivos {
+        font-size: 2rem; /* Menor no celular */
+    }
+}

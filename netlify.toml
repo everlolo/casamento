@@ -1,0 +1,9 @@
+# Resolução de CORS com Proxy Netlify
+
+[[redirects]]
+  # Quando o JavaScript chama /api/rsvp, o Netlify intercepta...
+  from = "/api/rsvp/*"
+  # ...e reescreve o destino para o endereço do seu N8N.
+  to = "https://everlolo-8nll.duckdns.org/:splat"
+  status = 200
+  force = true
