@@ -14,14 +14,14 @@
     --fonte-corpo: 'Montserrat', sans-serif;
 }
 
-/* --- O FUNDO FLORAL FIXO (O JEITO CORRETO) --- */
+/* --- FUNDO FLORAL FIXO (VERSÃO MELHORADA) --- */
 html {
-    background-color: var(--cor-fundo); /* Fundo Marfim aplicado ao HTML */
-    background-image: url('flores-laterais.png');
-    background-repeat: no-repeat;
+    background-color: #faf8f5; /* tom off-white suave */
+    background-image: url('/assets/fundo-casamento.png'); /* sua nova imagem */
+    background-repeat: repeat-y; /* repete verticalmente na rolagem */
     background-position: center top;
-    background-size: cover; /* Faz a imagem cobrir a tela */
-    background-attachment: fixed; /* AS FLORES FICAM PARADAS */
+    background-size: cover; /* cobre toda a largura */
+    background-attachment: fixed; /* flores paradas, conteúdo rola */
 }
 
 /* --- Estilos Globais --- */
@@ -613,4 +613,5 @@ footer {
 #confetti-container{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:9999; }
 .confetti{ position:absolute; width:10px; height:14px; opacity:.92; animation:confetti-fall linear forwards; }
 @keyframes confetti-fall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.95; } }
+
 
