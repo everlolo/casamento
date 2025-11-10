@@ -2,7 +2,7 @@
 // --- COLA AQUI A URL DA SUA API DO GOOGLE APPS SCRIPT (GAS) ---
 // ====================================================================
 // Cole AQUI a URL que você copiou do Google Apps Script (Web app URL)
-const WEBHOOK_URL_GAS = 'https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec'; 
+const WEBHOOK_URL_GAS = '/api/rsvp';
 
 // Variáveis do Contador de Tempo (Mantidas do seu código original)
 const diasEl = document.getElementById('dias');
@@ -133,3 +133,4 @@ checkNomeBtn.addEventListener('click', () => {
     btnSim.disabled = false;
     btnNao.disabled = false;
 });
+
