@@ -7,6 +7,7 @@
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/assets/fundo-casamento.webp" type="image/webp">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -22,7 +23,7 @@
   <!-- HERO / HOME -->
   <header id="home" class="hero">
     <h1 class="noivos">Everton &amp; Caroline</h1>
-    <p class="frase">28 de dezembro de 2025 — 18:00</p>
+    <p class="frase">25 de julho de 2026 — 09:30</p>
 
     <div id="contador" class="contador">
       <div class="timebox"><span id="dias">00</span><small>dias</small></div>
@@ -51,7 +52,7 @@
         <div class="local-card">
           <h3>Pesqueiro Campestre</h3>
           <p class="sub">A partir das 11:30</p>
-          <p>BR-473, Estrada Nova Andradina sentido Angelica, km 1,5 — Nova Andradina/MS</p>
+          <p>BR-473, Estrada Nova Andradina sentido Angélica, km 1,5 — Nova Andradina/MS</p>
           <a class="btn btn-roxo" target="_blank" href="https://maps.google.com/?q=Pesqueiro+Campestre+Nova+Andradina+MS">
             Ver no Google Maps
           </a>
@@ -70,45 +71,48 @@
         </p>
       </details>
 
-      <div class="carrossel">
-        <div class="presente">
-          <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=640&auto=format&fit=crop" alt="Liquidificador">
-          <h4>Liquidificador</h4>
-          <p class="valor">Valor referência: R$ 199,00</p>
-          <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
+      <div class="carrossel-wrap">
+        <button class="seta esquerda" aria-label="rolar para esquerda">‹</button>
+
+        <div class="carrossel" id="carrossel-presentes" tabindex="0" aria-label="lista de presentes">
+          <div class="presente">
+            <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=640&auto=format&fit=crop" alt="Liquidificador">
+            <h4>Liquidificador</h4>
+            <p class="valor">Valor referência: R$ 199,00</p>
+            <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
+          </div>
+
+          <div class="presente">
+            <img src="https://images.unsplash.com/photo-1601447182659-722fdce0f7b2?q=80&w=640&auto=format&fit=crop" alt="Jogo de Jantar">
+            <h4>Jogo de Jantar</h4>
+            <p class="valor">Valor referência: R$ 349,00</p>
+            <a class="btn btn-amarelo" href="#" target="_blank">Comprar na Loja</a>
+          </div>
+
+          <div class="presente">
+            <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
+            <h4>Panela</h4>
+            <p class="valor">Valor referência: R$ 259,00</p>
+            <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
+          </div>
+
+          <!-- Exemplos adicionais -->
+          <div class="presente">
+            <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=640&auto=format&fit=crop" alt="Jogo de Toalhas">
+            <h4>Jogo de Toalhas</h4>
+            <p class="valor">Valor referência: R$ 189,00</p>
+            <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
+          </div>
+
+          <div class="presente">
+            <img src="https://images.unsplash.com/photo-1582582621959-48d3a8d24b9e?q=80&w=640&auto=format&fit=crop" alt="Cafeteira">
+            <h4>Cafeteira</h4>
+            <p class="valor">Valor referência: R$ 329,00</p>
+            <a class="btn btn-laranja" href="#" target="_blank">Comprar na Loja</a>
+          </div>
         </div>
 
-        <div class="presente">
-          <img src="https://images.unsplash.com/photo-1601447182659-722fdce0f7b2?q=80&w=640&auto=format&fit=crop" alt="Jogo de Jantar">
-          <h4>Jogo de Jantar</h4>
-          <p class="valor">Valor referência: R$ 349,00</p>
-          <a class="btn btn-amarelo" href="#" target="_blank">Comprar na Loja</a>
-        </div>
-
-        <div class="presente">
-          <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
-          <h4>Panela</h4>
-          <p class="valor">Valor referência: R$ 259,00</p>
-          <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
-        </div>
-        <div class="presente">
-          <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
-          <h4>Panela</h4>
-          <p class="valor">Valor referência: R$ 259,00</p>
-          <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
-        </div>
-        <div class="presente">
-          <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
-          <h4>Panela</h4>
-          <p class="valor">Valor referência: R$ 259,00</p>
-          <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
-        </div>
-        <div class="presente">
-          <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
-          <h4>Panela</h4>
-          <p class="valor">Valor referência: R$ 259,00</p>
-          <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
-        </div>
+        <button class="seta direita" aria-label="rolar para direita">›</button>
       </div>
     </section>
 
@@ -117,9 +121,14 @@
       <h2 class="titulo-secao">Confirme sua presença</h2>
 
       <div class="rsvp-linha">
-        <label for="nomeInput" class="label">Seu nome na lista</label>
-        <input id="nomeInput" type="text" class="input" placeholder="Digite seu nome completo" />
-        <button id="checkNomeBtn" class="btn btn-principal">Verificar nome</button>
+        <div class="col">
+          <label for="nomeInput" class="label">Seu nome na lista</label>
+          <input id="nomeInput" type="text" class="input" placeholder="Digite seu nome completo" />
+        </div>
+        <div class="col col-botao">
+          <label class="label sr-only">Verificar</label>
+          <button id="checkNomeBtn" class="btn btn-principal w-100">Verificar nome</button>
+        </div>
       </div>
 
       <p id="rsvp-message" class="rsvp-message"></p>
@@ -127,8 +136,8 @@
       <div id="rsvp-confirmation-area" class="confirm-area">
         <p class="confirm-pergunta">Olá, <strong id="convidado-nome"></strong> — você poderá comparecer?</p>
         <div class="botoes">
-          <button id="btnSim" class="btn btn-sucesso" disabled>Sim, estarei presente</button>
-          <button id="btnNao" class="btn btn-contraste" disabled>Não poderei ir</button>
+          <button id="btnSim" class="btn btn-sucesso">Sim, estarei presente</button>
+          <button id="btnNao" class="btn btn-contraste">Não poderei ir</button>
         </div>
       </div>
     </section>
@@ -148,4 +157,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
