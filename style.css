@@ -376,4 +376,24 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 }
 .seta:hover{ color:#3a3a3a; }
 
+/* HOVER com troca de cor na paleta do casamento */
+.btn-principal:hover,
+.btn-sucesso:hover {          /* ex.: “Verificar nome” e “Sim, estarei presente” */
+  --bg:#fb8c00;               /* laranja */
+  --bg2:#e67d00;
+}
+
+.btn-rosa:hover,              /* ex.: “Não poderei ir” */
+.btn-contraste:hover {
+  --bg:#e76b83;               /* rosa */
+  --bg2:#d55b72;
+}
+
+/* Se quiser que os botões dos presentes também mudem para laranja no hover */
+#presentes .btn:hover {
+  --bg:#fb8c00;
+  --bg2:#e67d00;
+}
+
+
 
