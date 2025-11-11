@@ -395,5 +395,128 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   --bg2:#e67d00;
 }
 
+/* =========================
+   Nomes dos noivos (cor sutil, elegante)
+========================= */
+.noivos{
+  text-align:center;
+  font-family: "Cormorant Garamond", serif; /* ou a sua fonte de títulos */
+  font-weight: 700;
+  font-size: clamp(36px, 4.6vw, 64px);
+  line-height: 1.1;
+  margin: 22px 0 12px;
+  letter-spacing: .6px;
+}
+.noiva, .noivo{
+  background: linear-gradient(90deg, #6f42c1 0%, #fb8c00 35%, #e76b83 70%, #2e7d32 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: saturate(.92);
+}
+.noivos .e{
+  margin: 0 .35em;
+  color: #8a806f; /* neutro */
+}
+
+/* =========================
+   Data com destaque sofisticado
+========================= */
+.data-badge{
+  display:inline-flex;
+  align-items:center;
+  gap: 14px;
+  padding: 10px 16px;
+  border-radius: 18px;
+  background: #fffdf9;
+  border: 1px solid #f0e3cd;
+  box-shadow: 0 12px 26px rgba(0,0,0,.06);
+  margin: 0 auto 16px;
+}
+.data-badge .dia{
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 42px;
+  color: #6d675f;
+  line-height:1;
+}
+.data-badge .miolo{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding: 0 10px;
+  border-left: 2px solid #e9d9bd;
+  border-right: 2px solid #e9d9bd;
+}
+.data-badge .mes{
+  font-size: 13px;
+  letter-spacing: 2.5px;
+  color:#8a806f;
+}
+.data-badge .ano{
+  font-weight:700;
+  color:#6d675f;
+  font-size: 16px;
+}
+.data-badge .hora{
+  font-weight:700;
+  color:#2e7d32; /* verde da paleta */
+}
+
+/* =========================
+   Hovers por CONTEXTO
+========================= */
+
+/* Locais / Google Maps — amarelo no hover */
+#cerimonia .btn,
+#festa .btn,
+.local-card .btn,
+.btn-maps {
+  /* nada aqui: usa sua base .btn */
+}
+#cerimonia .btn:hover,
+#festa .btn:hover,
+.local-card .btn:hover,
+.btn-maps:hover {
+  --bg:#f5c045;   /* amarelo */
+  --bg2:#e3b53a;
+  --txt:#3b2f0a;
+}
+
+/* Lista de Presentes — laranja no hover */
+#presentes .btn,
+.btn-presentes {
+  /* base mantém */
+}
+#presentes .btn:hover,
+.btn-presentes:hover {
+  --bg:#fb8c00;  /* laranja */
+  --bg2:#e67d00;
+}
+
+/* RSVP — rosa no hover (Verificar, Sim, Não) */
+#rsvp .btn,
+.btn-rsvp {
+  /* base mantém */
+}
+#rsvp .btn:hover,
+.btn-rsvp:hover,
+.btn-sim:hover,
+.btn-nao:hover,
+.btn-verificar:hover {
+  --bg:#e76b83;   /* rosa */
+  --bg2:#d55b72;
+}
+
+/* Caso algum botão específico precise forçar uma variante: */
+.btn-sim    { /* “Sim, estarei presente” */ }
+.btn-nao    { /* “Não poderei ir” */ }
+.btn-verificar { /* “Verificar nome” */ }
+
+/* Ajuste de ícones (se usar) */
+.btn .icon{ font-size: 18px; line-height:0; }
+
+
+
 
 
