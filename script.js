@@ -48,30 +48,41 @@ const diasEl = document.getElementById('dias');
 const horasEl = document.getElementById('horas');
 const minutosEl = document.getElementById('minutos');
 const segundosEl = document.getElementById('segundos');
-// DATA CORRETA:
-const dataFinal = new Date('July 25, 2026 09:30:00').getTime();
+// DATA CORRETA (ISO evita problemas de fuso):
+const dataFinal = new Date('2026-07-25T09:30:00').getTime();
+
+// se existir um bloco de "segundos" no HTML, esconda-o uma vez
+(function ocultarSegundos() {
+  if (typeof segundosEl !== 'undefined' && segundosEl) {
+    const card = segundosEl.closest?.('.count-card') || segundosEl.parentElement;
+    if (card) card.style.display = 'none';
+  }
+})();
 
 function countdown() {
-  const agora = new Date().getTime();
+  const agora = Date.now();
   const distancia = dataFinal - agora;
 
-  const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-  const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-  const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-  if (diasEl)    diasEl.textContent    = dias    < 10 ? '0' + dias    : String(dias);
-  if (horasEl)   horasEl.textContent   = horas   < 10 ? '0' + horas   : String(horas);
-  if (minutosEl) minutosEl.textContent = minutos < 10 ? '0' + minutos : String(minutos);
-  if (segundosEl)segundosEl.textContent= segundos< 10 ? '0' + segundos: String(segundos);
-
-  if (distancia < 0) {
+  if (distancia <= 0) {
     clearInterval(x);
-    const c = document.getElementById("contador");
-    if (c) c.innerHTML = "O GRANDE DIA CHEGOU!";
+    const c = document.getElementById('contador');
+    if (c) c.innerHTML = 'O GRANDE DIA CHEGOU! ✨';
+    return;
   }
+
+  const dias    = Math.floor(distancia / (1000 * 60 * 60 * 24));
+  const horas   = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (diasEl)    diasEl.textContent    = dias   < 10 ? '0' + dias    : String(dias);
+  if (horasEl)   horasEl.textContent   = horas  < 10 ? '0' + horas   : String(horas);
+  if (minutosEl) minutosEl.textContent = minutos< 10 ? '0' + minutos : String(minutos);
 }
-const x = setInterval(countdown, 1000);
+
+// atualiza imediatamente e depois a cada 1 minuto
+countdown();
+const x = setInterval(countdown, 60_000);
+
 
 /* ================== SMOOTH SCROLL NAV ================== */
 document.querySelectorAll('.topbar a[href^="#"]').forEach(a=>{
@@ -242,5 +253,6 @@ if (checkNomeBtn) {
     await processarRSVP('Verificar');
   });
 }
+
 
 
