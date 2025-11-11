@@ -311,5 +311,28 @@ if (checkNomeBtn) {
 })();
 
 
+// Navegação do carrossel (mantendo sua estrutura)
+(() => {
+  const trilho = document.getElementById('carrossel-presentes');
+  const btnEsq = document.querySelector('.seta.esquerda');
+  const btnDir = document.querySelector('.seta.direita');
+  if (!trilho || !btnEsq || !btnDir) return;
+
+  const passo = () => Math.round(trilho.clientWidth * 0.9);
+
+  btnDir.addEventListener('click', () => {
+    trilho.scrollBy({ left:  passo(), behavior: 'smooth' });
+  });
+  btnEsq.addEventListener('click', () => {
+    trilho.scrollBy({ left: -passo(), behavior: 'smooth' });
+  });
+
+  // Snap com teclado (acessibilidade)
+  trilho.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') btnDir.click();
+    if (e.key === 'ArrowLeft')  btnEsq.click();
+  });
+})();
+
 
 
