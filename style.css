@@ -1,3 +1,6 @@
+* {
+  transition: all 0.25s ease-in-out;
+}
 /* =========================
    VARS & RESET
 ========================= */
@@ -22,6 +25,82 @@
 html, body { margin:0; padding:0; }
 img { max-width:100%; display:block; }
 button { cursor:pointer; border:none; }
+
+/* ===== 3) LISTA DE PRESENTES: scroll-snap + barra elegante ===== */
+.gifts-wrapper {
+  overflow-x: auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(85vw, 360px);
+  gap: 1rem;
+  padding: .25rem .25rem .75rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gifts-wrapper > * {
+  scroll-snap-align: start;
+}
+
+/* Barra de rolagem discreta */
+.gifts-wrapper::-webkit-scrollbar { height: 10px; }
+.gifts-wrapper::-webkit-scrollbar-track {
+  background: rgba(0,0,0,.04);
+  border-radius: 999px;
+}
+.gifts-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.18);
+  border-radius: 999px;
+}
+.gifts-wrapper:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,.28); }
+
+/* Botões de navegação laterais (se já existem, ganham estilo) */
+.gift-nav {
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: var(--cor-branco);
+  display: grid; place-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+.gift-nav:hover { transform: translateY(-2px); }
+
+/* ===== 4) TÍTULOS: sublinhado animado quando entram na tela ===== */
+.section-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: .35rem;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--cor-laranja), var(--cor-rosa));
+  border-radius: 999px;
+  transition: width .6s ease;
+}
+.section-title.revealed::after { width: 100%; }
+
+/* ===== 5) MICRO-ANIMAÇÕES: cards sobem levemente no hover ===== */
+.card, .gift-card, .present-card {
+  transition: transform .2s ease, box-shadow .2s ease;
+  will-change: transform;
+}
+.card:hover, .gift-card:hover, .present-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(0,0,0,.08);
+}
+/* Imagem cresce 3% no hover (sutil) */
+.card img, .gift-card img, .present-card img {
+  transition: transform .25s ease;
+}
+.card:hover img, .gift-card:hover img, .present-card:hover img {
+  transform: scale(1.03);
+}
+
+
+
 
 /* =========================
    FUNDO + MOLDURA FLORAL
@@ -562,6 +641,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   animation: fadeIn 1.2s ease forwards;
   animation-delay: 0.2s;
 }
+
 
 
 
