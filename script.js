@@ -281,7 +281,34 @@ if (checkNomeBtn) {
   }catch(e){ /* silencioso */ }
 })();
 
+// 4) Títulos com sublinhado animado (IntersectionObserver)
+(() => {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) e.target.classList.add('revealed');
+  }, { threshold: 0.6 });
 
+  document.querySelectorAll('.section-title').forEach(el => io.observe(el));
+})();
+
+
+// 3) Navegação por setas na lista de presentes
+(() => {
+  const track = document.querySelector('.gifts-wrapper');
+  if (!track) return;
+
+  const prev = document.querySelector('.gift-prev');
+  const next = document.querySelector('.gift-next');
+
+  const step = () => Math.max(track.clientWidth * 0.9, 320);
+
+  prev?.addEventListener('click', () => {
+    track.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+
+  next?.addEventListener('click', () => {
+    track.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+})();
 
 
 
