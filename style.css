@@ -516,6 +516,42 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 /* Ajuste de ícones (se usar) */
 .btn .icon{ font-size: 18px; line-height:0; }
 
+/* Centralização base do site */
+.container{ max-width: 1100px; margin: 0 auto; padding: 0 18px; }
+
+/* HERO */
+.hero{ text-align:center; margin: 28px auto 12px; }
+.noivos{
+  font-family: "Playfair Display", serif;      /* fonte elegante */
+  font-weight: 700;
+  font-size: clamp(36px, 4.6vw, 66px);
+  line-height: 1.08;
+  letter-spacing: .4px;
+  margin: 6px 0 10px;
+}
+.noiva{ color:#e76b83; }   /* rosa sólido (paleta) */
+.noivo{ color:#2e7d32; }   /* verde sólido (paleta) */
+.noivos .e{ color:#fb8c00; margin: 0 .4em; } /* laranja */
+
+/* Data “badge” */
+.data-badge{
+  display:inline-flex; align-items:center; gap:14px;
+  padding: 10px 16px; border-radius:18px;
+  background:#fffdf9; border:1px solid #f0e3cd;
+  box-shadow: 0 12px 26px rgba(0,0,0,.06);
+}
+.data-badge .dia{
+  font-family:"Playfair Display", serif; font-weight:700;
+  font-size: 42px; color:#6d675f; line-height:1;
+}
+.data-badge .miolo{
+  display:flex; flex-direction:column; align-items:center;
+  padding:0 10px; border-left:2px solid #e9d9bd; border-right:2px solid #e9d9bd;
+}
+.data-badge .mes{ font-size:13px; letter-spacing:2.4px; color:#8a806f; }
+.data-badge .ano{ font-weight:700; color:#6d675f; font-size:16px; }
+.data-badge .hora{ font-weight:700; color:#2e7d32; }
+
 
 
 
