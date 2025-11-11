@@ -203,21 +203,17 @@ body{
 .seta.esquerda{ left:-10px; }
 .seta.direita{ right:-10px; }
 
-/* RSVP */
-.rsvp-linha{
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 12px;
-  align-items: end;
-  margin-bottom: 12px;
-}
-.rsvp-linha .col{ display:flex; flex-direction:column; }
-.rsvp-linha .col-botao{ align-self:stretch; }
-.w-100{ width:100%; }
+/* Dentro dos cards de presente, o botão ocupa a base e 100% da largura */
+.presente{ display:flex; flex-direction:column; }
+.presente .btn{ margin-top:auto; width:100%; }
 
-.label{ font-weight:600; margin-bottom:6px; }
+.local-card .btn{ width: fit-content; } /* ou width:100% se preferir */
+
+
+
+/* Inputs */
 .input{
-  height: 44px;
+  height: 48px;                 /* mesma altura do .btn */
   padding: 10px 12px;
   border: 1px solid #e7d8bf;
   border-radius: 12px;
@@ -230,34 +226,71 @@ body{
   box-shadow: 0 0 0 3px rgba(216,191,152,.25);
 }
 
-.confirm-area{
-  display: none;
-  margin-top: 12px;
+/* Linha do RSVP (mantém seu grid) */
+.rsvp-linha{
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 12px;
 }
-.confirm-pergunta{ margin: 0 0 10px; font-weight:600; }
+@media (max-width: 640px){
+  .rsvp-linha{ grid-template-columns: 1fr; }
+  .col-botao .btn{ width:100%; }
+}
 
-/* Botões (paleta) */
-.btn{
-  --bg: #2e7d32; --bg2: #3e8d42; --txt: #fff;
-  height: 44px; padding: 0 16px; border-radius: 12px; color: var(--txt);
+/* =========================
+   BOTÕES — look & feel único
+========================= */
+.btn,
+a.btn {
+  --bg: #2e7d32;          /* cor principal (muda nas variantes) */
+  --bg2: #3e8d42;
+  --txt: #fff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+
+  min-height: 48px;        /* altura padrão */
+  padding: 0 18px;
+  border: 0;
+  border-radius: 14px;
+
   background: linear-gradient(180deg, var(--bg), var(--bg2));
-  box-shadow: 0 6px 14px rgba(0,0,0,.08);
-  transition: transform .05s ease, box-shadow .2s ease, filter .2s;
-  font-weight: 700; letter-spacing: .2px;
+  color: var(--txt);
+  text-decoration: none;    /* garante que <a> não sublinhe */
+  font-family: inherit;     /* mesma fonte do site */
+  font-weight: 700;
+  letter-spacing: .2px;
+
+  box-shadow: 0 10px 18px rgba(0,0,0,.08);
+  transition: transform .05s ease, box-shadow .2s ease, filter .2s ease;
 }
-.btn:hover{ filter: brightness(1.03); box-shadow: 0 10px 20px rgba(0,0,0,.10); }
-.btn:active{ transform: translateY(1px); }
-.btn:disabled{ opacity:.6; cursor:not-allowed; }
+.btn:hover,
+a.btn:hover { filter: brightness(1.03); box-shadow: 0 14px 24px rgba(0,0,0,.12); }
+.btn:active,
+a.btn:active { transform: translateY(1px); }
+.btn:disabled,
+a.btn:disabled { opacity:.6; cursor:not-allowed; }
 
-.btn-principal{ --bg:#2e7d32; --bg2:#3e8d42; }      /* verde */
-.btn-sucesso{ --bg:#2e7d32; --bg2:#3e8d42; }
-.btn-contraste{ --bg:#e76b83; --bg2:#d55b72; }      /* rosa */
-.btn-roxo{ --bg:#6f42c1; --bg2:#5b34a6; }
-.btn-amarelo{ --bg:#f5c045; --bg2:#e3ae35; color:#3b2f0a; }
-.btn-rosa{ --bg:#e76b83; --bg2:#d55b72; }
-.btn-laranja{ --bg:#fb8c00; --bg2:#e67d00; }
+/* Variantes na paleta do casamento */
+.btn-principal { --bg:#2e7d32; --bg2:#3e8d42; }   /* verde */
+.btn-sucesso   { --bg:#2e7d32; --bg2:#3e8d42; }
+.btn-contraste { --bg:#e76b83; --bg2:#d55b72; }   /* rosa */
+.btn-roxo      { --bg:#6f42c1; --bg2:#5b34a6; }
+.btn-amarelo   { --bg:#f5c045; --bg2:#e3b53a; --txt:#3b2f0a; }
+.btn-rosa      { --bg:#e76b83; --bg2:#d55b72; }
+.btn-laranja   { --bg:#fb8c00; --bg2:#e67d00; }
 
-.botoes{ display:flex; gap:10px; flex-wrap:wrap; }
+/* Tamanhos opcionais (se quiser usar no futuro) */
+.btn-sm { min-height: 40px; padding: 0 14px; border-radius: 12px; }
+.btn-lg { min-height: 54px; padding: 0 22px; border-radius: 16px; }
+
+/* Preenche a largura do container (usada nos cards) */
+.btn-block { width: 100%; }
+
 
 /* Mensagens RSVP */
 .rsvp-message{
@@ -289,3 +322,4 @@ body{
 @media (max-width: 900px){
   .grid-2{ grid-template-columns: 1fr; }
 }
+
