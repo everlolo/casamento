@@ -219,4 +219,52 @@ async function processarRSVP(resposta) {
   }
 }
 
+// ===== ELEMENTOS (ajuste aqui se seus IDs mudarem) =====
+const checkNomeBtn      = document.getElementById('checkNomeBtn');
+const btnSim            = document.getElementById('btnSim');
+const btnNao            = document.getElementById('btnNao');
+const nomeInput         = document.getElementById('nomeInput');
+const rsvpMessage       = document.getElementById('rsvp-message');
+const confirmationArea  = document.getElementById('rsvp-confirmation-area');
+
+// Garante estado inicial
+if (confirmationArea) confirmationArea.style.display = 'none';
+
+// ===== BINDINGS de clique =====
+function bindRSVP(){
+  if (!checkNomeBtn || !btnSim || !btnNao || !nomeInput) return;
+
+  // Verificar nome
+  checkNomeBtn.onclick = () => {
+    const nome = nomeInput.value.trim();
+    if (!nome){
+      rsvpMessage.textContent = 'Por favor, digite seu nome completo.';
+      rsvpMessage.className = 'rsvp-message error';
+      return;
+    }
+    // chama verificação (o GAS vai validar e responder “nome_encontrado”)
+    processarRSVP('Verificar');
+    // prepara UI
+    confirmationArea.style.display = 'block';
+    rsvpMessage.textContent = 'Nome verificado. Confirme sua presença:';
+    rsvpMessage.className = 'rsvp-message info';
+  };
+
+  // Confirmar / Recusar
+  btnSim.onclick = () => processarRSVP('Confirmado');
+  btnNao.onclick = () => processarRSVP('Recusado');
+
+  // Enter no input = verificar nome
+  nomeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter'){
+      e.preventDefault();
+      checkNomeBtn.click();
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', bindRSVP);
+
+
+
 
