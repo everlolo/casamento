@@ -1,159 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Everton & Caroline</title>
+  <title>Caroline & Everton | Nosso Casamento</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="/assets/fundo-casamento.webp" type="image/webp">
+  <!-- Preload de fontes para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Cantos florais (top/bottom) -->
+  <div class="corner floral top-left" aria-hidden="true"></div>
+  <div class="corner floral top-right" aria-hidden="true"></div>
+  <div class="corner floral bottom-left" aria-hidden="true"></div>
+  <div class="corner floral bottom-right" aria-hidden="true"></div>
 
-  <!-- Navegação fixa -->
-  <nav class="topbar">
-    <a href="#home">Home</a>
-    <a href="#cerimonia">Cerimônia e Festa</a>
-    <a href="#presentes">Lista de Presentes</a>
-    <a href="#rsvp">Confirmar Presença</a>
-  </nav>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="#topo">C♡E</a>
+      <ul>
+        <li><a href="#topo">Home</a></li>
+        <li><a href="#cerimonia">Cerimônia e Festa</a></li>
+        <li><a href="#presentes">Lista de Presentes</a></li>
+        <li><a href="#rsvp">Confirmar Presença</a></li>
+      </ul>
+    </nav>
 
-  <!-- HERO / HOME -->
-  <header id="home" class="hero">
-    <h1 class="noivos">Everton &amp; Caroline</h1>
-    <p class="frase">25 de julho de 2026 — 09:30</p>
+    <section id="topo" class="hero">
+      <h1 class="couple">
+        <span class="name">Caroline</span>
+        <span class="amp">&amp;</span>
+        <span class="name">Everton</span>
+      </h1>
 
-    <div id="contador" class="contador">
-      <div class="timebox"><span id="dias">00</span><small>dias</small></div>
-      <div class="timebox"><span id="horas">00</span><small>horas</small></div>
-      <div class="timebox"><span id="minutos">00</span><small>min</small></div>
-      <div class="timebox"><span id="segundos">00</span><small>seg</small></div>
-    </div>
+      <div class="date-badges">
+        <div class="badge day">25</div>
+        <div class="badge month">
+          <small>JULHO</small>
+          <strong>2026</strong>
+        </div>
+        <div class="badge time">09:30</div>
+      </div>
+
+      <div class="countdown" role="timer" aria-live="polite">
+        <div class="cd-item">
+          <div id="cd-dias" class="cd-value">—</div>
+          <div class="cd-label">dias</div>
+        </div>
+        <div class="cd-item">
+          <div id="cd-horas" class="cd-value">—</div>
+          <div class="cd-label">horas</div>
+        </div>
+        <div class="cd-item">
+          <div id="cd-min" class="cd-value">—</div>
+          <div class="cd-label">min</div>
+        </div>
+      </div>
+    </section>
   </header>
 
-  <main class="conteudo">
-
+  <main class="page">
     <!-- CERIMÔNIA E FESTA -->
-    <section id="cerimonia" class="card">
-      <h2 class="titulo-secao">Cerimônia e Festa</h2>
+    <section id="cerimonia" class="section">
+      <h2 class="section-title">Cerimônia e Festa</h2>
 
-      <div class="grid-2">
-        <div class="local-card">
-          <h3>Capela Santa Terezinha</h3>
-          <p class="sub">Às 09:30</p>
+      <div class="cards grid-2">
+        <article class="card">
+          <h3 class="card-title">Capela Santa Terezinha</h3>
+          <p class="card-sub"><span class="badge-soft">Às 09:30</span></p>
           <p>R. Hermenegildo Bianchi, 559 — Santa Terezinha, Nova Andradina/MS</p>
-          <a class="btn btn-laranja" target="_blank" href="https://maps.google.com/?q=R.+Hermenegildo+Bianchi,+559,+Nova+Andradina,+MS">
-            Ver no Google Maps
+          <a class="btn btn-maps" target="_blank" rel="noopener"
+             href="https://maps.google.com/?q=R.%20Hermenegildo%20Bianchi,%20559%20-%20Santa%20Terezinha,%20Nova%20Andradina/MS">
+            <span class="pin" aria-hidden="true">📍</span> Ver no Google Maps
           </a>
-        </div>
+        </article>
 
-        <div class="local-card">
-          <h3>Pesqueiro Campestre</h3>
-          <p class="sub">A partir das 11:30</p>
+        <article class="card">
+          <h3 class="card-title">Pesqueiro Campestre</h3>
+          <p class="card-sub"><span class="badge-soft">A partir das 11:30</span></p>
           <p>BR-473, Estrada Nova Andradina sentido Angélica, km 1,5 — Nova Andradina/MS</p>
-          <a class="btn btn-roxo" target="_blank" href="https://maps.google.com/?q=Pesqueiro+Campestre+Nova+Andradina+MS">
-            Ver no Google Maps
+          <a class="btn btn-maps" target="_blank" rel="noopener"
+             href="https://maps.google.com/?q=BR-473,%20Estrada%20Nova%20Andradina%20Ang%C3%A9lica%20km%201,5">
+            <span class="pin" aria-hidden="true">📍</span> Ver no Google Maps
           </a>
-        </div>
+        </article>
       </div>
     </section>
 
     <!-- LISTA DE PRESENTES -->
-    <section id="presentes" class="card">
-      <h2 class="titulo-secao">Lista de Presentes</h2>
-
-      <details class="lista-detalhes">
+    <section id="presentes" class="section">
+      <h2 class="section-title">Lista de Presentes</h2>
+      <details class="sug">
         <summary>Clique aqui para ver nossas sugestões e cotas</summary>
-        <p class="subtle">
-          Preparamos algumas sugestões com muito carinho para quem quiser nos presentear!
-        </p>
       </details>
 
-      <div class="carrossel-wrap">
-        <button class="seta esquerda" aria-label="rolar para esquerda">‹</button>
+      <div class="carousel">
+        <button class="car-arrow left" aria-label="Itens anteriores">‹</button>
 
-        <div class="carrossel" id="carrossel-presentes" tabindex="0" aria-label="lista de presentes">
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=640&auto=format&fit=crop" alt="Liquidificador">
-            <h4>Liquidificador</h4>
-            <p class="valor">Valor referência: R$ 199,00</p>
-            <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
-          </div>
+        <div class="car-track" id="carTrack" aria-live="polite">
+          <!-- Item 1 -->
+          <article class="gift card">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1600180758890-6b94519a8baa?q=80&w=1200&auto=format&fit=crop" alt="Liquidificador" />
+            <div class="gift-body">
+              <h3>Liquidificador</h3>
+              <p class="gift-ref">Valor referência: R$ 199,00</p>
+              <a class="btn btn-gift" target="_blank" rel="noopener" href="#">Comprar na Loja</a>
+            </div>
+          </article>
 
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1601447182659-722fdce0f7b2?q=80&w=640&auto=format&fit=crop" alt="Jogo de Jantar">
-            <h4>Jogo de Jantar</h4>
-            <p class="valor">Valor referência: R$ 349,00</p>
-            <a class="btn btn-amarelo" href="#" target="_blank">Comprar na Loja</a>
-          </div>
+          <!-- Item 2 -->
+          <article class="gift card">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1582582494700-1bfdcba2bbd3?q=80&w=1200&auto=format&fit=crop" alt="Jogo de Jantar" />
+            <div class="gift-body">
+              <h3>Jogo de Jantar</h3>
+              <p class="gift-ref">Valor referência: R$ 349,00</p>
+              <a class="btn btn-gift" target="_blank" rel="noopener" href="#">Comprar na Loja</a>
+            </div>
+          </article>
 
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
-            <h4>Panela</h4>
-            <p class="valor">Valor referência: R$ 259,00</p>
-            <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
-          </div>
-
-          <!-- Exemplos adicionais -->
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=640&auto=format&fit=crop" alt="Jogo de Toalhas">
-            <h4>Jogo de Toalhas</h4>
-            <p class="valor">Valor referência: R$ 189,00</p>
-            <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
-          </div>
-
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1582582621959-48d3a8d24b9e?q=80&w=640&auto=format&fit=crop" alt="Cafeteira">
-            <h4>Cafeteira</h4>
-            <p class="valor">Valor referência: R$ 329,00</p>
-            <a class="btn btn-laranja" href="#" target="_blank">Comprar na Loja</a>
-          </div>
+          <!-- Item 3 -->
+          <article class="gift card">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1520174680850-09d7d43b5b72?q=80&w=1200&auto=format&fit=crop" alt="Cafeteira" />
+            <div class="gift-body">
+              <h3>Cafeteira</h3>
+              <p class="gift-ref">Valor referência: R$ 329,00</p>
+              <a class="btn btn-gift" target="_blank" rel="noopener" href="#">Comprar na Loja</a>
+            </div>
+          </article>
         </div>
 
-        <button class="seta direita" aria-label="rolar para direita">›</button>
+        <button class="car-arrow right" aria-label="Próximos itens">›</button>
       </div>
+
+      <div class="car-dots" id="carDots" aria-hidden="true"></div>
     </section>
 
     <!-- RSVP -->
-    <section id="rsvp" class="card">
-      <h2 class="titulo-secao">Confirme sua presença</h2>
+    <section id="rsvp" class="section">
+      <h2 class="section-title">Confirme sua presença</h2>
 
-      <div class="rsvp-linha">
-        <div class="col">
-          <label for="nomeInput" class="label">Seu nome na lista</label>
-          <input id="nomeInput" type="text" class="input" placeholder="Digite seu nome completo" />
+      <form class="rsvp" onsubmit="return false;">
+        <label for="nomeInput" class="form-label">Seu nome na lista</label>
+        <div class="rsvp-row">
+          <input id="nomeInput" class="input" type="text" placeholder="Digite seu nome completo" inputmode="text" />
+          <button id="btnVerificar" class="btn btn-ok" type="button">Verificar nome</button>
         </div>
-        <div class="col col-botao">
-          <label class="label sr-only">Verificar</label>
-          <button id="checkNomeBtn" class="btn btn-principal w-100">Verificar nome</button>
-        </div>
-      </div>
 
-      <p id="rsvp-message" class="rsvp-message"></p>
+        <p id="msg" class="msg" role="status" aria-live="polite"></p>
 
-      <div id="rsvp-confirmation-area" class="confirm-area">
-        <p class="confirm-pergunta">Olá, <strong id="convidado-nome"></strong> — você poderá comparecer?</p>
-        <div class="botoes">
-          <button id="btnSim" class="btn btn-sucesso">Sim, estarei presente</button>
-          <button id="btnNao" class="btn btn-contraste">Não poderei ir</button>
+        <div class="rsvp-actions">
+          <button id="btnSim" class="btn btn-yes" type="button" disabled>Sim, estarei presente</button>
+          <button id="btnNao" class="btn btn-no" type="button" disabled>Não poderei ir</button>
+          <span class="spinner" id="spinner" aria-hidden="true"></span>
         </div>
-      </div>
+      </form>
     </section>
-
   </main>
 
-  <footer class="rodape">
-    <p>Com carinho, esperamos por você 💛</p>
+  <footer class="footer">
+    Com carinho, esperamos por você 💛
   </footer>
 
-  <!-- Acessibilidade: região para leitores de tela -->
-  <div id="aria-live" aria-live="polite" class="sr-only"></div>
+  <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
 
-  <!-- Confete -->
-  <div id="confetti-container" aria-hidden="true"></div>
-
-  <script src="script.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
