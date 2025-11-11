@@ -141,50 +141,57 @@ async function processarRSVP(resposta) {
   const nome = (nomeInput?.value || '').trim();
   if (!rsvpMessage) return;
 
-  // Guardas iniciais
   if (!nome) {
     rsvpMessage.textContent = 'Por favor, digite seu nome.';
     rsvpMessage.className = 'rsvp-message error';
     return;
   }
 
-  // Estado de carregamento
+  // Loading
   rsvpMessage.textContent = '⏳ Processando sua resposta...';
   rsvpMessage.className = 'rsvp-message loading';
   checkNomeBtn && (checkNomeBtn.disabled = true);
   btnSim && (btnSim.disabled = true);
   btnNao && (btnNao.disabled = true);
 
-  // 1) Fluxo "Verificar": não chama servidor — apenas prepara a UI
+  // Etapa "Verificar": só prepara UI
   if (resposta === 'Verificar') {
     rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
     rsvpMessage.className = 'rsvp-message info';
-
     confirmationArea && (confirmationArea.style.display = 'block');
     checkNomeBtn && (checkNomeBtn.style.display = 'none');
     nomeInput && (nomeInput.disabled = true);
-
     btnSim && (btnSim.disabled = false, btnSim.onclick = () => processarRSVP('Confirmado'));
     btnNao && (btnNao.disabled = false, btnNao.onclick = () => processarRSVP('Recusado'));
-
     live && live('Nome verificado. Confirme sua presença.');
     return;
   }
 
-  // 2) Fluxo de envio efetivo (Confirmado / Recusado)
   try {
-    // Resolve a URL que você já usa no projeto
-    const url =
-      (typeof GAS_URL !== 'undefined' && GAS_URL) ||
-      (typeof WEBHOOK_URL_GAS !== 'undefined' && WEBHOOK_URL_GAS);
+    // ---- RESOLVE URL (inclui GAS_FALLBACK_URL) ----
+    const candidates = [
+      (typeof GAS_URL !== 'undefined' && GAS_URL),
+      (typeof WEBHOOK_URL_GAS !== 'undefined' && WEBHOOK_URL_GAS),
+      (typeof GAS_FALLBACK_URL !== 'undefined' && GAS_FALLBACK_URL),
+      (typeof window !== 'undefined' && (window.GAS_URL || window.WEBHOOK_URL_GAS || window.GAS_FALLBACK_URL))
+    ].filter(Boolean);
 
-    if (!url) throw new Error('URL do endpoint (GAS_URL/WEBHOOK_URL_GAS) não definida.');
+    const url = candidates[0] || null;
 
-    // Envia ignorando CORS (resposta será "opaqua", não dá para ler JSON)
+    if (!url) {
+      console.error('[RSVP] URL do GAS não encontrada. Defina GAS_URL / WEBHOOK_URL_GAS / GAS_FALLBACK_URL.');
+      rsvpMessage.textContent = 'Configuração ausente do servidor (URL). Avise os noivos.';
+      rsvpMessage.className = 'rsvp-message error';
+      return;
+    }
+
+    console.log('[RSVP] Enviando para:', url, 'payload:', { nome, resposta });
+
+    // Importante: em no-cors, não setar Content-Type "application/json"
+    // Enviamos o corpo como texto (GAS lê e.postData.contents normalmente).
     await fetch(url, {
       method: 'POST',
-      mode: 'no-cors', // <- chave para não travar no CORS
-      headers: { 'Content-Type': 'application/json' },
+      mode: 'no-cors',
       body: JSON.stringify({
         nome,
         resposta,
@@ -192,13 +199,11 @@ async function processarRSVP(resposta) {
       })
     });
 
-    // Considera sucesso (planilha já vinha registrando mesmo quando o fetch falhava)
+    // Sucesso otimista (a planilha registra mesmo com resposta "opaqua")
     const confirmou = (resposta === 'Confirmado');
-
     rsvpMessage.innerHTML = confirmou
       ? '🎉 <strong>Presença confirmada!</strong> Que alegria ter você conosco! 💚'
       : '💌 <strong>Resposta registrada.</strong> Agradecemos o carinho e desejamos o melhor!';
-
     rsvpMessage.className = 'rsvp-message success';
 
     confirmationArea && (confirmationArea.innerHTML =
@@ -211,17 +216,17 @@ async function processarRSVP(resposta) {
     rsvpMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
   } catch (e) {
-    // Falha real de rede ou URL ausente — mantém retorno amigável
+    console.error('[RSVP] Falha no envio:', e);
     rsvpMessage.textContent = 'Erro de conexão. Tente novamente em alguns segundos.';
     rsvpMessage.className = 'rsvp-message error';
-
   } finally {
-    // Libera os controles (se desejar manter desativados após confirmar, remova as linhas abaixo)
     checkNomeBtn && (checkNomeBtn.disabled = false);
     btnSim && (btnSim.disabled = false);
     btnNao && (btnNao.disabled = false);
   }
 }
+
+
 
 
 // Clique do "Verificar"
@@ -237,4 +242,5 @@ if (checkNomeBtn) {
     await processarRSVP('Verificar');
   });
 }
+
 
