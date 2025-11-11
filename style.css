@@ -474,6 +474,75 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   color: #4b6043;
 }
 
+/* === Destaque elegante para a data do casamento === */
+.date-display{
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  margin:8px 0 28px;
+}
+
+.date-box{
+  background:#fff;
+  border:1.5px solid #efe4cf;           /* linha fininha e elegante */
+  border-radius:16px;
+  padding:10px 18px;
+  box-shadow:0 6px 16px rgba(0,0,0,.06); /* sombra suave */
+}
+
+.date-day{
+  font-family: "Fraunces", serif;        /* mesma vibe do título */
+  font-size:2rem; line-height:1; font-weight:800;
+  color:#2f8f58;                         /* VERDE da paleta */
+  letter-spacing:1px;
+}
+
+/* Cápsulas */
+.date-chip{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  color:#fff; font-weight:700; font-size:.95rem;
+  box-shadow:0 6px 16px rgba(0,0,0,.06);
+}
+
+/* MÊS + ANO (foco em LARANJA, com toque de ROXO) */
+.date-chip.month{
+  background:#ff8a3d;                    /* LARANJA */
+  border:2px solid rgba(123,97,255,.18); /* ROXO bem sutil na borda */
+}
+.date-chip.month .date-month{
+  letter-spacing:1px;
+}
+.date-chip.month .date-year{
+  background:rgba(255,255,255,.18);
+  padding:2px 8px; border-radius:999px;
+}
+
+/* HORÁRIO (pílula VERDE com ícone de relógio) */
+.date-chip.time{
+  background:#2f8f58;                    /* VERDE */
+  border:2px solid rgba(255,214,109,.25);/* AMARELO na borda (suave) */
+}
+.date-chip.time .date-time::before{
+  content:"⏰";
+  margin-right:8px;
+  filter:saturate(120%);
+}
+
+/* Pequeno efeito hover (delicado) */
+.date-chip:hover,
+.date-box:hover{
+  transform:translateY(-1px);
+  transition:.18s ease;
+}
+
+/* Responsivo: aproxima as fichas em telas menores */
+@media (max-width: 540px){
+  .date-display{ gap:8px; }
+  .date-day{ font-size:1.7rem; }
+  .date-chip{ padding:8px 12px; font-size:.9rem; }
+}
+
+
 
 
 
