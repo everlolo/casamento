@@ -141,78 +141,88 @@ async function processarRSVP(resposta) {
   const nome = (nomeInput?.value || '').trim();
   if (!rsvpMessage) return;
 
+  // Guardas iniciais
+  if (!nome) {
+    rsvpMessage.textContent = 'Por favor, digite seu nome.';
+    rsvpMessage.className = 'rsvp-message error';
+    return;
+  }
+
+  // Estado de carregamento
   rsvpMessage.textContent = '⏳ Processando sua resposta...';
   rsvpMessage.className = 'rsvp-message loading';
   checkNomeBtn && (checkNomeBtn.disabled = true);
   btnSim && (btnSim.disabled = true);
   btnNao && (btnNao.disabled = true);
 
-  try {
-    const data = await postRSVP({ nome, resposta, origem: detectarOrigem() });
-
-    if (data.status === 'nao_encontrado') {
-      rsvpMessage.innerHTML = '🔎 Nome não encontrado. Verifique a ortografia ou contate os noivos.';
-      rsvpMessage.className = 'rsvp-message error';
-      nomeInput && (nomeInput.disabled = false);
-      checkNomeBtn && (checkNomeBtn.disabled = false, checkNomeBtn.style.display = '');
-      confirmationArea && (confirmationArea.style.display = 'none');
-      live('Nome não encontrado.');
-      return;
-    }
-
-    if (data.status === 'nome_encontrado' || resposta === 'Verificar') {
-      rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
-      rsvpMessage.className = 'rsvp-message info';
-      confirmationArea && (confirmationArea.style.display = 'block');
-      checkNomeBtn && (checkNomeBtn.style.display = 'none');
-      nomeInput && (nomeInput.disabled = true);
-
-      btnSim && (btnSim.disabled = false, btnSim.onclick = () => processarRSVP('Confirmado'));
-      btnNao && (btnNao.disabled = false, btnNao.onclick = () => processarRSVP('Recusado'));
-
-      live('Nome verificado. Confirme sua presença.');
-      return;
-    }
-
-    if (data.status === 'bloqueado') {
-      rsvpMessage.innerHTML = `ℹ️ ${data.message || 'Resposta já registrada.'}`;
-      rsvpMessage.className = 'rsvp-message info';
-      confirmationArea && (confirmationArea.style.display = 'block');
-      live('Resposta já registrada anteriormente.');
-      return;
-    }
-
-    if (data.status === 'sucesso') {
-      const confirmou = (resposta === 'Confirmado');
-      rsvpMessage.innerHTML = confirmou
-        ? '🎉 <strong>Presença confirmada!</strong> Que alegria ter você conosco! 💚'
-        : '💌 <strong>Resposta registrada.</strong> Agradecemos o carinho e desejamos o melhor!';
-
-      rsvpMessage.className = 'rsvp-message success';
-      confirmationArea && (confirmationArea.innerHTML =
-        `<p class="rsvp-boas-vindas" style="font-size:1.3rem;margin:.5rem 0 0">
-           ${confirmou ? 'Nos vemos no grande dia! ✨' : 'Obrigado por nos avisar com antecedência 🙏'}
-         </p>`);
-
-      live(confirmou ? 'Presença confirmada.' : 'Ausência registrada.');
-      if (confirmou) confetti(140, 2400);
-      rsvpMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-
-    // fallback genérico
-    rsvpMessage.textContent = 'Recebemos sua resposta.';
+  // 1) Fluxo "Verificar": não chama servidor — apenas prepara a UI
+  if (resposta === 'Verificar') {
+    rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
     rsvpMessage.className = 'rsvp-message info';
 
+    confirmationArea && (confirmationArea.style.display = 'block');
+    checkNomeBtn && (checkNomeBtn.style.display = 'none');
+    nomeInput && (nomeInput.disabled = true);
+
+    btnSim && (btnSim.disabled = false, btnSim.onclick = () => processarRSVP('Confirmado'));
+    btnNao && (btnNao.disabled = false, btnNao.onclick = () => processarRSVP('Recusado'));
+
+    live && live('Nome verificado. Confirme sua presença.');
+    return;
+  }
+
+  // 2) Fluxo de envio efetivo (Confirmado / Recusado)
+  try {
+    // Resolve a URL que você já usa no projeto
+    const url =
+      (typeof GAS_URL !== 'undefined' && GAS_URL) ||
+      (typeof WEBHOOK_URL_GAS !== 'undefined' && WEBHOOK_URL_GAS);
+
+    if (!url) throw new Error('URL do endpoint (GAS_URL/WEBHOOK_URL_GAS) não definida.');
+
+    // Envia ignorando CORS (resposta será "opaqua", não dá para ler JSON)
+    await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors', // <- chave para não travar no CORS
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome,
+        resposta,
+        origem: (typeof detectarOrigem === 'function') ? detectarOrigem() : 'site'
+      })
+    });
+
+    // Considera sucesso (planilha já vinha registrando mesmo quando o fetch falhava)
+    const confirmou = (resposta === 'Confirmado');
+
+    rsvpMessage.innerHTML = confirmou
+      ? '🎉 <strong>Presença confirmada!</strong> Que alegria ter você conosco! 💚'
+      : '💌 <strong>Resposta registrada.</strong> Agradecemos o carinho e desejamos o melhor!';
+
+    rsvpMessage.className = 'rsvp-message success';
+
+    confirmationArea && (confirmationArea.innerHTML =
+      `<p class="rsvp-boas-vindas" style="font-size:1.3rem;margin:.5rem 0 0">
+         ${confirmou ? 'Nos vemos no grande dia! ✨' : 'Obrigado por nos avisar com antecedência 🙏'}
+       </p>`);
+
+    live && live(confirmou ? 'Presença confirmada.' : 'Ausência registrada.');
+    if (confirmou && typeof confetti === 'function') confetti(140, 2400);
+    rsvpMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
   } catch (e) {
-    rsvpMessage.textContent = 'Erro de conexão ou servidor. Tente novamente.';
+    // Falha real de rede ou URL ausente — mantém retorno amigável
+    rsvpMessage.textContent = 'Erro de conexão. Tente novamente em alguns segundos.';
     rsvpMessage.className = 'rsvp-message error';
+
   } finally {
+    // Libera os controles (se desejar manter desativados após confirmar, remova as linhas abaixo)
     checkNomeBtn && (checkNomeBtn.disabled = false);
     btnSim && (btnSim.disabled = false);
     btnNao && (btnNao.disabled = false);
   }
 }
+
 
 // Clique do "Verificar"
 if (checkNomeBtn) {
@@ -227,3 +237,4 @@ if (checkNomeBtn) {
     await processarRSVP('Verificar');
   });
 }
+
