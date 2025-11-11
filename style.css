@@ -867,6 +867,118 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   }
 }
 
+/* ===========================
+   1) Camafeu (foto redonda)
+   =========================== */
+/* Use o que você já tem: estes seletores pegam as classes mais comuns.
+   Se sua foto tiver outro nome de classe, só acrescente na lista abaixo. */
+.hero .foto-cameo,
+.hero .camafeu,
+.hero .camafeu-photo {
+  width: 140px;
+  height: 140px;
+  margin: 10px auto 18px;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.hero .foto-cameo img,
+.hero .camafeu img,
+.hero .camafeu-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  /* “aro” perolado que combina com o floral */
+  border: 6px solid #f5e8d0;
+  background: #fff;
+}
+
+/* brilho interno super discreto (opcional) */
+.hero .foto-cameo::after,
+.hero .camafeu::after,
+.hero .camafeu-photo::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(234,208,166,.45) inset;
+  pointer-events: none;
+}
+
+/* =========================================
+   2) Hierarquia: nome + linha decorativa
+   ========================================= */
+.noivos {
+  margin-bottom: 12px; /* separa do bloco da data */
+  animation: fadeInDown 700ms ease both; /* microanimação */
+}
+
+.noivos::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  margin: 10px auto 0;
+  background: linear-gradient(to right, #f4a261, #e9c46a, #2a9d8f);
+  border-radius: 2px;
+  opacity: .9;
+}
+
+/* a data fica um tiquinho mais suave que o nome */
+.date-display { 
+  margin-top: 6px;
+  opacity: .95;
+}
+
+/* ==============================
+   3) Contador: leveza e hover
+   ============================== */
+.contador { gap: 14px; }
+
+.contador .timebox {
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+  transform: translateZ(0);
+}
+
+/* números com largura tabular: colunas não “pulam” */
+.contador .timebox span { 
+  font-variant-numeric: tabular-nums; 
+}
+
+/* microinteração */
+.contador .timebox:hover {
+  transform: translateY(-2px) scale(1.04);
+  background: #fff8ef;                  /* bege clarinho */
+  box-shadow: 0 8px 22px rgba(0,0,0,.08);
+}
+
+/* =================================
+   4) Botão principal: verde mais quente
+   ================================= */
+.btn.btn-principal {
+  background-color: #4a7c59;  /* verde com matiz quente */
+  border-color: #4a7c59;
+}
+.btn.btn-principal:hover {
+  background-color: #3f6b4e;
+  border-color: #3f6b4e;
+}
+
+/* =======================
+   5) Microanimação do H1
+   ======================= */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
 
 
 
