@@ -2,7 +2,7 @@
    CONFIGURAÇÃO
    Preencha a URL do seu Google Apps Script se não vier do index.html
 ====================================================== */
-const WEBHOOK_URL_GAS = window.WEBHOOK_URL_GAS || 'COLE_AQUI_SUA_URL_WEB_APP_GAS';
+const WEBHOOK_URL_GAS = window.WEBHOOK_URL_GAS || 'https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec';
 
 /* ======================================================
    CONTADOR – 25/07/2026 09:30 America/Sao_Paulo
@@ -197,3 +197,4 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     el.scrollIntoView({behavior:'smooth', block:'start'});
   });
 });
+
