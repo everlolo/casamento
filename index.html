@@ -55,7 +55,7 @@
 
     <!-- CERIMÔNIA E FESTA -->
     <section id="cerimonia" class="card">
-      <h2 class="titulo-secao">Cerimônia e Festa</h2>
+      <h2 class="section-title">Cerimônia e Festa</h2>
 
       <div class="grid-2">
         <div class="local-card">
@@ -79,64 +79,63 @@
     </section>
 
     <!-- LISTA DE PRESENTES -->
-    <section id="presentes" class="card">
-      <h2 class="titulo-secao">Lista de Presentes</h2>
+<section id="presentes" class="card">
+  <h2 class="section-title">Lista de Presentes</h2>
 
-      <details class="lista-detalhes">
-        <summary>Clique aqui para ver nossas sugestões e cotas</summary>
-        <p class="subtle">
-          Preparamos algumas sugestões com muito carinho para quem quiser nos presentear!
-        </p>
-      </details>
+  <details class="lista-detalhes">
+    <summary>Clique aqui para ver nossas sugestões e cotas</summary>
+    <p class="subtle">
+      Preparamos algumas sugestões com muito carinho para quem quiser nos presentear!
+    </p>
+  </details>
 
-      <div class="carrossel-wrap">
-        <button class="seta esquerda" aria-label="rolar para esquerda">‹</button>
+  <div class="gifts-area">
+    <button class="gift-nav gift-prev" aria-label="rolar para esquerda">‹</button>
 
-        <div class="carrossel" id="carrossel-presentes" tabindex="0" aria-label="lista de presentes">
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=640&auto=format&fit=crop" alt="Liquidificador">
-            <h4>Liquidificador</h4>
-            <p class="valor">Valor referência: R$ 199,00</p>
-            <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
-          </div>
-
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1601447182659-722fdce0f7b2?q=80&w=640&auto=format&fit=crop" alt="Jogo de Jantar">
-            <h4>Jogo de Jantar</h4>
-            <p class="valor">Valor referência: R$ 349,00</p>
-            <a class="btn btn-amarelo" href="#" target="_blank">Comprar na Loja</a>
-          </div>
-
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
-            <h4>Panela</h4>
-            <p class="valor">Valor referência: R$ 259,00</p>
-            <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
-          </div>
-
-          <!-- Exemplos adicionais -->
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=640&auto=format&fit=crop" alt="Jogo de Toalhas">
-            <h4>Jogo de Toalhas</h4>
-            <p class="valor">Valor referência: R$ 189,00</p>
-            <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
-          </div>
-
-          <div class="presente">
-            <img src="https://images.unsplash.com/photo-1582582621959-48d3a8d24b9e?q=80&w=640&auto=format&fit=crop" alt="Cafeteira">
-            <h4>Cafeteira</h4>
-            <p class="valor">Valor referência: R$ 329,00</p>
-            <a class="btn btn-laranja" href="#" target="_blank">Comprar na Loja</a>
-          </div>
-        </div>
-
-        <button class="seta direita" aria-label="rolar para direita">›</button>
+    <div class="gifts-wrapper" id="carrossel-presentes" tabindex="0" aria-label="lista de presentes">
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=640&auto=format&fit=crop" alt="Liquidificador">
+        <h4>Liquidificador</h4>
+        <p class="valor">Valor referência: R$ 199,00</p>
+        <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
       </div>
-    </section>
+
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1601447182659-722fdce0f7b2?q=80&w=640&auto=format&fit=crop" alt="Jogo de Jantar">
+        <h4>Jogo de Jantar</h4>
+        <p class="valor">Valor referência: R$ 349,00</p>
+        <a class="btn btn-amarelo" href="#" target="_blank">Comprar na Loja</a>
+      </div>
+
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
+        <h4>Panela</h4>
+        <p class="valor">Valor referência: R$ 259,00</p>
+        <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
+      </div>
+
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=640&auto=format&fit=crop" alt="Jogo de Toalhas">
+        <h4>Jogo de Toalhas</h4>
+        <p class="valor">Valor referência: R$ 189,00</p>
+        <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
+      </div>
+
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1582582621959-48d3a8d24b9e?q=80&w=640&auto=format&fit=crop" alt="Cafeteira">
+        <h4>Cafeteira</h4>
+        <p class="valor">Valor referência: R$ 329,00</p>
+        <a class="btn btn-laranja" href="#" target="_blank">Comprar na Loja</a>
+      </div>
+    </div>
+
+    <button class="gift-nav gift-next" aria-label="rolar para direita">›</button>
+  </div>
+</section>
 
     <!-- RSVP -->
     <section id="rsvp" class="card">
-      <h2 class="titulo-secao">Confirme sua presença</h2>
+      <h2 class="section-title">Confirme sua presença</h2>
 
       <div class="rsvp-linha">
         <div class="col">
@@ -175,5 +174,6 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
