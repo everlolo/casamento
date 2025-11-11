@@ -376,4 +376,25 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 }
 .seta:hover{ color:#3a3a3a; }
 
+/* ====== AJUSTE SOLICITADO NOS BOTÕES ====== */
+
+/* Botões dos locais (Cerimônia e Festa) - fundo rosa ao passar o mouse */
+#cerimonia .btn-laranja:hover,
+#cerimonia .btn-roxo:hover {
+  background-color: #e76786 !important; /* Rosa */
+  color: #fff !important;
+  border-color: transparent !important;
+  transition: background-color 0.2s ease;
+}
+
+/* Botões da lista de presentes - fundo laranja ao passar o mouse */
+#presentes .btn:hover {
+  background-color: #f27d3d !important; /* Laranja */
+  color: #fff !important;
+  border-color: transparent !important;
+  transition: background-color 0.2s ease;
+}
+
+
+
 
