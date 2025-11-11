@@ -40,6 +40,7 @@ html::before{
   pointer-events: none;
   z-index: 0;
 
+  /* Use WEBP (otimizado) — já com preload no HTML */
   background-image: url('/assets/fundo-casamento.webp');
   background-repeat: repeat-y;
   background-position: center top;
@@ -169,38 +170,53 @@ body{
 }
 .local-card .sub{ opacity:.85; margin:.2rem 0 .6rem; }
 
-/* Carrossel simples (3 colunas) */
-.carrossel{
-  display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+/* Carrossel horizontal com snap */
+.carrossel-wrap{
+  position: relative;
+  margin-top: 8px;
 }
+.carrossel{
+  display: flex; gap: 16px; overflow-x: auto; padding: 8px 6px 10px;
+  scroll-snap-type: x mandatory; scrollbar-width: thin;
+}
+.carrossel::-webkit-scrollbar{ height: 8px; }
+.carrossel::-webkit-scrollbar-thumb{ background:#e7d8bf; border-radius:10px; }
+
 .presente{
   background:#fff; border:1px solid #f0e3cd; border-radius:14px; padding:12px;
   box-shadow: 0 6px 16px rgba(0,0,0,.04);
   display:flex; flex-direction:column; gap:8px; align-items:flex-start;
+  min-width: 260px; scroll-snap-align: start;
 }
 .presente img{ border-radius:12px; }
 .presente .valor{ opacity:.8; margin:-4px 0 6px; }
 
-.lista-detalhes{
-  margin: 6px 0 14px;
+.seta{
+  position:absolute; top:50%; transform: translateY(-50%);
+  width:36px; height:36px; border-radius:50%;
+  background:#ffffff; border:1px solid #eadfca;
+  box-shadow:0 6px 14px rgba(0,0,0,.08);
+  font-size:20px; line-height:34px; text-align:center;
+  color:#666; z-index:2;
 }
-.lista-detalhes summary{
-  cursor:pointer; padding:10px 12px; border-radius:12px;
-  background:#fff7e6; border:1px solid #ffd59e; color:#a56300; font-weight:700;
-}
-.lista-detalhes[open] summary{ filter:brightness(1.02); }
+.seta:hover{ filter:brightness(1.05); }
+.seta.esquerda{ left:-10px; }
+.seta.direita{ right:-10px; }
 
 /* RSVP */
 .rsvp-linha{
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 220px;
   gap: 12px;
   align-items: end;
   margin-bottom: 12px;
 }
+.rsvp-linha .col{ display:flex; flex-direction:column; }
+.rsvp-linha .col-botao{ align-self:stretch; }
+.w-100{ width:100%; }
+
 .label{ font-weight:600; margin-bottom:6px; }
 .input{
-  grid-column: 1 / span 1;
   height: 44px;
   padding: 10px 12px;
   border: 1px solid #e7d8bf;
@@ -213,7 +229,6 @@ body{
   border-color: #d8bf98;
   box-shadow: 0 0 0 3px rgba(216,191,152,.25);
 }
-.rsvp-linha .btn{ grid-column: 2 / span 1; }
 
 .confirm-area{
   display: none;
@@ -242,6 +257,8 @@ body{
 .btn-rosa{ --bg:#e76b83; --bg2:#d55b72; }
 .btn-laranja{ --bg:#fb8c00; --bg2:#e67d00; }
 
+.botoes{ display:flex; gap:10px; flex-wrap:wrap; }
+
 /* Mensagens RSVP */
 .rsvp-message{
   margin-top:.6rem; padding:.8rem 1rem; border-radius:12px; font-weight:600;
@@ -250,8 +267,6 @@ body{
 .rsvp-message.success{ background:#eefcf1; color:#0f7a39; border:1px solid #b9ebc5; }
 .rsvp-message.error{   background:#feeeee; color:#a12626; border:1px solid #f5bcbc; }
 .rsvp-message.loading{ background:#eef4ff; color:#2f54eb; border:1px solid #adc6ff; }
-
-.botoes{ display:flex; gap:10px; flex-wrap:wrap; }
 
 /* Confete */
 #confetti-container{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:9999; }
@@ -273,9 +288,4 @@ body{
 /* Responsivo */
 @media (max-width: 900px){
   .grid-2{ grid-template-columns: 1fr; }
-  .carrossel{ grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 600px){
-  .carrossel{ grid-template-columns: 1fr; }
-}
-
