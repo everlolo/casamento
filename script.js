@@ -254,5 +254,35 @@ if (checkNomeBtn) {
   });
 }
 
+// Preenche automaticamente a data nas cápsulas, reaproveitando a sua dataFinal
+(function renderWeddingDate(){
+  try{
+    const d = new Date(dataFinal);
+    if (isNaN(d)) return;
+
+    const meses = ["JANEIRO","FEVEREIRO","MARÇO","ABRIL","MAIO","JUNHO",
+                   "JULHO","AGOSTO","SETEMBRO","OUTUBRO","NOVEMBRO","DEZEMBRO"];
+
+    const dd   = String(d.getDate()).padStart(2,'0');
+    const mes  = meses[d.getMonth()];
+    const ano  = String(d.getFullYear());
+    const hh   = String(d.getHours()).padStart(2,'0');
+    const mm   = String(d.getMinutes()).padStart(2,'0');
+
+    const dayEl   = document.querySelector('.date-day');
+    const monthEl = document.querySelector('.date-month');
+    const yearEl  = document.querySelector('.date-year');
+    const timeEl  = document.querySelector('.date-time');
+
+    if (dayEl)   dayEl.textContent   = dd;
+    if (monthEl) monthEl.textContent = mes;
+    if (yearEl)  yearEl.textContent  = ano;
+    if (timeEl)  timeEl.textContent  = `${hh}:${mm}`;
+  }catch(e){ /* silencioso */ }
+})();
+
+
+
+
 
 
