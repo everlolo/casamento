@@ -1,379 +1,252 @@
-/* =========================
-   VARS & RESET
-========================= */
+/* ========== Paleta ========== */
 :root{
-  --cor-fundo: #faf8f5;  /* centro */
-  --cor-texto: #2b2b2b;
+  --bg-page: #faf8f5;
+  --text: #2a2a2a;
+  --muted: #6e6e6e;
 
-  /* Paleta */
-  --verde: #2e7d32;
-  --rosa: #e76b83;
-  --amarelo: #f5c045;
-  --roxo: #6f42c1;
-  --laranja: #fb8c00;
-  --branco: #ffffff;
+  --green: #2f7d4b;
+  --green-700:#1f5b35;
 
-  /* Largura e suavização das laterais florais */
-  --largura-faixa: clamp(110px, 12vw, 220px);
-  --borda-suave: 46px; /* quanto maior, mais suave a junção com o centro */
+  --orange:#f27d3d;
+  --orange-700:#d8682e;
+
+  --yellow:#f5c04d;
+  --yellow-700:#e2ad2d;
+
+  --pink:#e76786;
+  --pink-700:#c85372;
+
+  --purple:#7c5aa2;
+  --purple-700:#67488a;
+
+  --card: rgba(255,255,255,.88);
+  --border:#efeadf;
+  --shadow: 0 10px 24px rgba(0,0,0,.08);
 }
 
-* { box-sizing: border-box; }
-html, body { margin:0; padding:0; }
-img { max-width:100%; display:block; }
-button { cursor:pointer; border:none; }
-
-/* =========================
-   FUNDO + MOLDURA FLORAL
-========================= */
+/* ========== Reset & Base ========== */
+*{box-sizing:border-box}
+html,body{height:100%}
 html{
-  background-color: var(--cor-fundo) !important;
-  position: relative;
-  min-height: 100%;
+  background-color: var(--bg-page);
+  /* flores laterais – ajustadas e sem faixa branca */
+  background-image:
+    url('fundo-casamento.png'),
+    url('fundo-casamento.png');
+  background-repeat: repeat-y, repeat-y;
+  background-position: left top, right top;
+  background-size: 180px auto, 180px auto;
 }
-
-/* Moldura floral por cima, com FADE suave p/ o centro (sem corte) */
-html::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-
-  /* Use WEBP (otimizado) — já com preload no HTML */
-  background-image: url('/assets/fundo-casamento.webp');
-  background-repeat: repeat-y;
-  background-position: center top;
-  background-size: cover;
-  opacity: 1;
-
-  /* Máscara com transição (fade) para o centro */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    #000 0,
-    #000 calc(var(--largura-faixa) - var(--borda-suave)),
-    rgba(0,0,0,0.85) calc(var(--largura-faixa) - var(--borda-suave)),
-    rgba(0,0,0,0.0) var(--largura-faixa),
-    rgba(0,0,0,0.0) calc(100% - var(--largura-faixa)),
-    rgba(0,0,0,0.85) calc(100% - var(--largura-faixa) + var(--borda-suave)),
-    #000 calc(100% - var(--largura-faixa) + var(--borda-suave)),
-    #000 100%
-  );
-          mask-image: linear-gradient(
-    to right,
-    #000 0,
-    #000 calc(var(--largura-faixa) - var(--borda-suave)),
-    rgba(0,0,0,0.85) calc(var(--largura-faixa) - var(--borda-suave)),
-    rgba(0,0,0,0.0) var(--largura-faixa),
-    rgba(0,0,0,0.0) calc(100% - var(--largura-faixa)),
-    rgba(0,0,0,0.85) calc(100% - var(--largura-faixa) + var(--borda-suave)),
-    #000 calc(100% - var(--largura-faixa) + var(--borda-suave)),
-    #000 100%
-  );
-}
-
-@media (max-width: 768px){
-  :root{
-    --largura-faixa: clamp(74px, 9vw, 120px);
-    --borda-suave: 28px;
-  }
-}
-
-/* =========================
-   TIPOGRAFIA & LAYOUT
-========================= */
 body{
-  font-family: "Lora", serif;
-  color: var(--cor-texto);
-  background-color: transparent;
-  line-height: 1.6;
+  margin:0;
+  color:var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol", sans-serif;
+  background: transparent;
+}
+
+/* cantos florais delicados */
+.corner.floral{
+  position: fixed;
+  width: 180px; height: 180px;
+  background-image: url('fundo-casamento.png');
+  background-size: cover;
+  opacity:.2;
+  pointer-events:none;
+  z-index:0;
+  filter: saturate(95%);
+}
+.top-left{top:0; left:0}
+.top-right{top:0; right:0; transform: scaleX(-1)}
+.bottom-left{bottom:0; left:0; transform: scaleY(-1)}
+.bottom-right{bottom:0; right:0; transform: scale(-1)}
+
+/* ========== Header / Nav ========== */
+.site-header{
   position: relative;
-  z-index: 1; /* acima da moldura */
+  z-index:1;
 }
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  margin: 0 auto; padding: 12px 20px; max-width: 1100px;
+}
+.nav .brand{
+  text-decoration:none; color:var(--green); font-weight:700;
+  letter-spacing:.06em;
+}
+.nav ul{list-style:none; display:flex; gap:22px; padding:0; margin:0}
+.nav a{
+  color:var(--muted); text-decoration:none; font-weight:500;
+}
+.nav a:hover{color:var(--green)}
 
-.topbar{
-  position: sticky; top:0; z-index: 5;
-  display:flex; gap:18px; justify-content:center; align-items:center;
-  background: rgba(250,248,245,.86);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid #eee1cc;
-  padding: 10px 14px;
-}
-.topbar a{
-  text-decoration:none; color:#266b5a; font-weight:700;
-}
-.topbar a:hover{ text-decoration: underline; }
-
+/* ========== Hero ========== */
 .hero{
-  padding: 60px 20px 28px;
-  text-align: center;
+  max-width:1100px; margin: 18px auto 8px; padding: 24px 20px;
+  text-align:center;
 }
-.noivos{
+.couple{
   font-family: "Playfair Display", serif;
-  font-size: clamp(36px, 5vw, 64px);
-  margin: 0 0 6px;
-  letter-spacing: .5px;
+  font-weight:800;
+  font-size: clamp(40px, 6vw, 78px);
+  letter-spacing:.02em;
+  margin: 4px 0 10px;
 }
-.frase{
-  margin: 0 auto 24px;
-  font-size: 16px;
-  opacity: .8;
+.couple .name{color: var(--green);}
+.couple .amp{color: var(--orange); padding: 0 .2em}
+
+/* Badges data */
+.date-badges{
+  display:flex; gap:10px; align-items:center; justify-content:center;
+  margin-bottom: 18px;
+}
+.badge{
+  background:#fff; border:1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 12px; padding: 10px 14px; min-width: 64px;
+}
+.badge.day{font: 800 28px/1 "Playfair Display", serif; color:var(--green)}
+.badge.month small{display:block; font-size:.72rem; color:var(--muted)}
+.badge.month strong{font:700 18px/1 Inter, sans-serif}
+.badge.time{font-weight:700; color:var(--orange)}
+
+/* Countdown */
+.countdown{
+  display:flex; gap:10px; justify-content:center;
+}
+.cd-item{
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 18px; min-width: 90px;
+  box-shadow: var(--shadow);
+}
+.cd-value{font:800 28px/1 "Playfair Display", serif; color:var(--green)}
+.cd-label{font-size:.82rem; color:var(--muted); margin-top:4px}
+
+/* ========== Sections / Cards ========== */
+.page{position:relative; z-index:1}
+.section{
+  max-width:1100px; margin: 22px auto; padding: 0 20px;
+}
+.section-title{
+  font: 800 36px/1.2 "Playfair Display", serif;
+  margin: 6px 0 18px; position:relative;
+}
+.section-title::after{
+  content:""; display:block; width:120px; height:4px;
+  background: linear-gradient(90deg, var(--orange), var(--yellow));
+  border-radius:3px; margin-top:8px;
 }
 
-.contador{
-  display:flex; gap:14px; justify-content:center; align-items:center;
-  flex-wrap: wrap;
-}
-.timebox{
-  background: #fff;
-  border: 1px solid #eee1cc;
-  box-shadow: 0 6px 16px rgba(0,0,0,.06);
-  border-radius: 14px;
-  padding: 12px 14px;
-  min-width: 86px;
-}
-.timebox span{
-  display:block; font-size: 28px; font-weight:700;
-  font-family: "Playfair Display", serif;
-}
-.timebox small{
-  opacity:.7; font-size:12px;
-}
-
-.conteudo{
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 16px 20px 56px;
-}
-
-.card{
-  background: #ffffff;
-  border: 1px solid #eee1cc;
-  border-radius: 18px;
-  box-shadow: 0 10px 28px rgba(0,0,0,.06);
-  padding: 22px;
-  margin-bottom: 22px;
-}
-.titulo-secao{
-  font-family: "Playfair Display", serif;
-  margin: 4px 0 12px;
-  font-size: clamp(22px, 3.2vw, 30px);
-}
-
-/* Cerimônia e Festa */
 .grid-2{
-  display:grid; grid-template-columns: 1fr 1fr; gap:16px;
+  display:grid; grid-template-columns:1fr 1fr; gap:18px;
 }
-.local-card{
-  background:#fffdf9; border:1px solid #f0e3cd; border-radius:14px;
-  padding:16px; box-shadow: 0 10px 18px rgba(0,0,0,.04);
+.card{
+  background: var(--card);
+  border:1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(2px);
 }
-.local-card .sub{ opacity:.85; margin:.2rem 0 .6rem; }
+.card-title{margin:0 0 6px; font:700 20px "Playfair Display", serif}
+.card-sub{margin:0 0 10px}
+.badge-soft{
+  background: #fff8e8; color: #8a6b08; border:1px solid #f0e0b8;
+  font-weight:600; padding:4px 10px; border-radius:999px;
+}
 
-/* Carrossel horizontal com snap */
-.carrossel-wrap{
-  position: relative;
-  margin-top: 8px;
+/* ========== Botões (padrão visual) ========== */
+.btn{
+  --bg:#eaeaea; --bg-h:#d6d6d6; --fg:#222;
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px;
+  height:44px; padding:0 18px; border-radius:999px;
+  border:1px solid transparent; text-decoration:none; cursor:pointer;
+  font-weight:600; color:var(--fg); background:var(--bg);
+  box-shadow: 0 6px 14px rgba(0,0,0,.06);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
 }
-.carrossel{
-  display: flex; gap: 16px; overflow-x: auto; padding: 8px 6px 10px;
-  scroll-snap-type: x mandatory; scrollbar-width: thin;
-}
-.carrossel::-webkit-scrollbar{ height: 8px; }
-.carrossel::-webkit-scrollbar-thumb{ background:#e7d8bf; border-radius:10px; }
+.btn:hover{transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.08); background:var(--bg-h)}
+.btn:active{transform: translateY(0)}
+.btn:focus-visible{outline:3px solid rgba(47,125,75,.25)}
 
-.presente{
-  background:#fff; border:1px solid #f0e3cd; border-radius:14px; padding:12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,.04);
-  display:flex; flex-direction:column; gap:8px; align-items:flex-start;
-  min-width: 260px; scroll-snap-align: start;
+/* Específicos */
+.btn-maps{
+  --bg: var(--yellow); --bg-h: var(--yellow-700); --fg:#3a2e00;
 }
-.presente img{ border-radius:12px; }
-.presente .valor{ opacity:.8; margin:-4px 0 6px; }
+.btn-gift{
+  --bg: var(--orange); --bg-h: var(--orange-700); --fg:#fff;
+}
+.btn-yes{
+  --bg: var(--pink); --bg-h: var(--pink-700); --fg:#fff;
+}
+.btn-no{
+  --bg: var(--purple); --bg-h: var(--purple-700); --fg:#fff;
+}
+.btn-ok{
+  --bg: var(--green); --bg-h: var(--green-700); --fg:#fff;
+}
 
-.seta{
+/* ========== Carrossel ========== */
+.carousel{position:relative}
+.car-track{
+  display:grid; grid-auto-flow: column; grid-auto-columns: 33.33%;
+  gap:18px; overflow-x:auto; scroll-behavior:smooth;
+  scroll-snap-type: x mandatory; padding: 2px 48px;
+}
+.car-track::-webkit-scrollbar{height:10px}
+.car-track::-webkit-scrollbar-thumb{background:#e6ded1; border-radius:999px}
+
+.gift.card{scroll-snap-align:center; overflow:hidden; padding:0}
+.gift img{width:100%; height:220px; object-fit:cover; display:block}
+.gift-body{padding:16px 16px 18px}
+.gift-ref{color:var(--muted); margin:6px 0 12px}
+
+.car-arrow{
   position:absolute; top:50%; transform: translateY(-50%);
-  width:36px; height:36px; border-radius:50%;
-  background:#ffffff; border:1px solid #eadfca;
-  box-shadow:0 6px 14px rgba(0,0,0,.08);
-  font-size:20px; line-height:34px; text-align:center;
-  color:#666; z-index:2;
+  width:40px; height:40px; border-radius:999px; border:1px solid var(--border);
+  background:#fff; box-shadow: var(--shadow); cursor:pointer;
 }
-.seta:hover{ filter:brightness(1.05); }
-.seta.esquerda{ left:-10px; }
-.seta.direita{ right:-10px; }
+.car-arrow:hover{background:#fffdf8}
+.car-arrow.left{left:8px}
+.car-arrow.right{right:8px}
 
-/* Dentro dos cards de presente, o botão ocupa a base e 100% da largura */
-.presente{ display:flex; flex-direction:column; }
-.presente .btn{ margin-top:auto; width:100%; }
+.car-dots{display:flex; justify-content:center; gap:8px; margin:10px 0 0}
+.car-dots .dot{width:8px; height:8px; border-radius:999px; background:#e7e0d6; transition:.15s}
+.car-dots .dot.active{background: var(--orange)}
 
-.local-card .btn{ width: fit-content; } /* ou width:100% se preferir */
-
-/* Botão ocupa toda a largura nos cards de presente */
-#presentes .presente .btn { width:100%; }
-
-/* Se preferir mapas em largura total, ligue a linha abaixo */
-// #cerimonia .local-card .btn { width:100%; }
-
-
-
-
-
-/* Inputs */
+/* ========== RSVP ========== */
+.rsvp .form-label{font-weight:600; margin: 12px 0 8px; display:block}
+.rsvp-row{display:flex; gap:12px; align-items:center}
 .input{
-  height: 48px;                 /* mesma altura do .btn */
-  padding: 10px 12px;
-  border: 1px solid #e7d8bf;
-  border-radius: 12px;
-  background: #fff;
-  font-size: 16px;
-  outline: none;
+  flex:1; height:44px; padding:0 14px; border-radius:12px;
+  border:1px solid var(--border); background:#fff;
 }
-.input:focus{
-  border-color: #d8bf98;
-  box-shadow: 0 0 0 3px rgba(216,191,152,.25);
+.msg{min-height:24px; color:var(--muted); margin: 8px 0 6px}
+.rsvp-actions{display:flex; gap:12px; align-items:center; margin-top:8px}
+.spinner{
+  width:18px; height:18px; border-radius:999px; border:3px solid #e8e1d7; border-top-color: var(--green);
+  animation: spin .9s linear infinite; display:none;
+}
+@keyframes spin{to{transform: rotate(360deg)}}
+
+/* ========== Rodapé ========== */
+.footer{
+  text-align:center; color:var(--muted);
+  padding: 26px 12px; margin-top: 22px;
 }
 
-/* Linha do RSVP (mantém seu grid) */
-.rsvp-linha{
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 12px;
-  align-items: end;
-  margin-bottom: 12px;
+/* Confete canvas */
+.confetti-canvas{
+  position: fixed; inset:0; pointer-events:none; z-index: 999;
+}
+
+/* ========== Responsivo ========== */
+@media (max-width: 1000px){
+  .grid-2{grid-template-columns:1fr}
+  .car-track{grid-auto-columns: 80%}
 }
 @media (max-width: 640px){
-  .rsvp-linha{ grid-template-columns: 1fr; }
-  .col-botao .btn{ width:100%; }
+  .car-track{grid-auto-columns: 92%}
+  .rsvp-row{flex-direction:column; align-items:stretch}
+  .btn-ok{width:100%}
 }
-
-/* =========================
-   BOTÕES — look & feel único
-========================= */
-.btn,
-a.btn {
-  --bg: #2e7d32;          /* cor principal (muda nas variantes) */
-  --bg2: #3e8d42;
-  --txt: #fff;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-
-  min-height: 48px;        /* altura padrão */
-  padding: 0 18px;
-  border: 0;
-  border-radius: 14px;
-
-  background: linear-gradient(180deg, var(--bg), var(--bg2));
-  color: var(--txt);
-  text-decoration: none;    /* garante que <a> não sublinhe */
-  font-family: inherit;     /* mesma fonte do site */
-  font-weight: 700;
-  letter-spacing: .2px;
-
-  box-shadow: 0 10px 18px rgba(0,0,0,.08);
-  transition: transform .05s ease, box-shadow .2s ease, filter .2s ease;
-}
-.btn:hover,
-a.btn:hover { filter: brightness(1.03); box-shadow: 0 14px 24px rgba(0,0,0,.12); }
-.btn:active,
-a.btn:active { transform: translateY(1px); }
-.btn:disabled,
-a.btn:disabled { opacity:.6; cursor:not-allowed; }
-
-/* Variantes na paleta do casamento */
-.btn-principal { --bg:#2e7d32; --bg2:#3e8d42; }   /* verde */
-.btn-sucesso   { --bg:#2e7d32; --bg2:#3e8d42; }
-.btn-contraste { --bg:#e76b83; --bg2:#d55b72; }   /* rosa */
-.btn-roxo      { --bg:#6f42c1; --bg2:#5b34a6; }
-.btn-amarelo   { --bg:#f5c045; --bg2:#e3b53a; --txt:#3b2f0a; }
-.btn-rosa      { --bg:#e76b83; --bg2:#d55b72; }
-.btn-laranja   { --bg:#fb8c00; --bg2:#e67d00; }
-
-/* Tamanhos opcionais (se quiser usar no futuro) */
-.btn-sm { min-height: 40px; padding: 0 14px; border-radius: 12px; }
-.btn-lg { min-height: 54px; padding: 0 22px; border-radius: 16px; }
-
-/* Preenche a largura do container (usada nos cards) */
-.btn-block { width: 100%; }
-
-
-/* Mensagens RSVP */
-.rsvp-message{
-  margin-top:.6rem; padding:.8rem 1rem; border-radius:12px; font-weight:600;
-}
-.rsvp-message.info{    background:#fff7e6; color:#a56300; border:1px solid #ffd59e; }
-.rsvp-message.success{ background:#eefcf1; color:#0f7a39; border:1px solid #b9ebc5; }
-.rsvp-message.error{   background:#feeeee; color:#a12626; border:1px solid #f5bcbc; }
-.rsvp-message.loading{ background:#eef4ff; color:#2f54eb; border:1px solid #adc6ff; }
-
-/* Confete */
-#confetti-container{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:9999; }
-.confetti{ position:absolute; width:10px; height:14px; opacity:.92; animation:confetti-fall linear forwards; }
-@keyframes confetti-fall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.95; } }
-
-/* Acessibilidade: apenas leitores de tela */
-.sr-only{
-  position:absolute!important; width:1px!important; height:1px!important;
-  padding:0!important; margin:-1px!important; overflow:hidden!important;
-  clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important;
-}
-
-/* Rodapé */
-.rodape{
-  text-align:center; padding: 28px 16px; opacity:.75; font-size: 14px;
-}
-
-/* Responsivo */
-@media (max-width: 900px){
-  .grid-2{ grid-template-columns: 1fr; }
-}
-
-/* Títulos com realce sutil */
-.titulo-secao{
-  position:relative;
-  padding-bottom: .35rem;
-}
-.titulo-secao::after{
-  content:"";
-  position:absolute; left:0; bottom:0;
-  width: 68px; height: 3px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, #fb8c00, #e76b83);
-  opacity:.9;
-}
-
-/* <summary> mais clicável e harmônico */
-.lista-detalhes > summary{
-  list-style:none;
-  cursor:pointer;
-  padding: 10px 12px;
-  border-radius:12px;
-  background:#fffdf9;
-  border:1px solid #f0e3cd;
-  transition: background .2s ease, border-color .2s ease;
-}
-.lista-detalhes[open] > summary{
-  background:#fff8ee;
-  border-color:#f0d5b3;
-}
-
-/* Sombra do card um pouco mais “cremosa” */
-.card{
-  background:#fff;
-  border:1px solid #eee1cc;
-  border-radius:18px;
-  box-shadow: 0 16px 40px rgba(0,0,0,.06);
-}
-
-/* Setas do carrossel mais visíveis */
-.seta{
-  width:38px; height:38px;
-  background:#fff; color:#6d6760;
-  border:1px solid #eadfca;
-}
-.seta:hover{ color:#3a3a3a; }
-
-
