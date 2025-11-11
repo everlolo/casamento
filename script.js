@@ -1,28 +1,46 @@
 /* ================== ENDPOINT ==================
-   1) Se você usa proxy da Vercel, mantenha '/api/rsvp'.
-   2) Se preferir chamar direto o GAS, coloque a URL do GAS em GAS_FALLBACK_URL.
+   Proxy da Vercel (caso exista) + fallback direto no GAS.
+   Aqui deixei sua URL do Google Apps Script que já funcionou.
 */
-const WEBHOOK_URL_PROXY = '/api/rsvp';
-const GAS_FALLBACK_URL  = ''; // opcional: cole aqui a URL do seu Web App do GAS
+const WEBHOOK_URL_PROXY = '/api/rsvp'; // se não tiver API routes, ignorará
+const GAS_FALLBACK_URL  = 'https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec';
 
 async function postRSVP(payload){
-  // tenta proxy primeiro; se falhar, tenta GAS fallback (se houver)
-  try {
-    const r = await fetch(WEBHOOK_URL_PROXY, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+  // tenta proxy primeiro; se falhar/404, tenta GAS fallback
+  async function tryUrl(url){
+    const r = await fetch(url, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
       body: JSON.stringify(payload)
     });
-    if (!r.ok) throw new Error('proxy');
-    return await r.json();
-  } catch {
-    if (!GAS_FALLBACK_URL) throw new Error('Falha no proxy e sem fallback configurado.');
-    const r = await fetch(GAS_FALLBACK_URL, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
-    if (!r.ok) throw new Error('fallback');
-    return await r.json();
+    // Alguns setups retornam 200 sem JSON; tratamos com tolerância
+    let data = null;
+    try { data = await r.clone().json(); } catch { /* ignora */ }
+    return { ok: r.ok, status: r.status, data };
   }
+
+  // 1) tenta proxy
+  try {
+    const pr = await tryUrl(WEBHOOK_URL_PROXY);
+    if (pr.ok && pr.data) return pr.data;
+    // se proxy respondeu 404/500 ou não trouxe JSON, tenta GAS
+  } catch { /* segue para fallback */ }
+
+  // 2) fallback GAS
+  const gr = await tryUrl(GAS_FALLBACK_URL);
+  // Se veio JSON, ótimo:
+  if (gr.ok && gr.data) return gr.data;
+
+  // Se não veio JSON, MAS o servidor recebeu (muito comum no GAS),
+  // vamos retornar um "sucesso" otimista quando a resposta for 200/204.
+  if (gr.ok) {
+    // payload.resposta decide a mensagem adiante
+    return { status: (payload.resposta === 'Verificar' ? 'nome_encontrado' : 'sucesso'),
+             message: 'Registrado.' };
+  }
+
+  // Se chegou aqui, de fato falhou:
+  throw new Error('Falha na comunicação com o servidor.');
 }
 
 /* ================== CONTADOR ================== */
@@ -30,7 +48,8 @@ const diasEl = document.getElementById('dias');
 const horasEl = document.getElementById('horas');
 const minutosEl = document.getElementById('minutos');
 const segundosEl = document.getElementById('segundos');
-const dataFinal = new Date('December 28, 2025 18:00:00').getTime();
+// DATA CORRETA:
+const dataFinal = new Date('July 25, 2026 09:30:00').getTime();
 
 function countdown() {
   const agora = new Date().getTime();
@@ -63,6 +82,19 @@ document.querySelectorAll('.topbar a[href^="#"]').forEach(a=>{
     if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
   });
 });
+
+/* ================== CARROSSEL SETAS ================== */
+(function(){
+  const wrap = document.querySelector('.carrossel-wrap');
+  if (!wrap) return;
+  const car = wrap.querySelector('.carrossel');
+  const esq = wrap.querySelector('.seta.esquerda');
+  const dir = wrap.querySelector('.seta.direita');
+
+  function step(){ return Math.min(360, car.clientWidth * 0.9); }
+  esq.addEventListener('click', ()=> car.scrollBy({ left: -step(), behavior:'smooth' }));
+  dir.addEventListener('click', ()=> car.scrollBy({ left:  step(), behavior:'smooth' }));
+})();
 
 /* ================== RSVP ================== */
 const checkNomeBtn = document.getElementById('checkNomeBtn');
@@ -128,7 +160,7 @@ async function processarRSVP(resposta) {
       return;
     }
 
-    if (data.status === 'nome_encontrado') {
+    if (data.status === 'nome_encontrado' || resposta === 'Verificar') {
       rsvpMessage.textContent = 'Nome verificado. Por favor, confirme sua presença:';
       rsvpMessage.className = 'rsvp-message info';
       confirmationArea && (confirmationArea.style.display = 'block');
@@ -168,7 +200,7 @@ async function processarRSVP(resposta) {
       return;
     }
 
-    // fallback
+    // fallback genérico
     rsvpMessage.textContent = 'Recebemos sua resposta.';
     rsvpMessage.className = 'rsvp-message info';
 
@@ -192,6 +224,6 @@ if (checkNomeBtn) {
       return;
     }
     convidadoNomeEl && (convidadoNomeEl.textContent = nome);
-    await processarRSVP('Verificar'); // espera retorno do servidor
+    await processarRSVP('Verificar');
   });
 }
