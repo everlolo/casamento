@@ -423,6 +423,14 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   transition: background-color .2s ease, color .2s ease !important;
 }
 
+/* ===== AJUSTE DE HOVER NO RSVP ===== */
+#rsvp .btn:hover {
+  background-color: #f5c04d !important; /* amarelo */
+  color: #fff !important;
+  border-color: transparent !important;
+  transition: background-color 0.2s ease;
+}
+
 
 
 
