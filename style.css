@@ -552,6 +552,10 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 .data-badge .ano{ font-weight:700; color:#6d675f; font-size:16px; }
 .data-badge .hora{ font-weight:700; color:#2e7d32; }
 
+<section id="cerimonia" class="container"> … </section>
+<section id="presentes" class="container"> … </section>
+<section id="rsvp" class="container"> … </section>
+
 
 
 
