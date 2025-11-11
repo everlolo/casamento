@@ -395,6 +395,36 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   transition: background-color 0.2s ease;
 }
 
+/* ===== AJUSTE HOVER EXATAMENTE COMO PEDIDO ===== */
+
+/* 1) CERIMÔNIA/FESTA → fundo ROSA no hover */
+#cerimonia .card a.btn:hover,
+#cerimonia .card button.btn:hover,
+#cerimonia a.btn-maps:hover,
+#cerimonia .btn:hover {
+  background-color: #e76786 !important; /* rosa */
+  background-image: none !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  filter: none !important;
+  transition: background-color .2s ease, color .2s ease !important;
+}
+
+/* 2) LISTA DE PRESENTES → fundo LARANJA no hover */
+#presentes .card a.btn:hover,
+#presentes .card button.btn:hover,
+#presentes .btn-gift:hover,
+#presentes .btn:hover {
+  background-color: #f27d3d !important; /* laranja */
+  background-image: none !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  filter: none !important;
+  transition: background-color .2s ease, color .2s ease !important;
+}
+
+
+
 
 
 
