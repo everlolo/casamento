@@ -209,6 +209,14 @@ body{
 
 .local-card .btn{ width: fit-content; } /* ou width:100% se preferir */
 
+/* Botão ocupa toda a largura nos cards de presente */
+#presentes .presente .btn { width:100%; }
+
+/* Se preferir mapas em largura total, ligue a linha abaixo */
+// #cerimonia .local-card .btn { width:100%; }
+
+
+
 
 
 /* Inputs */
@@ -322,4 +330,50 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 @media (max-width: 900px){
   .grid-2{ grid-template-columns: 1fr; }
 }
+
+/* Títulos com realce sutil */
+.titulo-secao{
+  position:relative;
+  padding-bottom: .35rem;
+}
+.titulo-secao::after{
+  content:"";
+  position:absolute; left:0; bottom:0;
+  width: 68px; height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #fb8c00, #e76b83);
+  opacity:.9;
+}
+
+/* <summary> mais clicável e harmônico */
+.lista-detalhes > summary{
+  list-style:none;
+  cursor:pointer;
+  padding: 10px 12px;
+  border-radius:12px;
+  background:#fffdf9;
+  border:1px solid #f0e3cd;
+  transition: background .2s ease, border-color .2s ease;
+}
+.lista-detalhes[open] > summary{
+  background:#fff8ee;
+  border-color:#f0d5b3;
+}
+
+/* Sombra do card um pouco mais “cremosa” */
+.card{
+  background:#fff;
+  border:1px solid #eee1cc;
+  border-radius:18px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.06);
+}
+
+/* Setas do carrossel mais visíveis */
+.seta{
+  width:38px; height:38px;
+  background:#fff; color:#6d6760;
+  border:1px solid #eadfca;
+}
+.seta:hover{ color:#3a3a3a; }
+
 
