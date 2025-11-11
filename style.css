@@ -543,6 +543,26 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 }
 
 
+/* ==== Animações suaves ==== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero h1, .date-display, #contador {
+  animation: fadeInUp 1s ease forwards;
+}
+
+.section-container {
+  animation: fadeIn 1.2s ease forwards;
+  animation-delay: 0.2s;
+}
+
 
 
 
