@@ -43,45 +43,34 @@ async function postRSVP(payload){
   throw new Error('Falha na comunicação com o servidor.');
 }
 
-/* ================== CONTADOR ================== */
-const diasEl = document.getElementById('dias');
-const horasEl = document.getElementById('horas');
-const minutosEl = document.getElementById('minutos');
-const segundosEl = document.getElementById('segundos');
-// DATA CORRETA (ISO evita problemas de fuso):
-const dataFinal = new Date('2026-07-25T09:30:00').getTime();
+// DATA EXATA DO CASAMENTO (mantém a sua)
+const dataFinal = new Date('July 25, 2026 09:30:00').getTime();
 
-// se existir um bloco de "segundos" no HTML, esconda-o uma vez
-(function ocultarSegundos() {
-  if (typeof segundosEl !== 'undefined' && segundosEl) {
-    const card = segundosEl.closest?.('.count-card') || segundosEl.parentElement;
-    if (card) card.style.display = 'none';
-  }
-})();
-
-function countdown() {
+function atualizarDiasRestantes(){
+  const alvo = dataFinal;
   const agora = Date.now();
-  const distancia = dataFinal - agora;
+  let dias = Math.ceil((alvo - agora) / (1000 * 60 * 60 * 24));
 
-  if (distancia <= 0) {
-    clearInterval(x);
-    const c = document.getElementById('contador');
-    if (c) c.innerHTML = 'O GRANDE DIA CHEGOU! ✨';
+  const el = document.getElementById('daysOnly');
+  const banner = document.getElementById('bannerCountdown');
+  if (!el || !banner) return;
+
+  if (dias <= 0){
+    // Chegou o grande dia
+    banner.querySelector('.bc-label').textContent = '';
+    el.textContent = 'HOJE!';
+    banner.querySelectorAll('.bc-label')[1]?.remove?.(); // remove “DIAS”
     return;
   }
 
-  const dias    = Math.floor(distancia / (1000 * 60 * 60 * 24));
-  const horas   = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-
-  if (diasEl)    diasEl.textContent    = dias   < 10 ? '0' + dias    : String(dias);
-  if (horasEl)   horasEl.textContent   = horas  < 10 ? '0' + horas   : String(horas);
-  if (minutosEl) minutosEl.textContent = minutos< 10 ? '0' + minutos : String(minutos);
+  // formata com 2–3 dígitos, se quiser
+  el.textContent = String(dias).padStart(2, '0');
 }
 
-// atualiza imediatamente e depois a cada 1 minuto
-countdown();
-const x = setInterval(countdown, 60_000);
+// inicia e mantém atualizado 1x por minuto (basta p/ dias)
+atualizarDiasRestantes();
+setInterval(atualizarDiasRestantes, 60 * 1000);
+
 
 
 /* ================== SMOOTH SCROLL NAV ================== */
@@ -369,6 +358,7 @@ if (checkNomeBtn) {
     }
   }, { passive: false });
 })();
+
 
 
 
