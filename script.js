@@ -334,5 +334,42 @@ if (checkNomeBtn) {
   });
 })();
 
+// ====== Navegação da galeria (mesma experiência do carrossel de presentes) ======
+(function initGaleria() {
+  const wrap = document.getElementById('galeria-noivos');
+  if (!wrap) return;
+
+  const prev = document.querySelector('#galeria .gallery-nav.prev');
+  const next = document.querySelector('#galeria .gallery-nav.next');
+
+  const step = () => Math.max(280, Math.floor(wrap.clientWidth * 0.8));
+
+  prev?.addEventListener('click', () => wrap.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next?.addEventListener('click', () => wrap.scrollBy({ left:  step(), behavior: 'smooth' }));
+
+  // Arrastar com o dedo/mouse (drag-to-scroll)
+  let isDown = false, startX = 0, startLeft = 0, pid = null;
+  wrap.addEventListener('pointerdown', (e) => {
+    isDown = true; startX = e.clientX; startLeft = wrap.scrollLeft;
+    pid = e.pointerId; wrap.setPointerCapture(pid);
+  });
+  wrap.addEventListener('pointermove', (e) => {
+    if (!isDown) return;
+    wrap.scrollLeft = startLeft - (e.clientX - startX);
+  });
+  const stop = () => { isDown = false; if (pid) { wrap.releasePointerCapture(pid); pid = null; } };
+  wrap.addEventListener('pointerup', stop);
+  wrap.addEventListener('pointercancel', stop);
+
+  // Roda do mouse (shift+scroll horizontal em alguns SOs)
+  wrap.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault();
+      wrap.scrollBy({ left: e.deltaX, behavior: 'smooth' });
+    }
+  }, { passive: false });
+})();
+
+
 
 
