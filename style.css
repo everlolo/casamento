@@ -980,6 +980,56 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 
 
 
+/* ——— Data + Camafeu ——— */
+.date-display {
+  gap: 8px;                 /* aproxima as cápsulas entre si */
+  margin-bottom: 8px;       /* encosta mais na foto */
+}
+.date-box,
+.date-chip {
+  height: 42px;             /* altura uniforme nas três cápsulas */
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.date-box .date-day { line-height: 1; }
+
+/* Camafeu mais delicado */
+.hero .foto-cameo,
+.hero .camafeu,
+.hero .camafeu-photo {
+  margin-top: 6px;
+}
+.hero .foto-cameo img,
+.hero .camafeu img,
+.hero .camafeu-photo img {
+  border-width: 5px;              /* antes 6px */
+  box-shadow: 0 0 0 1px rgba(234,208,166,.35) inset;
+}
+
+/* ——— Contador ——— */
+.contador { gap: 12px; }
+.contador .timebox {
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+}
+.contador .timebox small {
+  letter-spacing: .02em;
+  color: #7a7a7a;                 /* legenda mais suave */
+}
+
+/* ——— Responsivo (até 768px) ——— */
+@media (max-width: 768px) {
+  .date-box, .date-chip { height: 38px; padding: 0 10px; }
+  .hero .foto-cameo, .hero .camafeu, .hero .camafeu-photo {
+    width: 120px; height: 120px;
+  }
+  .contador .timebox { transform: scale(.92); } /* -8% sutil */
+}
+
 
 
 
