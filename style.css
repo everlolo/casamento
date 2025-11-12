@@ -1258,7 +1258,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 
 /* === MONOGRAMA ESTÁTICO (imagem) === */
 .monograma-img {
-  width: clamp(220px, 40vw, 340px);
+  width: clamp(286px, 52vw, 442px);
   height: auto;
   display: block;
   margin: 20px auto 10px;
@@ -1449,4 +1449,5 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 
 /* Se quiser sumir com o contador antigo quadradinho: */
 .contador{ display:none !important; }
+
 
