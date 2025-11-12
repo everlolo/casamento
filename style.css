@@ -1272,3 +1272,71 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   margin-bottom: 10px;
 }
 
+/* ====== Galeria horizontal (fotos quadradas com a mesma “vibe” do cameo) ====== */
+
+.gallery-area {
+  position: relative;
+  margin-top: .5rem;
+}
+
+.gallery-wrapper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 260px);   /* largura do “cartão” */
+  gap: 18px;
+  overflow-x: auto;
+  padding: 8px 8px 12px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #e7dccb transparent;
+}
+.gallery-wrapper::-webkit-scrollbar { height: 8px; }
+.gallery-wrapper::-webkit-scrollbar-thumb {
+  background: #e7dccb; border-radius: 8px;
+}
+
+.gallery-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  z-index: 2;
+  width: 38px; height: 38px; line-height: 36px;
+  border-radius: 999px; border: 1px solid #e7dccb;
+  background: #fff; box-shadow: 0 6px 16px rgba(0,0,0,.08);
+  cursor: pointer; font-size: 20px;
+}
+.gallery-nav.prev { left: -6px; }
+.gallery-nav.next { right: -6px; }
+
+.cameo-square {
+  scroll-snap-align: start;
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px;
+  border: 1px solid #eee4d6;
+  box-shadow: 0 8px 28px rgba(0,0,0,.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+  display: grid; gap: 10px;
+}
+.cameo-square:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 34px rgba(0,0,0,.09);
+}
+
+.cameo-square img {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
+  border-radius: 12px;
+  /* “anel” similar ao cameo redondo */
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.06),
+    inset 0 0 0 3px #fff,
+    0 0 0 1px rgba(0,0,0,.04);
+}
+
+.cameo-square figcaption {
+  font-size: .92rem;
+  color: #6b6b6b;
+  text-align: center;
+}
+@media (max-width: 680px) {
+  .gallery-wrapper { grid-auto-columns: minmax(160px, 1fr); }
+}
+
