@@ -22,20 +22,24 @@
 
   <!-- HERO / HOME -->
   <header id="home" class="hero">
-   <!-- MONOGRAMA + FAIXA DE DATA (substitui o h1 + .date-display) -->
-<div class="monograma">
-  <h1 class="monograma-iniciais">C &amp; E</h1>
-  <h2 class="monograma-nomes">Caroline e Everton</h2>
-</div>
+  <!-- Monograma + nomes + divisor + data empilhada (sem horário) -->
+<section class="crest" aria-label="Identidade do casal e data">
+  <h2 class="crest-initials" aria-hidden="true">C &amp; E</h2>
 
-<div class="date-ribbon" aria-label="Data do casamento">
-  <span class="ribbon-day">25</span>
-  <span class="ribbon-sep">•</span>
-  <span class="ribbon-month">julho</span>
-  <span class="ribbon-sep">•</span>
-  <span class="ribbon-year">2026</span>
-  <span class="ribbon-time">09:30</span>
-</div>
+  <p class="crest-names">Caroline e Everton</p>
+
+  <div class="crest-divider" role="img" aria-label="ornamento">
+    <span class="line"></span>
+    <span class="heart" aria-hidden="true">❤</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="crest-date" aria-label="Data do casamento">
+    <span class="crest-day">25</span>
+    <span class="crest-month">julho</span>
+    <span class="crest-year">2026</span>
+  </div>
+</section>
 
 
     
@@ -248,6 +252,7 @@
   
 </body>
 </html>
+
 
 
 
