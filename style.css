@@ -1413,17 +1413,19 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 }
 
 .banner-countdown .bc-number{
-  min-width:2.6rem;
-  text-align:center;
-  line-height:1;
-  padding:.38rem .62rem;
-  border-radius:.60rem;
-  font-weight:800;
-  font-size:1.05rem;
-  background:var(--bc-orange);      /* número em laranja */
-  color:#fff;
-  box-shadow: inset 0 -2px 0 rgba(0,0,0,.08);
+  min-width: 2.8rem;
+  text-align: center;
+  line-height: 1;
+  padding: .42rem .70rem;
+  border-radius: .65rem;
+  font-weight: 900;                 /* negrito mais forte */
+  font-size: 1.25rem;               /* levemente maior */
+  color: #e37230;                   /* laranja mais vivo */
+  background: transparent;          /* remove o fundo */
+  border: 2px solid #e37230;        /* contorno laranja elegante */
+  box-shadow: inset 0 0 0 rgba(0,0,0,0);
 }
+
 
 /* Hover/Focus sutil (opcional) */
 .banner-countdown:hover{ box-shadow:0 10px 30px rgba(0,0,0,.07); }
@@ -1442,6 +1444,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   box-shadow:0 2px 0 rgba(0,0,0,.03);
 }
 */
+
 
 
 
