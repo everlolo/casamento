@@ -1055,78 +1055,100 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   transition: color 0.2s ease-in-out;
 }
 
-/* ===== MONOGRAMA E DATA ESTILO CONVITE ===== */
-.monograma {
-  text-align: center;
-  margin-top: 40px;
+/* ======= CREST (monograma + nomes + data empilhada) ======= */
+.crest{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  margin-inline:auto;
+  margin-top:6px;          /* aproxima do topo */
+  margin-bottom:16px;      /* distância antes da foto */
+  text-align:center;
 }
 
-.monograma h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 4rem;
+.crest-initials{
+  font-family: "Playfair Display", serif;
   font-weight: 700;
-  color: #2C2C2C;
+  font-size: clamp(40px, 6vw, 68px);
+  letter-spacing: .04em;
+  color: var(--cor-verde-escuro, #2f4a37); /* sólido da sua paleta */
+  line-height: 1;
+}
+
+.crest-names{
+  font-family: "Lora", serif;
+  font-size: clamp(16px, 2.2vw, 20px);
+  color: var(--cor-texto, #3b3b3b);
+  opacity:.9;
+  margin: 2px 0 0;
+}
+
+.crest-divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+.crest-divider .line{
+  display:inline-block;
+  width: 72px;
+  max-width: 20vw;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cor-dourado, #caa66a), transparent);
+  border-radius: 2px;
+}
+.crest-divider .heart{
+  font-size: 16px;
+  color: var(--cor-dourado, #caa66a);
+  transform: translateY(-1px);
+}
+
+/* Data empilhada */
+.crest-date{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  line-height:1.1;
+  gap:4px;
+  color: var(--cor-verde-escuro, #2f4a37);
+}
+.crest-day{
+  font-family: "Playfair Display", serif;
+  font-weight:700;
+  font-size: clamp(24px, 4.8vw, 32px);
   position: relative;
-  display: inline-block;
+  padding-inline: 20px;
+}
+.crest-day::before,
+.crest-day::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  height:1px;
+  background: currentColor;
+  opacity:.25;
+}
+.crest-day::before{ top:-6px; }
+.crest-day::after{ bottom:-6px; }
+
+.crest-month{
+  font-family:"Lora",serif;
+  text-transform: lowercase;   /* “julho” minúsculo, como no exemplo */
+  letter-spacing:.08em;
+  font-size: clamp(14px, 2.5vw, 16px);
+  color: var(--cor-texto, #3b3b3b);
+}
+.crest-year{
+  font-family:"Playfair Display",serif;
+  font-weight:600;
+  font-size: clamp(16px, 3vw, 18px);
+  color: var(--cor-texto, #3b3b3b);
 }
 
-.monograma h1::before,
-.monograma h1::after {
-  content: url('https://upload.wikimedia.org/wikipedia/commons/3/3b/Floral_icon.svg');
-  position: absolute;
-  top: -20px;
-  width: 70px;
-  opacity: 0.4;
-}
-.monograma h1::before {
-  left: -90px;
-  transform: rotate(-15deg);
-}
-.monograma h1::after {
-  right: -90px;
-  transform: rotate(15deg);
-}
+/* Respirações com a foto no formato camafeu */
+.foto-cameo{ margin-top: 6px; }
 
-/* Nome completo e divisor */
-.monograma h2 {
-  font-family: 'Lora', serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin-top: 12px;
-  color: #4A4A4A;
-  letter-spacing: 2px;
-}
-.monograma h2::after {
-  content: "❤";
-  display: block;
-  color: #C96A00;
-  font-size: 1rem;
-  margin: 6px auto 0;
-}
-
-/* Data vertical */
-.data-vertical {
-  text-align: center;
-  font-family: 'Lora', serif;
-  margin-top: 14px;
-  line-height: 1.4;
-}
-.data-vertical span {
-  display: block;
-  color: #2C2C2C;
-  font-weight: 600;
-}
-.data-vertical span:not(:last-child)::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 1px;
-  background: #D6CFC6;
-  margin: 4px auto;
-}
-.data-vertical .mes {
-  text-transform: lowercase;
-  color: #C96A00;
-  font-weight: 700;
-}
-
+/* Peq. ajuste no contador para não colar na foto */
+#contador.contador{ margin-top: 12px; }
