@@ -1031,6 +1031,30 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 }
 
 
+/* ——— Animação de hover nas cápsulas da data ——— */
+.date-box,
+.date-chip,
+.date-chip.time {
+  transition: all 0.25s ease-in-out;
+  transform: translateZ(0);
+}
+
+.date-box:hover,
+.date-chip:hover,
+.date-chip.time:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(0,0,0,.1);
+  filter: brightness(1.05);
+}
+
+/* brilha um pouquinho o texto */
+.date-box:hover span,
+.date-chip:hover span,
+.date-chip.time:hover span {
+  color: #2a2a2a;
+  transition: color 0.2s ease-in-out;
+}
+
 
 
 
