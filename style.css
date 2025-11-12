@@ -1379,93 +1379,35 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   .couple-gallery { --tile-size: 240px; }  /* levemente menor no mobile */
 }
 
-
-
-
-/* ===== Countdown banner (paleta verde + laranja) ===== */
+/* === Countdown: número laranja em pílula branca === */
 .banner-countdown{
-  --bc-green: #2f5d46;    /* verde do site */
-  --bc-orange:#e28b51;    /* laranja da paleta */
+  --bc-green: #2f5d46;
+  --bc-orange:#e37230;      /* laranja mais forte */
   --bc-bg:    #ffffff;
-  --bc-br:    #eadfce;    /* contorno suave já usado no site */
-
-  display:inline-flex;
-  align-items:center;
-  gap:.55rem;
-  padding:.40rem .85rem;
-  border:1px solid var(--bc-br);
-  border-radius:999px;
-  background:var(--bc-bg);
-  box-shadow:0 8px 26px rgba(0,0,0,.05);
-  transform: scale(1.15);            /* ligeiramente menor que a data acima */
+  --bc-br:    #eadfce;
 }
 
-.banner-countdown .bc-label{
-  font-family: "Playfair Display", serif;
-  font-weight:600;
-  letter-spacing:.18em;
-  font-size:.80rem;
-  color: color-mix(in srgb, var(--bc-green) 88%, #000 0%);
-  opacity:.82;
-  text-decoration:none;             /* garante SEM tachado */
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-
-.banner-countdown .bc-number {
-  min-width: 2.8rem;
-  text-align: center;
-  line-height: 1;
-  padding: .45rem .75rem;
-  border-radius: .65rem;
-  font-weight: 900;             /* negrito real */
-  font-size: 1.25rem;
-  background: #e37230;          /* laranja mais forte */
-  color: #fff;                  /* texto branco */
-  box-shadow: inset 0 -2px 0 rgba(0,0,0,.08);
-  border: none;
-}
-
-
-
-
-/* Hover/Focus sutil (opcional) */
-.banner-countdown:hover{ box-shadow:0 10px 30px rgba(0,0,0,.07); }
-
-/* Ajuste mobile: mais discreto */
-@media (max-width: 640px){
-  .banner-countdown{ transform: scale(.92); padding:.35rem .75rem; }
-  .banner-countdown .bc-label{ font-size:.78rem; letter-spacing:.16em; }
-  .banner-countdown .bc-number{ font-size:1rem; padding:.34rem .56rem; }
-}
-
-/* Variante: se preferir o número em verde e a pílula branca, troque por:
-.banner-countdown .bc-number{
-  background:#fff; color:var(--bc-green);
-  border:1px solid var(--bc-br);
-  box-shadow:0 2px 0 rgba(0,0,0,.03);
-}
-*/
-
-
-/* força o estilo do número, mesmo se houver <strong> ou outra tag dentro */
+/* garante negrito e cor nos filhos (se houver <span>/<strong>) */
 .banner-countdown .bc-number,
-.banner-countdown .bc-number * {
-  font-weight: 900 !important;               /* negrito real */
-  color: var(--bc-orange, #e37230) !important;
+.banner-countdown .bc-number *{
+  font-weight: 900 !important;
+  color: var(--bc-orange) !important;
 }
 
-/* escolha 1: pílula sólida laranja (número branco) */
-.banner-countdown .bc-number {
-  background: var(--bc-orange, #e37230) !important;
-  color: #fff !important;
-  border: none !important;
-  min-width: 2.8rem;
-  line-height: 1;
-  padding: .45rem .75rem;
-  border-radius: .65rem;
-  box-shadow: inset 0 -2px 0 rgba(0,0,0,.08);
+/* pílula branca com contorno suave */
+.banner-countdown .bc-number{
+  background:#fff !important;
+  border:1px solid var(--bc-br) !important;
+  box-shadow:0 2px 0 rgba(0,0,0,.03) !important;
+  min-width:2.8rem;
+  line-height:1;
+  padding:.45rem .75rem;
+  border-radius:.65rem;
 }
+
+
+
+
 
 
 
