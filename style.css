@@ -1055,3 +1055,98 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   transition: color 0.2s ease-in-out;
 }
 
+/* =========================================================
+   FAIXA DE FITA — data do casamento (usa o mesmo HTML)
+   ========================================================= */
+.date-display{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  margin: 6px 0 14px;
+  background: #FFF8F1;                 /* marfim quentinho */
+  border: 1px solid #EEDFCC;
+  border-radius: 12px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.08);
+}
+
+/* Tiras (rabichos) da fita */
+.date-display::before,
+.date-display::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  background: #F7A500;                 /* laranja da paleta */
+  /* triângulo com “dentinho” de fita */
+  -webkit-clip-path: polygon(0 50%, 100% 0, 100% 100%);
+          clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.08));
+}
+.date-display::before{ left: -18px; }
+.date-display::after {
+  right: -18px;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+/* Linha de “costura” sutíl no topo/rodapé da faixa */
+.date-display::marker{ content:none; }
+.date-display:after, .date-display:before{ pointer-events:none; }
+.date-display > *{ position:relative; z-index: 1; }
+
+/* Pílulas internas (dia, mês/ano, hora) */
+.date-box,
+.date-chip{
+  background: #fff;
+  border: 1px solid #EEDFCC;
+  border-radius: 999px;
+  padding: 7px 12px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  transition: .18s ease-in-out;
+}
+.date-box:hover,
+.date-chip:hover{ transform: translateY(-2px); }
+
+/* Cores: dia + hora (verde), mês/ano (laranja) */
+.date-day,
+.date-time{ color:#2C6A4A; font-weight:700; }
+
+.date-chip.month .date-month{
+  color:#C96A00; letter-spacing:.06em; text-transform:uppercase;
+  font-weight:700; font-size:.9rem;
+}
+.date-chip.month .date-year{
+  color:#915200; font-weight:700; font-size:.9rem;
+}
+
+/* Ícone minimalista de relógio na pílula da hora */
+.date-chip.time{ padding-left: 30px; }
+.date-chip.time::before{
+  content:"";
+  position:absolute; left:12px; top:50%; transform:translateY(-50%);
+  width:14px; height:14px; border-radius:50%;
+  border:2px solid #2C6A4A;
+}
+.date-chip.time::after{
+  content:"";
+  position:absolute; left:18px; top:50%;
+  width:6px; height:2px; background:#2C6A4A; border-radius:2px;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* Responsivo: faixa mais compacta no mobile */
+@media (max-width: 480px){
+  .date-display{ padding:8px 14px; gap:8px; }
+  .date-display::before{ left:-14px; width:18px; height:18px; }
+  .date-display::after{ right:-14px; width:18px; height:18px; }
+  .date-box, .date-chip{ padding:6px 10px; }
+  .date-chip.time{ padding-left:28px; }
+}
+
+
