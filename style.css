@@ -1397,7 +1397,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   border-radius:999px;
   background:var(--bc-bg);
   box-shadow:0 8px 26px rgba(0,0,0,.05);
-  transform: scale(.95);            /* ligeiramente menor que a data acima */
+  transform: scale(1.15);            /* ligeiramente menor que a data acima */
 }
 
 .banner-countdown .bc-label{
@@ -1442,6 +1442,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   box-shadow:0 2px 0 rgba(0,0,0,.03);
 }
 */
+
 
 
 
