@@ -1379,31 +1379,22 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   .couple-gallery { --tile-size: 240px; }  /* levemente menor no mobile */
 }
 
-/* === Countdown: número laranja em pílula branca === */
-.banner-countdown{
-  --bc-green: #2f5d46;
-  --bc-orange:#e37230;      /* laranja mais forte */
-  --bc-bg:    #ffffff;
-  --bc-br:    #eadfce;
-}
 
-/* garante negrito e cor nos filhos (se houver <span>/<strong>) */
-.banner-countdown .bc-number,
-.banner-countdown .bc-number *{
+/* === Força o número de DIAS a ficar laranja e em destaque === */
+#contador .timebox:first-child span#dias,
+#contador #dias {
   font-weight: 900 !important;
-  color: var(--bc-orange) !important;
+  color: #fff !important;      /* laranja mais forte */
+  background: #e37230 !important;    /* pílula branca */
+  border: none !important;
+  padding: .45rem .75rem !important;
+  border-radius: .65rem !important;
+  display: inline-block !important;
+  line-height: 1 !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,.03) !important;
 }
 
-/* pílula branca com contorno suave */
-.banner-countdown .bc-number{
-  background:#fff !important;
-  border:1px solid var(--bc-br) !important;
-  box-shadow:0 2px 0 rgba(0,0,0,.03) !important;
-  min-width:2.8rem;
-  line-height:1;
-  padding:.45rem .75rem;
-  border-radius:.65rem;
-}
+
 
 
 
