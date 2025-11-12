@@ -1256,3 +1256,19 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   margin: 5px 0;
 }
 
+/* === MONOGRAMA ESTÁTICO (imagem) === */
+.monograma-img {
+  width: clamp(220px, 40vw, 340px);
+  height: auto;
+  display: block;
+  margin: 20px auto 10px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.06));
+  border-radius: 6px;
+}
+
+.crest {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
