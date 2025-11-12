@@ -48,40 +48,15 @@ const diasEl = document.getElementById('dias');
 const horasEl = document.getElementById('horas');
 const minutosEl = document.getElementById('minutos');
 const segundosEl = document.getElementById('segundos');
-// DATA CORRETA (ISO evita problemas de fuso):
-const dataFinal = new Date('2026-07-25T09:30:00').getTime();
 
-// se existir um bloco de "segundos" no HTML, esconda-o uma vez
-(function ocultarSegundos() {
-  if (typeof segundosEl !== 'undefined' && segundosEl) {
-    const card = segundosEl.closest?.('.count-card') || segundosEl.parentElement;
-    if (card) card.style.display = 'none';
-  }
-})();
-
-function countdown() {
-  const agora = Date.now();
-  const distancia = dataFinal - agora;
-
-  if (distancia <= 0) {
-    clearInterval(x);
-    const c = document.getElementById('contador');
-    if (c) c.innerHTML = 'O GRANDE DIA CHEGOU! ✨';
-    return;
-  }
-
-  const dias    = Math.floor(distancia / (1000 * 60 * 60 * 24));
-  const horas   = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-
-  if (diasEl)    diasEl.textContent    = dias   < 10 ? '0' + dias    : String(dias);
-  if (horasEl)   horasEl.textContent   = horas  < 10 ? '0' + horas   : String(horas);
-  if (minutosEl) minutosEl.textContent = minutos< 10 ? '0' + minutos : String(minutos);
-}
-
-// atualiza imediatamente e depois a cada 1 minuto
-countdown();
-const x = setInterval(countdown, 60_000);
+<!-- Contador-banner: FALTAM XX DIAS -->
+<div class="banner-countdown" id="bannerCountdown" aria-live="polite">
+  <span class="bc-label">FALTAM</span>
+  <span class="bc-tiles">
+    <span class="bc-tile"><strong id="daysOnly">000</strong></span>
+  </span>
+  <span class="bc-label">DIAS</span>
+</div>
 
 
 /* ================== SMOOTH SCROLL NAV ================== */
@@ -369,6 +344,7 @@ if (checkNomeBtn) {
     }
   }, { passive: false });
 })();
+
 
 
 
