@@ -1152,3 +1152,107 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 
 /* Peq. ajuste no contador para não colar na foto */
 #contador.contador{ margin-top: 12px; }
+
+/* === MONOGRAMA ESTILO CONVITE ELEGANTE === */
+.crest {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.crest-initials {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: clamp(3.8rem, 7vw, 5rem);
+  color: #2f4b3a;
+  letter-spacing: 0.03em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+/* Iniciais e & com hierarquia visual */
+.crest-initials .initial {
+  position: relative;
+}
+.crest-initials .amp {
+  font-size: 0.7em;
+  margin: 0 0.05em;
+}
+
+/* Ornamentação floral sutil */
+.crest-initials::before,
+.crest-initials::after {
+  content: "";
+  position: absolute;
+  top: -30px;
+  width: 70px;
+  height: 70px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/f/f5/Floral_line_art.svg') center/contain no-repeat;
+  opacity: 0.4;
+}
+.crest-initials::before { left: -80px; transform: rotate(-15deg); }
+.crest-initials::after { right: -80px; transform: rotate(15deg); }
+
+.crest-names {
+  font-family: "Lora", serif;
+  font-size: 1.1rem;
+  color: #3b3b3b;
+  letter-spacing: 0.1em;
+  margin-top: 5px;
+}
+
+.crest-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.crest-divider .line {
+  width: 60px;
+  height: 1px;
+  background: #d6cfc6;
+}
+
+.crest-divider .heart {
+  color: #c96a00;
+  font-size: 1rem;
+  transform: translateY(-1px);
+}
+
+/* Data empilhada com linhas */
+.crest-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+  font-family: "Lora", serif;
+  color: #2f4b3a;
+}
+
+.crest-day {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.crest-month {
+  font-size: 1rem;
+  text-transform: lowercase;
+}
+
+.crest-year {
+  font-size: 1rem;
+}
+
+.mini-line {
+  width: 40px;
+  border: none;
+  border-top: 1px solid #d6cfc6;
+  margin: 5px 0;
+}
+
