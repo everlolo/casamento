@@ -363,7 +363,7 @@ if (checkNomeBtn) {
    RSVP VIA PIN — FRONT-END
    ============================================================ */
 
-const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbxLJ3L5fgqPzyQOsW0tJHICmMfD-iAc29ilrtg1jqh6z5PfRjEoo_Qt3adZmp2MQjHHdg/exec";
+const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec";
 
 const pinInput = document.getElementById("pinInput");
 const buscarBtn = document.getElementById("buscarPinBtn");
@@ -450,6 +450,7 @@ salvarBtn.addEventListener("click", async () => {
     mensagem.textContent = "Erro ao salvar.";
   }
 });
+
 
 
 
