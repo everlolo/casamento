@@ -1467,6 +1467,20 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   box-shadow: inset 0 -2px 0 rgba(0,0,0,.08);
 }
 
+/* estilo RSVP */
+
+.membro-item {
+  background: #fff8ef;
+  border: 1px solid #e6d0b8;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+.membro-item input {
+  margin-right: 6px;
+  transform: scale(1.2);
+}
 
 
 
