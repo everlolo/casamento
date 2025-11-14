@@ -1513,6 +1513,39 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 
 
 
+/* ====== NOSSOS MOMENTOS – layout especial no celular ====== */
+@media (max-width: 640px) {
+
+  /* trilho vira coluna, sem scroll lateral */
+  #galeria-noivos.gallery-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-x: hidden;
+    padding: 8px 0 16px;
+    scroll-snap-type: none;   /* desliga o snap horizontal */
+  }
+
+  /* cada foto ocupa quase toda a largura, centralizada */
+  #galeria-noivos .cameo-square {
+    width: min(90vw, 340px);
+    margin: 0 auto;
+  }
+
+  /* deixa a imagem um pouco mais alta e bem visível */
+  #galeria-noivos .cameo-square img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;  /* pode trocar pra 1/1 se quiser quadrado */
+    object-fit: cover;
+  }
+
+  /* esconde as setas no mobile */
+  #galeria .gallery-nav {
+    display: none;
+  }
+}
+
 
 
 
