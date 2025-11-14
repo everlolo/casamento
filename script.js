@@ -376,6 +376,13 @@ const salvarBtn       = document.getElementById("btnSalvarRsvp");
 const mensagem        = document.getElementById("pin-message");
 const listaArea       = document.getElementById("lista-membros");
 const membrosContainer = document.getElementById("membros-container");
+const hotelSim   = document.getElementById("hotelSim");
+const hotelNao   = document.getElementById("hotelNao");
+const qtdCasal   = document.getElementById("qtdCasal");
+const qtdSolteiro = document.getElementById("qtdSolteiro");
+const cafeSim    = document.getElementById("cafeSim");
+const cafeNao    = document.getElementById("cafeNao");
+
 
 let membrosEncontrados = [];
 
@@ -410,66 +417,56 @@ function chamarJsonp(params) {
   });
 }
 
-// === BUSCAR FAMÍLIA PELO PIN ===
-if (buscarBtn) {
-  buscarBtn.addEventListener("click", async () => {
-    const pin = (pinInput.value || "").trim();
+if (salvarBtn) {
+  salvarBtn.addEventListener("click", async () => {
+    const checkboxes = document.querySelectorAll(".chk-membro");
 
-    mensagem.textContent = "";
-    listaArea.style.display = "none";
-    membrosContainer.innerHTML = "";
-
-    if (pin.length !== 4) {
-      mensagem.textContent = "Digite um PIN válido (4 dígitos).";
+    if (!checkboxes.length) {
+      mensagem.textContent = "Nenhum convidado para confirmar.";
       return;
     }
 
-    mensagem.textContent = "Buscando...";
+    const atualizacoes = [];
+
+    checkboxes.forEach((chk) => {
+      const linha = Number(chk.dataset.linha);
+      const status = chk.checked ? "Confirmado" : "Recusado";
+      atualizacoes.push({ linha, status });
+    });
+
+    // Monta o objeto de hotel (por família)
+    const hotel = {
+      precisaHotel:
+        hotelSim && hotelSim.checked ? "Sim" :
+        hotelNao && hotelNao.checked ? "Não" : "",
+      quartosCasal:    qtdCasal ? (qtdCasal.value || "0").trim() : "",
+      quartosSolteiro: qtdSolteiro ? (qtdSolteiro.value || "0").trim() : "",
+      cafeManha:
+        cafeSim && cafeSim.checked ? "Sim" :
+        cafeNao && cafeNao.checked ? "Não" : ""
+    };
+
+    mensagem.textContent = "Salvando...";
 
     try {
-      const data = await chamarJsonp({ acao: "buscar", pin });
-
-      if (!data.ok) {
-        mensagem.textContent = data.error || "PIN não encontrado.";
-        return;
-      }
-
-      membrosEncontrados = data.membros || [];
-
-      if (!membrosEncontrados.length) {
-        mensagem.textContent = "Nenhum convidado vinculado a este PIN.";
-        return;
-      }
-
-      // Monta a lista de checkboxes
-      listaArea.style.display = "block";
-      mensagem.textContent = "";
-
-      membrosContainer.innerHTML = "";
-
-      membrosEncontrados.forEach((m) => {
-        const div = document.createElement("div");
-        div.className = "membro-item";
-        div.innerHTML = `
-          <label>
-            <input
-              type="checkbox"
-              class="chk-membro"
-              data-linha="${m.linha}"
-              ${m.rsvp === "Confirmado" ? "checked" : ""}
-            >
-            ${m.nome}
-          </label>
-        `;
-        membrosContainer.appendChild(div);
+      const data = await chamarJsonp({
+        acao: "salvar",
+        atualizacoes: JSON.stringify(atualizacoes),
+        hotel: JSON.stringify(hotel)     // <— vai para o Apps Script
       });
 
+      if (data.ok) {
+        mensagem.textContent = "Confirmação salva com sucesso! 🎉";
+      } else {
+        mensagem.textContent = data.error || "Erro ao salvar.";
+      }
     } catch (err) {
-      console.error("Erro na busca por PIN:", err);
+      console.error("Erro ao salvar RSVP:", err);
       mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
     }
   });
 }
+
 
 // === SALVAR CONFIRMAÇÕES ===
 if (salvarBtn) {
@@ -508,6 +505,7 @@ if (salvarBtn) {
     }
   });
 }
+
 
 
 
