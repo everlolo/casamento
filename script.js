@@ -361,100 +361,153 @@ if (checkNomeBtn) {
 
 
 
-/********************************************
- * RSVP POR PIN – FRONT-END
- ********************************************/
-const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbxLJ3L5fgqPzyQOsW0tJHICmMfD-iAc29ilrtg1jqh6z5PfRjEoo_Qt3adZmp2MQjHHdg/exec";
 
-const pinInput = document.getElementById("pinInput");
-const buscarBtn = document.getElementById("buscarPinBtn");
-const mensagem = document.getElementById("pin-message");
-const listaArea = document.getElementById("lista-membros");
+/************************************************
+ * RSVP POR PIN – JSONP (sem CORS)
+ ************************************************/
+
+// 1) COLOQUE AQUI a URL do SEU WebApp (termina em /exec)
+const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbxcOHe1LCUhATyE1O_SMGciYPAwRMWbUirUfTl5r0TRhhOH2LLf7Jwn92r3iCfskFpXVQ/exec";
+
+// 2) Pega os elementos da área de RSVP
+const pinInput        = document.getElementById("pinInput");
+const buscarBtn       = document.getElementById("buscarPinBtn");
+const salvarBtn       = document.getElementById("btnSalvarRsvp");
+const mensagem        = document.getElementById("pin-message");
+const listaArea       = document.getElementById("lista-membros");
 const membrosContainer = document.getElementById("membros-container");
-const salvarBtn = document.getElementById("btnSalvarRsvp");
 
 let membrosEncontrados = [];
 
-// Buscar família pelo PIN
-buscarBtn.addEventListener("click", async () => {
-  const pin = pinInput.value.trim();
+/**
+ * Helper para chamar o Apps Script via JSONP
+ * params: objeto { acao: 'buscar', pin: '1234', ... }
+ */
+function chamarJsonp(params) {
+  return new Promise((resolve, reject) => {
+    const callbackName = "jsonp_cb_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+    params.callback = callbackName;
 
-  mensagem.textContent = "";
-  listaArea.style.display = "none";
-  membrosContainer.innerHTML = "";
+    const qs = new URLSearchParams(params).toString();
 
-  if (pin.length !== 4) {
-    mensagem.textContent = "Digite um PIN válido (4 dígitos).";
-    return;
-  }
+    const script = document.createElement("script");
+    script.src = `${URL_WEBAPP}?${qs}`;
 
-  mensagem.textContent = "Buscando...";
+    // callback chamado pelo Apps Script
+    window[callbackName] = (data) => {
+      delete window[callbackName];
+      script.remove();
+      resolve(data);
+    };
 
-  try {
-    const resp = await fetch(URL_WEBAPP, {
-      method: "POST",
-      body: JSON.stringify({ acao: "buscar", pin })
-    });
+    script.onerror = () => {
+      delete window[callbackName];
+      script.remove();
+      reject(new Error("Falha na requisição JSONP"));
+    };
 
-    const data = await resp.json();
+    document.body.appendChild(script);
+  });
+}
 
-    if (!data.ok) {
-      mensagem.textContent = data.error || "PIN não encontrado.";
+// === BUSCAR FAMÍLIA PELO PIN ===
+if (buscarBtn) {
+  buscarBtn.addEventListener("click", async () => {
+    const pin = (pinInput.value || "").trim();
+
+    mensagem.textContent = "";
+    listaArea.style.display = "none";
+    membrosContainer.innerHTML = "";
+
+    if (pin.length !== 4) {
+      mensagem.textContent = "Digite um PIN válido (4 dígitos).";
       return;
     }
 
-    mensagem.textContent = "";
-    listaArea.style.display = "block";
-    membrosEncontrados = data.membros;
+    mensagem.textContent = "Buscando...";
 
-    membrosEncontrados.forEach(m => {
-      const div = document.createElement("div");
-      div.className = "membro-item";
-      div.innerHTML = `
-        <label>
-          <input type="checkbox" class="chk-membro" data-linha="${m.linha}"
-            ${m.rsvp === "Confirmado" ? "checked" : ""}>
-          ${m.nome}
-        </label>
-      `;
-      membrosContainer.appendChild(div);
-    });
-  } catch (err) {
-    console.error("Erro na busca por PIN:", err);
-    mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
-  }
-});
+    try {
+      const data = await chamarJsonp({ acao: "buscar", pin });
 
-// Salvar confirmações
-salvarBtn.addEventListener("click", async () => {
-  const checkboxes = document.querySelectorAll(".chk-membro");
+      if (!data.ok) {
+        mensagem.textContent = data.error || "PIN não encontrado.";
+        return;
+      }
 
-  const atualizacoes = [];
+      membrosEncontrados = data.membros || [];
 
-  checkboxes.forEach(chk => {
-    const linha = Number(chk.dataset.linha);
-    const confirmado = chk.checked ? "Confirmado" : "Recusado";
-    atualizacoes.push({ linha, confirmado });
-  });
+      if (!membrosEncontrados.length) {
+        mensagem.textContent = "Nenhum convidado vinculado a este PIN.";
+        return;
+      }
 
-  mensagem.textContent = "Salvando...";
+      // Monta a lista de checkboxes
+      listaArea.style.display = "block";
+      mensagem.textContent = "";
 
-  try {
-    const resp = await fetch(URL_WEBAPP, {
-      method: "POST",
-      body: JSON.stringify({ acao: "salvar", atualizacoes })
-    });
+      membrosContainer.innerHTML = "";
 
-    const data = await resp.json();
+      membrosEncontrados.forEach((m) => {
+        const div = document.createElement("div");
+        div.className = "membro-item";
+        div.innerHTML = `
+          <label>
+            <input
+              type="checkbox"
+              class="chk-membro"
+              data-linha="${m.linha}"
+              ${m.rsvp === "Confirmado" ? "checked" : ""}
+            >
+            ${m.nome}
+          </label>
+        `;
+        membrosContainer.appendChild(div);
+      });
 
-    if (data.ok) {
-      mensagem.textContent = "Confirmação salva com sucesso! 🎉";
-    } else {
-      mensagem.textContent = data.error || "Erro ao salvar.";
+    } catch (err) {
+      console.error("Erro na busca por PIN:", err);
+      mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
     }
-  } catch (err) {
-    console.error("Erro ao salvar:", err);
-    mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
-  }
-});
+  });
+}
+
+// === SALVAR CONFIRMAÇÕES ===
+if (salvarBtn) {
+  salvarBtn.addEventListener("click", async () => {
+    const checkboxes = document.querySelectorAll(".chk-membro");
+
+    if (!checkboxes.length) {
+      mensagem.textContent = "Nenhum convidado para confirmar.";
+      return;
+    }
+
+    const atualizacoes = [];
+
+    checkboxes.forEach((chk) => {
+      const linha = Number(chk.dataset.linha);
+      const status = chk.checked ? "Confirmado" : "Recusado";
+      atualizacoes.push({ linha, status });
+    });
+
+    mensagem.textContent = "Salvando...";
+
+    try {
+      const data = await chamarJsonp({
+        acao: "salvar",
+        atualizacoes: JSON.stringify(atualizacoes),
+      });
+
+      if (data.ok) {
+        mensagem.textContent = "Confirmação salva com sucesso! 🎉";
+      } else {
+        mensagem.textContent = data.error || "Erro ao salvar.";
+      }
+    } catch (err) {
+      console.error("Erro ao salvar RSVP:", err);
+      mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
+    }
+  });
+}
+
+
 
