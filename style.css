@@ -1482,6 +1482,41 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   transform: scale(1.2);
 }
 
+/*Hotel */
+
+.hotel-box {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #eee1cc;
+  background: #fffbf5;
+  box-shadow: 0 6px 16px rgba(0,0,0,.04);
+}
+.hotel-title {
+  margin: 0 0 6px;
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+}
+.hotel-text {
+  margin: 0 0 10px;
+  font-size: .92rem;
+  color: #6b6b6b;
+}
+.hotel-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.hotel-input {
+  width: 80px;
+  margin-left: 6px;
+}
+.hotel-row label {
+  font-size: .9rem;
+}
+
 
 
 
