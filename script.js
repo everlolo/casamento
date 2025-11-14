@@ -376,6 +376,8 @@ const salvarBtn       = document.getElementById("btnSalvarRsvp");
 const mensagem        = document.getElementById("pin-message");
 const listaArea       = document.getElementById("lista-membros");
 const membrosContainer = document.getElementById("membros-container");
+const recusarBtn       = document.getElementById("btnRecusarTodos");
+
 
 let membrosEncontrados = [];
 
@@ -449,20 +451,31 @@ if (buscarBtn) {
 
       membrosEncontrados.forEach((m) => {
         const div = document.createElement("div");
-        div.className = "membro-item";
+        div.className = "membro-item" + (m.rsvp === "Confirmado" ? " confirmado" : "");
         div.innerHTML = `
           <label>
-            <input
-              type="checkbox"
+            <input type="checkbox"
               class="chk-membro"
               data-linha="${m.linha}"
-              ${m.rsvp === "Confirmado" ? "checked" : ""}
-            >
+              ${m.rsvp === "Confirmado" ? "checked" : ""}>
             ${m.nome}
           </label>
         `;
         membrosContainer.appendChild(div);
       });
+
+membrosContainer.addEventListener("change", (e) => {
+  if (!e.target.classList.contains("chk-membro")) return;
+  const item = e.target.closest(".membro-item");
+  if (!item) return;
+  if (e.target.checked) {
+    item.classList.add("confirmado");
+  } else {
+    item.classList.remove("confirmado");
+  }
+});
+
+       
 
     } catch (err) {
       console.error("Erro na busca por PIN:", err);
@@ -477,7 +490,7 @@ if (salvarBtn) {
     const checkboxes = document.querySelectorAll(".chk-membro");
 
     if (!checkboxes.length) {
-      mensagem.textContent = "Nenhum convidado para confirmar.";
+      mensagem.textContent = "Busque primeiro o PIN da sua família.";
       return;
     }
 
@@ -494,11 +507,25 @@ if (salvarBtn) {
     try {
       const data = await chamarJsonp({
         acao: "salvar",
-        atualizacoes: JSON.stringify(atualizacoes),
+        atualizacoes: JSON.stringify(atualizacoes)
       });
 
       if (data.ok) {
-        mensagem.textContent = "Confirmação salva com sucesso! 🎉";
+        const temConfirmado = atualizacoes.some(a => a.status === "Confirmado");
+
+        mensagem.innerHTML = `
+          Confirmação salva com sucesso! 🎉
+          <span class="rsvp-hotel-tip">
+            Caso precise de hospedagem, os hotéis Primma Hotel e B&amp;S
+            oferecerão condições especiais para os convidados do casamento
+            de Caroline e Everton. Basta informar que a reserva é para o
+            casamento.
+          </span>
+        `;
+
+        if (temConfirmado) {
+          soltarConfeteRsvp();
+        }
       } else {
         mensagem.textContent = data.error || "Erro ao salvar.";
       }
@@ -509,5 +536,66 @@ if (salvarBtn) {
   });
 }
 
+/*confete*/
+
+function soltarConfeteRsvp() {
+  const container = document.getElementById("confetti-container");
+  if (!container) return;
+
+  const cores = ["#2f8f58", "#ff8a3d", "#e76b83", "#f5c045", "#ffffff"];
+  const quantidade = 120;
+
+  for (let i = 0; i < quantidade; i++) {
+    const pedaco = document.createElement("div");
+    pedaco.className = "confetti";
+    pedaco.style.left = Math.random() * 100 + "vw";
+    pedaco.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+    pedaco.style.animationDuration = 2.5 + Math.random() * 1.5 + "s";
+    container.appendChild(pedaco);
+    setTimeout(() => pedaco.remove(), 4000);
+  }
+}
+
+/*não poderemos comparecer*/
+
+if (recusarBtn) {
+  recusarBtn.addEventListener("click", async () => {
+    const checkboxes = document.querySelectorAll(".chk-membro");
+
+    if (!checkboxes.length) {
+      mensagem.textContent = "Busque primeiro o PIN da sua família.";
+      return;
+    }
+
+    const atualizacoes = [];
+
+    checkboxes.forEach((chk) => {
+      const linha = Number(chk.dataset.linha);
+      atualizacoes.push({ linha, status: "Recusado" });
+      chk.checked = false;
+      const item = chk.closest(".membro-item");
+      if (item) item.classList.remove("confirmado");
+    });
+
+    mensagem.textContent = "Registrando ausência...";
+
+    try {
+      const data = await chamarJsonp({
+        acao: "salvar",
+        atualizacoes: JSON.stringify(atualizacoes)
+      });
+
+      if (data.ok) {
+        mensagem.textContent =
+          "Registro realizado. Sentiremos sua falta, mas agradecemos por avisar! ❤️";
+      } else {
+        mensagem.textContent = data.error || "Erro ao salvar.";
+      }
+    } catch (err) {
+      console.error("Erro ao registrar ausência:", err);
+      mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
+    }
+  });
+}
 
 
