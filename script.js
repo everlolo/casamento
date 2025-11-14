@@ -359,6 +359,97 @@ if (checkNomeBtn) {
   }, { passive: false });
 })();
 
+/* ============================================================
+   RSVP VIA PIN — FRONT-END
+   ============================================================ */
+
+const URL_WEBAPP = "COLE_AQUI_SUA_URL_DO_WEBAPP_PUBLICADO";
+
+const pinInput = document.getElementById("pinInput");
+const buscarBtn = document.getElementById("buscarPinBtn");
+const mensagem = document.getElementById("pin-message");
+const listaArea = document.getElementById("lista-membros");
+const membrosContainer = document.getElementById("membros-container");
+const salvarBtn = document.getElementById("btnSalvarRsvp");
+
+let membrosEncontrados = [];  // será carregado após buscar o PIN
+
+// Buscar família pelo PIN
+buscarBtn.addEventListener("click", async () => {
+  const pin = pinInput.value.trim();
+
+  mensagem.textContent = "";
+  listaArea.style.display = "none";
+  membrosContainer.innerHTML = "";
+
+  if (pin.length !== 4) {
+    mensagem.textContent = "Digite um PIN válido (4 dígitos).";
+    return;
+  }
+
+  mensagem.textContent = "Buscando...";
+
+  const resp = await fetch(URL_WEBAPP, {
+    method: "POST",
+    contentType: "application/json",
+    body: JSON.stringify({ acao: "buscar", pin })
+  });
+
+  const data = await resp.json();
+
+  if (!data.ok) {
+    mensagem.textContent = "PIN não encontrado.";
+    return;
+  }
+
+  // Sucesso
+  mensagem.textContent = "";
+  listaArea.style.display = "block";
+  membrosEncontrados = data.membros;
+
+  membrosEncontrados.forEach(m => {
+    const div = document.createElement("div");
+    div.className = "membro-item";
+    div.innerHTML = `
+      <label>
+        <input type="checkbox" class="chk-membro" data-linha="${m.linha}"
+          ${m.rsvp === "Confirmado" ? "checked" : ""}>
+        ${m.nome}
+      </label>
+    `;
+    membrosContainer.appendChild(div);
+  });
+});
+
+// Salvar confirmações
+salvarBtn.addEventListener("click", async () => {
+  const checkboxes = document.querySelectorAll(".chk-membro");
+
+  const atualizacoes = [];
+
+  checkboxes.forEach(chk => {
+    const linha = Number(chk.dataset.linha);
+    const confirmado = chk.checked ? "Confirmado" : "Recusado";
+    atualizacoes.push({ linha, confirmado });
+  });
+
+  mensagem.textContent = "Salvando...";
+
+  const resp = await fetch(URL_WEBAPP, {
+    method: "POST",
+    contentType: "application/json",
+    body: JSON.stringify({ acao: "salvar", atualizacoes })
+  });
+
+  const data = await resp.json();
+
+  if (data.ok) {
+    mensagem.textContent = "Confirmação salva com sucesso! 🎉";
+  } else {
+    mensagem.textContent = "Erro ao salvar.";
+  }
+});
+
 
 
 
