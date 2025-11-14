@@ -389,11 +389,12 @@ buscarBtn.addEventListener("click", async () => {
 
   mensagem.textContent = "Buscando...";
 
-  const resp = await fetch(URL_WEBAPP, {
-    method: "POST",
-    contentType: "application/json",
-    body: JSON.stringify({ acao: "buscar", pin })
-  });
+ const resp = await fetch(URL_WEBAPP, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ acao: "salvar", atualizacoes })
+});
+
 
   const data = await resp.json();
 
@@ -449,6 +450,7 @@ salvarBtn.addEventListener("click", async () => {
     mensagem.textContent = "Erro ao salvar.";
   }
 });
+
 
 
 
