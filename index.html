@@ -171,30 +171,36 @@
 </section>
 
     <!-- RSVP -->
-    <section id="rsvp" class="card">
-      <h2 class="section-title">Confirme sua presença</h2>
+   <section id="rsvp" class="card">
+  <h2 class="section-title">Confirme sua Presença</h2>
 
-      <div class="rsvp-linha">
-        <div class="col">
-          <label for="nomeInput" class="label">Seu nome na lista</label>
-          <input id="nomeInput" type="text" class="input" placeholder="Digite seu nome completo" />
-        </div>
-        <div class="col col-botao">
-          <label class="label sr-only">Verificar</label>
-          <button id="checkNomeBtn" class="btn btn-principal w-100">Verificar nome</button>
-        </div>
-      </div>
+  <!-- Campo do PIN -->
+  <div class="rsvp-linha">
+    <div class="col">
+      <label for="pinInput" class="label">Digite o PIN da sua família</label>
+      <input id="pinInput" type="text" class="input" placeholder="Ex: 4821" maxlength="4" />
+    </div>
+    <div class="col col-botao">
+      <label class="label sr-only">Buscar</label>
+      <button id="buscarPinBtn" class="btn btn-principal w-100">Buscar</button>
+    </div>
+  </div>
 
-      <p id="rsvp-message" class="rsvp-message"></p>
+  <!-- Mensagem -->
+  <p id="pin-message" class="rsvp-message"></p>
 
-      <div id="rsvp-confirmation-area" class="confirm-area">
-        <p class="confirm-pergunta">Olá, <strong id="convidado-nome"></strong> — você poderá comparecer?</p>
-        <div class="botoes">
-          <button id="btnSim" class="btn btn-sucesso">Sim, estarei presente</button>
-          <button id="btnNao" class="btn btn-contraste">Não poderei ir</button>
-        </div>
-      </div>
-    </section>
+  <!-- Lista dos membros -->
+  <div id="lista-membros" class="confirm-area" style="display:none;">
+    <p class="confirm-pergunta">Selecione quem irá ao evento:</p>
+
+    <div id="membros-container"></div>
+
+    <div class="botoes" style="margin-top:20px;">
+      <button id="btnSalvarRsvp" class="btn btn-sucesso w-100">Salvar Seleção</button>
+    </div>
+  </div>
+</section>
+
 
   </main>
 
@@ -283,6 +289,7 @@
   
 </body>
 </html>
+
 
 
 
