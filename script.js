@@ -364,28 +364,24 @@ if (checkNomeBtn) {
 /********************************************
  * RSVP POR PIN – FRONT-END
  ********************************************/
-const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec";
+const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbxLJ3L5fgqPzyQOsW0tJHICmMfD-iAc29ilrtg1jqh6z5PfRjEoo_Qt3adZmp2MQjHHdg/exec";
 
-const pinInput        = document.getElementById("pinInput");
-const buscarBtn       = document.getElementById("buscarPinBtn");
-const mensagem        = document.getElementById("pin-message");
-const listaArea       = document.getElementById("lista-membros");
+const pinInput = document.getElementById("pinInput");
+const buscarBtn = document.getElementById("buscarPinBtn");
+const mensagem = document.getElementById("pin-message");
+const listaArea = document.getElementById("lista-membros");
 const membrosContainer = document.getElementById("membros-container");
-const salvarBtn       = document.getElementById("btnSalvarRsvp");
+const salvarBtn = document.getElementById("btnSalvarRsvp");
 
-let membrosEncontrados = [];  // família retornada pelo PIN
+let membrosEncontrados = [];
 
-/* ==========================
-   1) BUSCAR FAMÍLIA PELO PIN
-   ========================== */
-buscarBtn?.addEventListener("click", async () => {
-  const pin = (pinInput.value || "").trim();
+// Buscar família pelo PIN
+buscarBtn.addEventListener("click", async () => {
+  const pin = pinInput.value.trim();
 
-  // limpa estado anterior
   mensagem.textContent = "";
   listaArea.style.display = "none";
   membrosContainer.innerHTML = "";
-  membrosEncontrados = [];
 
   if (pin.length !== 4) {
     mensagem.textContent = "Digite um PIN válido (4 dígitos).";
@@ -397,59 +393,42 @@ buscarBtn?.addEventListener("click", async () => {
   try {
     const resp = await fetch(URL_WEBAPP, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ acao: "buscar", pin })
     });
 
     const data = await resp.json();
-    console.log("Resposta /buscar:", data);
 
     if (!data.ok) {
       mensagem.textContent = data.error || "PIN não encontrado.";
       return;
     }
 
-    // Sucesso: mostra a lista de membros
-    membrosEncontrados = data.membros || [];
-    if (!membrosEncontrados.length) {
-      mensagem.textContent = "Nenhum convidado vinculado a este PIN.";
-      return;
-    }
-
-    listaArea.style.display = "block";
     mensagem.textContent = "";
+    listaArea.style.display = "block";
+    membrosEncontrados = data.membros;
 
     membrosEncontrados.forEach(m => {
       const div = document.createElement("div");
       div.className = "membro-item";
       div.innerHTML = `
         <label>
-          <input
-            type="checkbox"
-            class="chk-membro"
-            data-linha="${m.linha}"
-            ${m.rsvp === "Confirmado" ? "checked" : ""}
-          >
+          <input type="checkbox" class="chk-membro" data-linha="${m.linha}"
+            ${m.rsvp === "Confirmado" ? "checked" : ""}>
           ${m.nome}
         </label>
       `;
       membrosContainer.appendChild(div);
     });
-
   } catch (err) {
     console.error("Erro na busca por PIN:", err);
     mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
   }
 });
 
-
-/* ==========================
-   2) SALVAR CONFIRMAÇÕES
-   ========================== */
-salvarBtn?.addEventListener("click", async () => {
+// Salvar confirmações
+salvarBtn.addEventListener("click", async () => {
   const checkboxes = document.querySelectorAll(".chk-membro");
 
-  // <<< AQUI a variável é declarada corretamente >>>
   const atualizacoes = [];
 
   checkboxes.forEach(chk => {
@@ -458,34 +437,23 @@ salvarBtn?.addEventListener("click", async () => {
     atualizacoes.push({ linha, confirmado });
   });
 
-  if (!atualizacoes.length) {
-    mensagem.textContent = "Selecione pelo menos uma pessoa.";
-    return;
-  }
-
   mensagem.textContent = "Salvando...";
 
   try {
     const resp = await fetch(URL_WEBAPP, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ acao: "salvar", atualizacoes })
     });
 
     const data = await resp.json();
-    console.log("Resposta /salvar:", data);
 
     if (data.ok) {
       mensagem.textContent = "Confirmação salva com sucesso! 🎉";
     } else {
       mensagem.textContent = data.error || "Erro ao salvar.";
     }
-
   } catch (err) {
-    console.error("Erro ao salvar confirmações:", err);
+    console.error("Erro ao salvar:", err);
     mensagem.textContent = "Erro ao falar com o servidor. Tente novamente.";
   }
 });
-
-
-
