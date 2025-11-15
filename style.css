@@ -1600,6 +1600,96 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   }
 }
 
+/* =================================
+   TIMELINE / PROGRAMAÇÃO (ACCORDION)
+   ================================= */
+.timeline-accordion {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espaço entre os itens */
+}
+
+.timeline-item {
+  background: #fffdf9; /* Um bege bem claro, combina com o site */
+  border: 1px solid #f0e3cd;
+  border-radius: 14px;
+  transition: background-color 0.2s ease;
+}
+
+/* Quando o item está aberto */
+.timeline-item[open] {
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0,0,0,.05);
+}
+
+.timeline-summary {
+  list-style: none; /* Remove a seta padrão do navegador */
+  cursor: pointer;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.timeline-summary::-webkit-details-marker {
+  display: none; /* Remove a seta padrão no Safari */
+}
+
+/* Adiciona um ícone customizado (+) */
+.timeline-summary::before {
+  content: '+';
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cor-laranja); /* Puxa da sua paleta de cores */
+  font-family: 'Lora', serif;
+  margin-right: 5px;
+  transition: transform 0.2s ease;
+  transform: rotate(0deg) translateY(-2px);
+}
+
+/* Gira o ícone para (-) quando aberto */
+.timeline-item[open] > .timeline-summary::before {
+  content: '−'; /* Símbolo de menos */
+  transform: rotate(180deg) translateY(-2px);
+}
+
+.timeline-time {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #333;
+  background: #fff8ee;
+  border: 1px solid #eee1cc;
+  border-radius: 8px;
+  padding: 4px 10px;
+  min-width: 65px;
+  text-align: center;
+}
+
+.timeline-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--cor-verde); /* Puxa o verde da sua paleta */
+}
+
+/* O conteúdo que expande */
+.timeline-content {
+  /* Alinha o texto com o título, pulando o ícone e a hora */
+  padding: 0px 20px 20px 52px; 
+  border-top: 1px solid #f0e3cd;
+  margin: 0 20px 12px;
+}
+
+.timeline-content p {
+  margin: 12px 0 0;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.timeline-content p:last-child {
+  margin-bottom: 0;
+}
 
 
 
