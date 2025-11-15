@@ -76,14 +76,37 @@
   #presentes .gift-card h4, .gift-card h4 { margin:6px 0 4px; font-size:1.05rem; }
   #presentes .gift-card .valor, .gift-card .valor { color:#6b6b6b; font-size:.95rem; }
 
-/* --- Adiciona o hover laranja nos botões desta página --- */
-#presentes-grid-container .btn:hover {
+/* --- Adiciona o ESTILO DE BOTÃO + HOVER LARANJA --- */
+
+/* 1. Força o visual de botão verde (a base) */
+#presentes-grid-container .btn-principal {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: .5rem !important;
+  min-height: 48px !important;
+  padding: 0 18px !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  letter-spacing: .2px !important;
+
+  /* Cores do botão verde */
+  background: linear-gradient(180deg, #2e7d32, #3e8d42) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 18px rgba(0,0,0,.08) !important;
+  transition: all .2s ease !important;
+}
+
+/* 2. Adiciona o hover laranja */
+#presentes-grid-container .btn-principal:hover {
   background-color: #f27d3d !important; /* laranja */
   background-image: none !important;
   color: #ffffff !important;
   border-color: transparent !important;
   filter: none !important;
-  transition: background-color .2s ease, color .2s ease !important;
+  transform: translateY(-1px) !important;
 }
 
 
