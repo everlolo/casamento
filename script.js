@@ -650,14 +650,55 @@ async function carregarPresentes() {
       const card = document.createElement("article");
       card.className = "gift-card";
 
-      card.innerHTML = `
-        <div class="gift-image">
-          ${
-            p.foto
-              ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">`
-              : ""
-          }
-        </div>
+     // --- SUBSTITUA O BLOCO card.innerHTML EM script (7).js ---
+
+// Lógica para formatar o valor (seja cota ou valor cheio)
+let valorHtml = '';
+if (p.cota_sim === 'Sim' && p.cota_valor) {
+  // É COTA
+  const valorCotaNum = parseFloat(String(p.cota_valor).replace(',', '.'));
+  const valorCotaFmt = isNaN(valorCotaNum) ? p.cota_valor : valorCotaNum.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  valorHtml = `<p class="gift-value">Valor da cota: <strong>R$ ${valorCotaFmt}</strong></p>`;
+  if (p.cota_desc) {
+    valorHtml += `<p class="gift-cota-desc">${p.cota_desc}</p>`;
+  }
+
+} else if (p.valor) {
+  // É PRESENTE NORMAL
+  const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
+  const valorFormatado = isNaN(valorNumerico) ? p.valor : valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
+}
+
+// Lógica para o botão (Muda o texto e o link se for cota)
+let botaoHtml = '';
+if (p.cota_sim === 'Sim' && p.url) {
+  // É COTA -> Botão "Comprar Cota" (usa o link do Mercado Pago da col. H)
+  botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Comprar Cota</a>`;
+} else if (p.url) {
+  // É PRESENTE NORMAL -> Botão "Abrir link"
+  botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>`;
+}
+
+// Monta o card
+card.innerHTML = `
+  <div class="gift-image">
+    ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
+  </div>
+  <div class="gift-content">
+    <h3>${p.item || "Presente"}</h3>
+    ${valorHtml} 
+    <p class="gift-code">
+      Código do presente: <strong>${p.codigo}</strong>
+    </p>
+    <div class="gift-actions">
+      ${botaoHtml}
+    </div>
+  </div>
+`;
+// --- FIM DA SUBSTITUIÇÃO ---
         <div class="gift-content">
           <h3>${p.item || "Presente"}</h3>
           ${
@@ -749,6 +790,7 @@ if (giftBtn) {
     }
   });
 }
+
 
 
 
