@@ -1601,68 +1601,6 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 }
 
 
- /* Trilho horizontal dos presentes */
-  #presentes .gifts-wrapper{
-    display:grid !important;
-    grid-auto-flow:column !important;
-    grid-auto-columns:minmax(300px,320px) !important; /* largura uniforme */
-    gap:20px !important;
-    overflow-x:auto !important;
-    padding:8px 8px 16px !important;
-    scroll-snap-type:x mandatory !important;
-    align-items:stretch !important; /* alturas iguais */
-  }
-
-  /* Cartão de presente */
-  #presentes .gift-card{
-    display:flex !important;
-    flex-direction:column !important;
-    min-height:420px !important;              /* altura consistente */
-    background:#fff;
-    border:1px solid #eee4d6;
-    border-radius:14px;
-    box-shadow:0 6px 22px rgba(0,0,0,.05);
-    padding:14px;
-    scroll-snap-align:start;
-  }
-
-  /* Imagem padronizada */
-  #presentes .gift-card img{
-    width:100% !important;
-    height:200px !important;
-    object-fit:cover !important;              /* corta proporcional mantendo proporção */
-    border-radius:10px;
-    margin-bottom:12px;
-    display:block;
-  }
-
-  #presentes .gift-card h4{ margin:6px 0 4px; font-size:1.05rem; }
-  #presentes .gift-card .valor{ color:#6b6b6b; font-size:.95rem; }
-
-  /* Botão sempre no rodapé do cartão */
-  #presentes .gift-card .btn{
-    margin-top:auto !important;
-    align-self:stretch;
-    text-align:center;
-  }
-
-  /* Setas de navegação */
-  #presentes .gifts-area{ position:relative; }
-  #presentes .gift-nav{
-    position:absolute; top:50%; transform:translateY(-50%);
-    z-index:2;
-    background:#fff; border:1px solid #e7dccb;
-    width:36px; height:36px; border-radius:999px;
-    box-shadow:0 6px 16px rgba(0,0,0,.08);
-    cursor:pointer;
-  }
-  #presentes .gift-prev{ left:-6px; }
-  #presentes .gift-next{ right:-6px; }
-
-  /* Scrollbar discreta do trilho */
-  #carrossel-presentes::-webkit-scrollbar{ height:8px; }
-  #carrossel-presentes::-webkit-scrollbar-thumb{ background:#e7dccb; border-radius:6px; }
-  #carrossel-presentes{ scrollbar-color:#e7dccb transparent; scrollbar-width:thin; }
 
 
 
