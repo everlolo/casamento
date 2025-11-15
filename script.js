@@ -587,7 +587,7 @@ if (recusarBtn) {
   });
 }
 
-/ 1) fora do click, uma vez só:
+/* 1) fora do click, uma vez só:*/
 membrosContainer.addEventListener("change", (e) => {
   if (!e.target.classList.contains("chk-membro")) return;
   const item = e.target.closest(".membro-item");
@@ -730,4 +730,5 @@ if (giftBtn) {
     }
   });
 }
+
 
