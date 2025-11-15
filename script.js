@@ -661,10 +661,27 @@ async function carregarPresentes() {
         <div class="gift-content">
           <h3>${p.item || "Presente"}</h3>
           ${
-            p.valor
-              ? `<p class="gift-value">Sugestão de valor: <strong>R$ ${p.valor}</strong></p>`
-              : ""
-          }
+  p.valor
+    ? (() => {
+        // Tenta converter o valor para um número, aceitando "," como decimal
+        const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
+
+        if (isNaN(valorNumerico)) {
+          // Se não for um número, só troca o texto
+          return `<p class="gift-value">Valor aproximado: <strong>R$ ${p.valor}</strong></p>`;
+        }
+
+        // Formata o número para o padrão R$ (ex: 799,00 ou 749,90)
+        const valorFormatado = valorNumerico.toLocaleString('pt-BR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+
+        // Retorna o HTML com o texto novo e o valor formatado
+        return `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
+      })()
+    : ""
+}
           <p class="gift-code">
             Código do presente: <strong>${p.codigo}</strong>
           </p>
@@ -732,6 +749,7 @@ if (giftBtn) {
     }
   });
 }
+
 
 
 
