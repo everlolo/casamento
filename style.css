@@ -1691,6 +1691,34 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   margin-bottom: 0;
 }
 
+/* =================================
+   POLIMENTO DA PALETA DE CORES (NOVOS)
+   ================================= */
+
+/* 1. Muda o ícone "+" da Programação para ROSA */
+.timeline-summary::before {
+  color: var(--rosa) !important; /* Em vez de var(--laranja) */
+}
+
+/* 2. Muda o hover do botão "Buscar" (RSVP) para AMARELO */
+#rsvp #buscarPinBtn:hover {
+  background-color: var(--amarelo) !important;
+  background-image: none !important;
+  color: #3b2f0a !important; /* Texto escuro para legibilidade no amarelo */
+  border-color: transparent !important;
+  filter: none !important;
+  transition: background-color .2s ease, color .2s ease !important;
+}
+
+/* 3. Muda o hover do "Informar que já comprei" (Presentes) para ROSA */
+#presentes #gift-submit:hover {
+  background-color: var(--rosa) !important; /* rosa */
+  background-image: none !important;
+  color: #ffffff !important;
+  border-color: transparent !impor
+  filter: none !important;
+  transition: background-color .2s ease, color .2s ease !important;
+}
 
 
 
