@@ -599,3 +599,135 @@ membrosContainer.addEventListener("change", (e) => {
   }
 });
 
+/* ============================================================
+   LISTA DE PRESENTES (DINÂMICA + PIN DO CONVIDADO)
+   ============================================================ */
+
+const presentesContainer = document.getElementById("carrossel-presentes");
+const giftCodeInput      = document.getElementById("gift-code");
+const giftPinInput       = document.getElementById("gift-pin");
+const giftMsg            = document.getElementById("gift-message");
+const giftBtn            = document.getElementById("gift-submit");
+
+// Carrega presentes ao abrir a página
+if (presentesContainer) {
+  carregarPresentes();
+}
+
+/**
+ * Busca no Apps Script a lista de presentes disponíveis
+ * (apenas os que ainda não têm PIN de comprador na coluna K)
+ */
+async function carregarPresentes() {
+  try {
+    presentesContainer.innerHTML = "<p>Carregando presentes...</p>";
+
+    const data = await chamarJsonp(
+      { acao: "presentesListar" },
+      "callbackPresentesListar"
+    );
+
+    if (!data.ok) {
+      presentesContainer.innerHTML =
+        "<p>Não foi possível carregar a lista de presentes.</p>";
+      console.error(data.error);
+      return;
+    }
+
+    const presentes = data.presentes || [];
+
+    if (!presentes.length) {
+      presentesContainer.innerHTML =
+        "<p>Todos os presentes já foram escolhidos! 💝</p>";
+      return;
+    }
+
+    presentesContainer.innerHTML = "";
+
+    presentes.forEach((p) => {
+      const card = document.createElement("article");
+      card.className = "gift-card";
+
+      card.innerHTML = `
+        <div class="gift-image">
+          ${
+            p.foto
+              ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">`
+              : ""
+          }
+        </div>
+        <div class="gift-content">
+          <h3>${p.item || "Presente"}</h3>
+          ${
+            p.valor
+              ? `<p class="gift-value">Sugestão de valor: <strong>R$ ${p.valor}</strong></p>`
+              : ""
+          }
+          <p class="gift-code">
+            Código do presente: <strong>${p.codigo}</strong>
+          </p>
+          <div class="gift-actions">
+            ${
+              p.url
+                ? `<a href="${p.url}" class="btn btn-light" target="_blank" rel="noopener">Abrir link</a>`
+                : ""
+            }
+          </div>
+        </div>
+      `;
+
+      presentesContainer.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+    presentesContainer.innerHTML =
+      "<p>Erro ao carregar a lista de presentes.</p>";
+  }
+}
+
+/**
+ * Quando o convidado informa que JÁ COMPROU o presente
+ * – ele digita o código do presente (col. I da Lista Presentes)
+ * – e o PIN do convite (col. I da Lista de Convidados)
+ */
+if (giftBtn) {
+  giftBtn.addEventListener("click", async () => {
+    const codigo = giftCodeInput.value.trim();
+    const pin    = giftPinInput.value.trim();
+
+    giftMsg.textContent = "";
+
+    if (!codigo || !pin) {
+      giftMsg.textContent =
+        "Preencha o código do presente e o PIN do convite.";
+      return;
+    }
+
+    giftMsg.textContent = "Enviando...";
+
+    try {
+      const data = await chamarJsonp(
+        { acao: "presentesComprar", codigo: codigo, pinConvite: pin },
+        "callbackPresentesComprar"
+      );
+
+      if (!data.ok) {
+        giftMsg.textContent = data.error || "Não foi possível registrar a compra.";
+        return;
+      }
+
+      giftMsg.textContent =
+        "Obrigados pelo carinho! Seu presente foi registrado com sucesso. 💝";
+
+      giftCodeInput.value = "";
+      giftPinInput.value = "";
+
+      // Recarrega a lista para esconder o presente já escolhido
+      carregarPresentes();
+    } catch (err) {
+      console.error(err);
+      giftMsg.textContent = "Erro ao se comunicar com o servidor.";
+    }
+  });
+}
+
