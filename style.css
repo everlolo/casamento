@@ -1668,6 +1668,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 }
 
 .timeline-title {
+  font-family: 'Playfair Display', serif;
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--verde); /* <<<--- CORRIGIDO */
@@ -1719,6 +1720,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   filter: none !important;
   transition: background-color .2s ease, color .2s ease !important;
 }
+
 
 
 
