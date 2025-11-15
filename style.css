@@ -1546,6 +1546,28 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   }
 }
 
+/* ===== MOBILE: MOSTRAR 1 FOTO POR VEZ NA GALERIA ===== */
+@media (max-width: 680px) {
+
+  /* cada card ocupa praticamente a largura inteira do celular */
+  .couple-gallery {
+    --tile-size: 88vw;    /* ocupa ~90% da largura da tela */
+    --tile-gap: 16px;
+  }
+
+  /* deixa as fotos maiores e com foco */
+  .couple-gallery .item {
+    aspect-ratio: 4 / 5;  /* estilo foto vertical bonita (troque para 1/1 se quiser quadrada) */
+    border-radius: 16px;
+  }
+
+  .couple-gallery .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 
 
 
