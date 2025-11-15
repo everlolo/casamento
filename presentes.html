@@ -1,33 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lista de Presentes - Caroline & Everton</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-
-  <style>
-    /* Reusa o .gifts-wrapper mas força um layout de grid */
-    .gifts-wrapper {
-      display: grid !important; /* Força o grid */
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px !important;
-      overflow-x: hidden !important; /* Tira o scroll horizontal */
-      padding-bottom: 20px !important;
-    }
-
-    /* O CSS do .gift-card virá do style.css (Passo 1) */
-    .gift-card {
-      min-height: 420px; /* Mantém a altura consistente */
-    }
-
-    /* Esconde as setas de navegação nesta página */
-    .gift-nav {
-      display: none;
-    }
-  </style>
   <style>
   /* Reusa o .gifts-wrapper mas força um layout de grid */
   .gifts-wrapper {
@@ -44,9 +17,9 @@
     display: none;
   }
 
-  /* --- A CORREÇÃO ESTÁ AQUI --- */
+  /* --- A CORREÇÃO DE ALINHAMENTO --- */
 
-  /* Cartão de presente (duplicado do CSS principal para garantir) */
+  /* Cartão de presente */
   #presentes .gift-card, .gift-card {
     display: flex !important;
     flex-direction: column !important;
@@ -58,7 +31,7 @@
     padding: 14px;
   }
 
-  /* Container da Imagem padronizado (NOVO) */
+  /* Container da Imagem padronizado (para alinhar) */
   #presentes .gift-card .gift-image, .gift-card .gift-image {
     width: 100%;
     height: 200px; /* Força a altura do container */
@@ -66,7 +39,7 @@
     border: 1px dashed #e7dccb; /* Linha sutil para caixas vazias */
     border-radius: 10px;
     margin-bottom: 12px;
-    display: block; /* Garante o bloco */
+    display: block;
     position: relative;
   }
 
@@ -82,8 +55,7 @@
     font-weight: 600;
   }
 
-
-  /* Imagem (se existir) preenche o container (NOVO) */
+  /* Imagem (se existir) preenche o container */
   #presentes .gift-card .gift-image img, .gift-card .gift-image img {
     width: 100%;
     height: 100%; /* Preenche os 200px do pai */
@@ -103,8 +75,6 @@
   /* Títulos e valores */
   #presentes .gift-card h4, .gift-card h4 { margin:6px 0 4px; font-size:1.05rem; }
   #presentes .gift-card .valor, .gift-card .valor { color:#6b6b6b; font-size:.95rem; }
-
-  /* --- FIM DA CORREÇÃO --- */
 </style>
 </head>
 <body>
