@@ -1568,6 +1568,37 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   }
 }
 
+/* ===== AJUSTE DA GALERIA SÓ NO CELULAR (mantém desktop como está) ===== */
+@media (max-width: 680px) {
+
+  /* trilho da galeria dos noivos */
+  #galeria-noivos.gallery-wrapper {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(82vw, 1fr) !important; /* 1 foto por vez */
+    gap: 16px !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 8px 10px 16px !important;
+  }
+
+  /* cada “cartão” de foto */
+  #galeria-noivos .cameo-square {
+    scroll-snap-align: start;
+    min-width: 82vw;          /* garante 1 foto por tela */
+    max-width: 82vw;
+  }
+
+  /* só pra ter uma margem mais agradável no mobile */
+  #galeria {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
 
 
 
