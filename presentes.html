@@ -75,6 +75,19 @@
   /* Títulos e valores */
   #presentes .gift-card h4, .gift-card h4 { margin:6px 0 4px; font-size:1.05rem; }
   #presentes .gift-card .valor, .gift-card .valor { color:#6b6b6b; font-size:.95rem; }
+
+/* --- Adiciona o hover laranja nos botões desta página --- */
+#presentes-grid-container .btn:hover {
+  background-color: #f27d3d !important; /* laranja */
+  background-image: none !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  filter: none !important;
+  transition: background-color .2s ease, color .2s ease !important;
+}
+
+
+    
 </style>
 </head>
 <body>
@@ -153,7 +166,7 @@
                   Código do presente: <strong>${p.codigo}</strong>
                 </p>
                 <div class="gift-actions">
-                  ${p.url ? `<a href="${p.url}" class="btn btn-light" target="_blank" rel="noopener">Abrir link</a>` : ""}
+                  ${p.url ? `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>` : ""}
                 </div>
               </div>
             `;
