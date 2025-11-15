@@ -369,7 +369,7 @@ if (checkNomeBtn) {
  ************************************************/
 
 // 1) COLOQUE AQUI a URL do SEU WebApp (termina em /exec)
-const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbxcOHe1LCUhATyE1O_SMGciYPAwRMWbUirUfTl5r0TRhhOH2LLf7Jwn92r3iCfskFpXVQ/exec";
+const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbzktn7dyPIvfIo2JskZ4YH55mOS6q1VX-88QSSZJNi9lp_2M67jrQc86sXCDzDjI20PRg/exec";
 
 // 2) Pega os elementos da área de RSVP
 const pinInput        = document.getElementById("pinInput");
@@ -732,6 +732,7 @@ if (giftBtn) {
     }
   });
 }
+
 
 
 
