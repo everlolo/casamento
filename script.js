@@ -97,7 +97,7 @@ document.querySelectorAll('.topbar a[href^="#"]').forEach(a=>{
 })();
 
 /* ================== RSVP ================== */
-/* const checkNomeBtn = document.getElementById('checkNomeBtn');
+const checkNomeBtn = document.getElementById('checkNomeBtn');
 const nomeInput = document.getElementById('nomeInput');
 const rsvpMessage = document.getElementById('rsvp-message');
 const confirmationArea = document.getElementById('rsvp-confirmation-area');
@@ -137,7 +137,7 @@ function confetti(pieces = 120, durationMs = 2200){
   }
 }
 
-async function processarRSVP(resposta) {*/
+async function processarRSVP(resposta) {
   const nome = (nomeInput?.value || '').trim();
   if (!rsvpMessage) return;
 
@@ -242,6 +242,7 @@ if (checkNomeBtn) {
     await processarRSVP('Verificar');
   });
 }
+*/
 
 // Preenche automaticamente a data nas cápsulas, reaproveitando a sua dataFinal
 (function renderWeddingDate(){
@@ -730,5 +731,6 @@ if (giftBtn) {
     }
   });
 }
+
 
 
