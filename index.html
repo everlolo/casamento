@@ -118,57 +118,46 @@
     <!-- LISTA DE PRESENTES -->
 <section id="presentes" class="card">
   <h2 class="section-title">Lista de Presentes</h2>
-
-  <details class="lista-detalhes">
-    <summary>Clique aqui para ver nossas sugestões e cotas</summary>
-    <p class="subtle">
-      Preparamos algumas sugestões com muito carinho para quem quiser nos presentear!
-    </p>
-  </details>
+  <p class="section-subtitle">
+    Se quiser nos presentear, você pode escolher um item da lista abaixo.
+    Depois de comprar, registre aqui no site para que ele saia da lista. 💝
+  </p>
 
   <div class="gifts-area">
-    <button class="gift-nav gift-prev" aria-label="rolar para esquerda">‹</button>
+    <button class="gift-nav gift-prev" aria-label="rolar lista para esquerda">‹</button>
 
-    <div class="gifts-wrapper" id="carrossel-presentes" tabindex="0" aria-label="lista de presentes">
-      <div class="gift-card">
-        <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=640&auto=format&fit=crop" alt="Liquidificador">
-        <h4>Liquidificador</h4>
-        <p class="valor">Valor referência: R$ 199,00</p>
-        <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
+    <div class="gifts-wrapper" id="carrossel-presentes">
+      <!-- O JavaScript vai preencher os presentes aqui -->
+    </div>
+
+    <button class="gift-nav gift-next" aria-label="rolar lista para direita">›</button>
+  </div>
+
+  <div class="card confirm-card" style="margin-top: 2rem;">
+    <h3 class="section-subtitle">Já comprou um presente?</h3>
+    <p>Informe o <strong>código do presente</strong> e o <strong>PIN do seu convite</strong> para registrarmos:</p>
+
+    <div class="rsvp-linha">
+      <div class="col">
+        <label for="gift-code" class="label">Código do presente</label>
+        <input id="gift-code" class="input" placeholder="Ex: P012" />
       </div>
-
-      <div class="gift-card">
-        <img src="https://images.unsplash.com/photo-1601447182659-722fdce0f7b2?q=80&w=640&auto=format&fit=crop" alt="Jogo de Jantar">
-        <h4>Jogo de Jantar</h4>
-        <p class="valor">Valor referência: R$ 349,00</p>
-        <a class="btn btn-amarelo" href="#" target="_blank">Comprar na Loja</a>
+      <div class="col">
+        <label for="gift-pin" class="label">PIN do convite</label>
+        <input id="gift-pin" class="input" placeholder="Ex: 4821" maxlength="4" />
       </div>
-
-      <div class="gift-card">
-        <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=640&auto=format&fit=crop" alt="Panela">
-        <h4>Panela</h4>
-        <p class="valor">Valor referência: R$ 259,00</p>
-        <a class="btn btn-rosa" href="#" target="_blank">Comprar na Loja</a>
-      </div>
-
-      <div class="gift-card">
-        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=640&auto=format&fit=crop" alt="Jogo de Toalhas">
-        <h4>Jogo de Toalhas</h4>
-        <p class="valor">Valor referência: R$ 189,00</p>
-        <a class="btn btn-principal" href="#" target="_blank">Comprar na Loja</a>
-      </div>
-
-      <div class="gift-card">
-        <img src="https://images.unsplash.com/photo-1582582621959-48d3a8d24b9e?q=80&w=640&auto=format&fit=crop" alt="Cafeteira">
-        <h4>Cafeteira</h4>
-        <p class="valor">Valor referência: R$ 329,00</p>
-        <a class="btn btn-laranja" href="#" target="_blank">Comprar na Loja</a>
+      <div class="col col-botao">
+        <label class="label sr-only">Confirmar</label>
+        <button id="gift-submit" class="btn btn-principal w-100">
+          Informar que já comprei
+        </button>
       </div>
     </div>
 
-    <button class="gift-nav gift-next" aria-label="rolar para direita">›</button>
+    <p id="gift-message" class="rsvp-message"></p>
   </div>
 </section>
+
 
     <!-- RSVP -->
    <section id="rsvp" class="card">
@@ -296,6 +285,7 @@
   
 </body>
 </html>
+
 
 
 
