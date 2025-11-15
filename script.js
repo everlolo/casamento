@@ -97,6 +97,7 @@ document.querySelectorAll('.topbar a[href^="#"]').forEach(a=>{
 })();
 
 /* ================== RSVP ================== */
+/*
 const checkNomeBtn = document.getElementById('checkNomeBtn');
 const nomeInput = document.getElementById('nomeInput');
 const rsvpMessage = document.getElementById('rsvp-message');
@@ -731,6 +732,7 @@ if (giftBtn) {
     }
   });
 }
+
 
 
 
