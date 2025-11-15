@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lista de Presentes - Caroline & Everton</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Reusa o .gifts-wrapper mas força um layout de grid */
+    .gifts-wrapper {
+      display: grid !important; /* Força o grid */
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px !important;
+      overflow-x: hidden !important; /* Tira o scroll horizontal */
+      padding-bottom: 20px !important;
+    }
+
+    /* O CSS do .gift-card virá do style.css (Passo 1) */
+    .gift-card {
+      min-height: 420px; /* Mantém a altura consistente */
+    }
+
+    /* Esconde as setas de navegação nesta página */
+    .gift-nav {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="conteudo">
+    <section class="card">
+      <h1 class="section-title">Lista de Presentes Completa</h1>
+      <p><a href="index.html#presentes" style="font-weight: 600;">&larr; Voltar ao site principal</a></p>
+
+      <div class="gifts-wrapper" id="presentes-grid-container">
+        <p style="grid-column: 1 / -1;">Carregando presentes...</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+
+  <script>
+    // Roda assim que a página carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pega o container desta página
+      const gridContainer = document.getElementById('presentes-grid-container');
+
+      // Função adaptada da 'carregarPresentes' do seu script.js
+      async function carregarPresentesGrid() {
+        try {
+          gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Carregando presentes...</p>";
+
+          const data = await chamarJsonp(
+            { acao: "presentesListar" },
+            "callbackPresentesGrid" // Usa um callback diferente para não conflitar
+          );
+
+          if (!data.ok) {
+            gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Não foi possível carregar a lista de presentes.</p>";
+            console.error(data.error);
+            return;
+          }
+
+          const presentes = data.presentes || [];
+
+          if (!presentes.length) {
+            gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Todos os presentes já foram escolhidos! 💝</p>";
+            return;
+          }
+
+          gridContainer.innerHTML = ""; // Limpa o "Carregando..."
+
+          presentes.forEach((p) => {
+            const card = document.createElement("article");
+            card.className = "gift-card"; // Reusa a classe .gift-card
+
+            // Formata o valor (lógica da nossa conversa anterior)
+            let valorHtml = '';
+            if (p.valor) {
+              const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
+              let valorFormatado = p.valor;
+              if (!isNaN(valorNumerico)) {
+                valorFormatado = valorNumerico.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                });
+              }
+              valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
+            }
+
+            // Monta o card (mesmo HTML do script.js)
+            card.innerHTML = `
+              <div class="gift-image">
+                ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
+              </div>
+              <div class="gift-content">
+                <h3>${p.item || "Presente"}</h3>
+                ${valorHtml}
+                <p class="gift-code">
+                  Código do presente: <strong>${p.codigo}</strong>
+                </p>
+                <div class="gift-actions">
+                  ${p.url ? `<a href="${p.url}" class="btn btn-light" target="_blank" rel="noopener">Abrir link</a>` : ""}
+                </div>
+              </div>
+            `;
+            gridContainer.appendChild(card);
+          });
+
+        } catch (err) {
+          console.error(err);
+          gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Erro ao carregar a lista de presentes.</p>";
+        }
+      }
+
+      // Executa a função
+      carregarPresentesGrid();
+    });
+  </script>
+
+</body>
+</html>
