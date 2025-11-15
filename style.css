@@ -1641,7 +1641,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
   content: '+';
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--cor-laranja); /* Puxa da sua paleta de cores */
+  color: var(--laranja); /* <<<--- CORRIGIDO */
   font-family: 'Lora', serif;
   margin-right: 5px;
   transition: transform 0.2s ease;
@@ -1670,7 +1670,7 @@ a.btn:disabled { opacity:.6; cursor:not-allowed; }
 .timeline-title {
   font-weight: 700;
   font-size: 1.1rem;
-  color: var(--cor-verde); /* Puxa o verde da sua paleta */
+  color: var(--verde); /* <<<--- CORRIGIDO */
 }
 
 /* O conteúdo que expande */
