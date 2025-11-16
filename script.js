@@ -3,14 +3,14 @@
    Aqui deixei sua URL do Google Apps Script que já funcionou.
 */
 const WEBHOOK_URL_PROXY = '/api/rsvp'; // se não tiver API routes, ignorará
-const GAS_FALLBACK_URL  = 'https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec';
+const GAS_FALLBACK_URL = 'https://script.google.com/macros/s/AKfycbygYup61ahqKlAPN5Nr0_ldLItzN3MwFUU1GQl0-b6K-6J5-MDUr_bbCWz33NlAMgmvoA/exec';
 
-async function postRSVP(payload){
+async function postRSVP(payload) {
   // tenta proxy primeiro; se falhar/404, tenta GAS fallback
-  async function tryUrl(url){
+  async function tryUrl(url) {
     const r = await fetch(url, {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
     // Alguns setups retornam 200 sem JSON; tratamos com tolerância
@@ -35,8 +35,10 @@ async function postRSVP(payload){
   // vamos retornar um "sucesso" otimista quando a resposta for 200/204.
   if (gr.ok) {
     // payload.resposta decide a mensagem adiante
-    return { status: (payload.resposta === 'Verificar' ? 'nome_encontrado' : 'sucesso'),
-             message: 'Registrado.' };
+    return {
+      status: (payload.resposta === 'Verificar' ? 'nome_encontrado' : 'sucesso'),
+      message: 'Registrado.'
+    };
   }
 
   // Se chegou aqui, de fato falhou:
@@ -46,7 +48,7 @@ async function postRSVP(payload){
 // DATA EXATA DO CASAMENTO (mantém a sua)
 const dataFinal = new Date('July 25, 2026 09:30:00').getTime();
 
-function atualizarDiasRestantes(){
+function atualizarDiasRestantes() {
   const alvo = dataFinal;
   const agora = Date.now();
   let dias = Math.ceil((alvo - agora) / (1000 * 60 * 60 * 24));
@@ -55,7 +57,7 @@ function atualizarDiasRestantes(){
   const banner = document.getElementById('bannerCountdown');
   if (!el || !banner) return;
 
-  if (dias <= 0){
+  if (dias <= 0) {
     // Chegou o grande dia
     banner.querySelector('.bc-label').textContent = '';
     el.textContent = 'HOJE!';
@@ -74,29 +76,29 @@ setInterval(atualizarDiasRestantes, 60 * 1000);
 
 
 /* ================== SMOOTH SCROLL NAV ================== */
-document.querySelectorAll('.topbar a[href^="#"]').forEach(a=>{
-  a.addEventListener('click', e=>{
+document.querySelectorAll('.topbar a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
     e.preventDefault();
     const id = a.getAttribute('href');
     const el = document.querySelector(id);
-    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 
 /* ================== CARROSSEL SETAS ================== */
-(function(){
+(function () {
   const wrap = document.querySelector('.carrossel-wrap');
   if (!wrap) return;
   const car = wrap.querySelector('.carrossel');
   const esq = wrap.querySelector('.seta.esquerda');
   const dir = wrap.querySelector('.seta.direita');
 
-  function step(){ return Math.min(360, car.clientWidth * 0.9); }
-  esq.addEventListener('click', ()=> car.scrollBy({ left: -step(), behavior:'smooth' }));
-  dir.addEventListener('click', ()=> car.scrollBy({ left:  step(), behavior:'smooth' }));
+  function step() { return Math.min(360, car.clientWidth * 0.9); }
+  esq.addEventListener('click', () => car.scrollBy({ left: -step(), behavior: 'smooth' }));
+  dir.addEventListener('click', () => car.scrollBy({ left: step(), behavior: 'smooth' }));
 })();
 
-/* ================== RSVP ================== */
+/* ================== RSVP ANTIGO (COMENTADO) ================== */
 /*
 const checkNomeBtn = document.getElementById('checkNomeBtn');
 const nomeInput = document.getElementById('nomeInput');
@@ -227,9 +229,6 @@ async function processarRSVP(resposta) {
   }
 }
 
-
-
-
 // Clique do "Verificar"
 if (checkNomeBtn) {
   checkNomeBtn.addEventListener('click', async () => {
@@ -246,30 +245,30 @@ if (checkNomeBtn) {
 */
 
 // Preenche automaticamente a data nas cápsulas, reaproveitando a sua dataFinal
-(function renderWeddingDate(){
-  try{
+(function renderWeddingDate() {
+  try {
     const d = new Date(dataFinal);
     if (isNaN(d)) return;
 
-    const meses = ["JANEIRO","FEVEREIRO","MARÇO","ABRIL","MAIO","JUNHO",
-                   "JULHO","AGOSTO","SETEMBRO","OUTUBRO","NOVEMBRO","DEZEMBRO"];
+    const meses = ["JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO",
+      "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"];
 
-    const dd   = String(d.getDate()).padStart(2,'0');
-    const mes  = meses[d.getMonth()];
-    const ano  = String(d.getFullYear());
-    const hh   = String(d.getHours()).padStart(2,'0');
-    const mm   = String(d.getMinutes()).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mes = meses[d.getMonth()];
+    const ano = String(d.getFullYear());
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
 
-    const dayEl   = document.querySelector('.date-day');
+    const dayEl = document.querySelector('.date-day');
     const monthEl = document.querySelector('.date-month');
-    const yearEl  = document.querySelector('.date-year');
-    const timeEl  = document.querySelector('.date-time');
+    const yearEl = document.querySelector('.date-year');
+    const timeEl = document.querySelector('.date-time');
 
-    if (dayEl)   dayEl.textContent   = dd;
+    if (dayEl) dayEl.textContent = dd;
     if (monthEl) monthEl.textContent = mes;
-    if (yearEl)  yearEl.textContent  = ano;
-    if (timeEl)  timeEl.textContent  = `${hh}:${mm}`;
-  }catch(e){ /* silencioso */ }
+    if (yearEl) yearEl.textContent = ano;
+    if (timeEl) timeEl.textContent = `${hh}:${mm}`;
+  } catch (e) { /* silencioso */ }
 })();
 
 // 4) Títulos com sublinhado animado (IntersectionObserver)
@@ -312,7 +311,7 @@ if (checkNomeBtn) {
   const passo = () => Math.round(trilho.clientWidth * 0.9);
 
   btnDir.addEventListener('click', () => {
-    trilho.scrollBy({ left:  passo(), behavior: 'smooth' });
+    trilho.scrollBy({ left: passo(), behavior: 'smooth' });
   });
   btnEsq.addEventListener('click', () => {
     trilho.scrollBy({ left: -passo(), behavior: 'smooth' });
@@ -321,7 +320,7 @@ if (checkNomeBtn) {
   // Snap com teclado (acessibilidade)
   trilho.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') btnDir.click();
-    if (e.key === 'ArrowLeft')  btnEsq.click();
+    if (e.key === 'ArrowLeft') btnEsq.click();
   });
 })();
 
@@ -336,7 +335,7 @@ if (checkNomeBtn) {
   const step = () => Math.max(280, Math.floor(wrap.clientWidth * 0.8));
 
   prev?.addEventListener('click', () => wrap.scrollBy({ left: -step(), behavior: 'smooth' }));
-  next?.addEventListener('click', () => wrap.scrollBy({ left:  step(), behavior: 'smooth' }));
+  next?.addEventListener('click', () => wrap.scrollBy({ left: step(), behavior: 'smooth' }));
 
   // Arrastar com o dedo/mouse (drag-to-scroll)
   let isDown = false, startX = 0, startLeft = 0, pid = null;
@@ -369,16 +368,16 @@ if (checkNomeBtn) {
  ************************************************/
 
 // 1) COLOQUE AQUI a URL do SEU WebApp (termina em /exec)
-const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbzktn7dyPIvfIo2JskZ4YH55mOS6q1VX-88QSSZJNi9lp_2M67jrQc86sXCDzDjI20PRg/exec";
+const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbx-s-Kk8iYwbm-r-x2mS5iE-kP_l08kUv-f2rXwzEw1l1t2tK2H_zH4_Qh9s-2dJqg7/exec";
 
 // 2) Pega os elementos da área de RSVP
-const pinInput        = document.getElementById("pinInput");
-const buscarBtn       = document.getElementById("buscarPinBtn");
-const salvarBtn       = document.getElementById("btnSalvarRsvp");
-const mensagem        = document.getElementById("pin-message");
-const listaArea       = document.getElementById("lista-membros");
+const pinInput = document.getElementById("pinInput");
+const buscarBtn = document.getElementById("buscarPinBtn");
+const salvarBtn = document.getElementById("btnSalvarRsvp");
+const mensagem = document.getElementById("pin-message");
+const listaArea = document.getElementById("lista-membros");
 const membrosContainer = document.getElementById("membros-container");
-const recusarBtn       = document.getElementById("btnRecusarTodos");
+const recusarBtn = document.getElementById("btnRecusarTodos");
 
 
 let membrosEncontrados = [];
@@ -466,7 +465,7 @@ if (buscarBtn) {
         membrosContainer.appendChild(div);
       });
 
-       
+
 
     } catch (err) {
       console.error("Erro na busca por PIN:", err);
@@ -606,10 +605,10 @@ membrosContainer.addEventListener("change", (e) => {
    ============================================================ */
 
 const presentesContainer = document.getElementById("carrossel-presentes");
-const giftCodeInput      = document.getElementById("gift-code");
-const giftPinInput       = document.getElementById("gift-pin");
-const giftMsg            = document.getElementById("gift-message");
-const giftBtn            = document.getElementById("gift-submit");
+const giftCodeInput = document.getElementById("gift-code");
+const giftPinInput = document.getElementById("gift-pin");
+const giftMsg = document.getElementById("gift-message");
+const giftBtn = document.getElementById("gift-submit");
 
 // Carrega presentes ao abrir a página
 if (presentesContainer) {
@@ -621,92 +620,91 @@ if (presentesContainer) {
  * (apenas os que ainda não têm PIN de comprador na coluna K)
  */
 async function carregarPresentes() {
-/* === CÓDIGO CORRETO PARA O script (7).js === */
-try {
-  presentesContainer.innerHTML = "<p>Carregando presentes...</p>";
+  try {
+    presentesContainer.innerHTML = "<p>Carregando presentes...</p>";
 
-  const data = await chamarJsonp(
-    { acao: "presentesListar" },
-    "callbackPresentesListar"
-  );
+    const data = await chamarJsonp(
+      { acao: "presentesListar" },
+      "callbackPresentesListar"
+    );
 
-  if (!data.ok) {
-    presentesContainer.innerHTML =
-      "<p>Não foi possível carregar a lista de presentes.</p>";
-    console.error(data.error);
-    return;
-  }
+    if (!data.ok) {
+      presentesContainer.innerHTML =
+        "<p>Não foi possível carregar a lista de presentes.</p>";
+      console.error(data.error);
+      return;
+    }
 
-  const presentes = data.presentes || [];
+    const presentes = data.presentes || [];
 
-  if (!presentes.length) {
-    presentesContainer.innerHTML =
-      "<p>Todos os presentes já foram escolhidos! 💝</p>";
-    return;
-  }
+    if (!presentes.length) {
+      presentesContainer.innerHTML =
+        "<p>Todos os presentes já foram escolhidos! 💝</p>";
+      return;
+    }
 
-  presentesContainer.innerHTML = "";
+    presentesContainer.innerHTML = "";
 
-  presentes.forEach((p) => {
-    const card = document.createElement("article");
-    card.className = "gift-card";
+    presentes.forEach((p) => {
+      const card = document.createElement("article");
+      card.className = "gift-card";
 
-    // --- Início da Lógica de Cota ---
-    let valorHtml = '';
-    if (p.cota_sim === 'Sim' && p.cota_valor) {
-      // É COTA
-      const valorCotaNum = parseFloat(String(p.cota_valor).replace(',', '.'));
-      const valorCotaFmt = isNaN(valorCotaNum) ? p.cota_valor : valorCotaNum.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      
-      valorHtml = `<p class="gift-value">Valor da cota: <strong>R$ ${valorCotaFmt}</strong></p>`;
-      if (p.cota_desc) {
-        valorHtml += `<p class"gift-cota-desc" style="font-size: 0.85rem; opacity: 0.8; margin-top: -5px;">${p.cota_desc}</p>`;
+      // --- Início da Lógica de Cota (CORRETA) ---
+      let valorHtml = '';
+      if (p.cota_sim === 'Sim' && p.cota_valor) {
+        // É COTA
+        const valorCotaNum = parseFloat(String(p.cota_valor).replace(',', '.'));
+        const valorCotaFmt = isNaN(valorCotaNum) ? p.cota_valor : valorCotaNum.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        valorHtml = `<p class="gift-value">Valor da cota: <strong>R$ ${valorCotaFmt}</strong></p>`;
+        if (p.cota_desc) {
+          valorHtml += `<p class"gift-cota-desc" style="font-size: 0.85rem; opacity: 0.8; margin-top: -5px;">${p.cota_desc}</p>`;
+        }
+
+      } else if (p.valor) {
+        // É PRESENTE NORMAL
+        const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
+        const valorFormatado = isNaN(valorNumerico) ? p.valor : valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
       }
 
-    } else if (p.valor) {
-      // É PRESENTE NORMAL
-      const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
-      const valorFormatado = isNaN(valorNumerico) ? p.valor : valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      
-      valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
-    }
+      // Lógica para o botão
+      let botaoHtml = '';
+      if (p.cota_sim === 'Sim' && p.url) {
+        // É COTA -> Botão "Comprar Cota"
+        botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Comprar Cota</a>`;
+      } else if (p.url) {
+        // É PRESENTE NORMAL -> Botão "Abrir link"
+        botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>`;
+      }
+      // --- Fim da Lógica de Cota ---
 
-    // Lógica para o botão
-    let botaoHtml = '';
-    if (p.cota_sim === 'Sim' && p.url) {
-      // É COTA -> Botão "Comprar Cota"
-      botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Comprar Cota</a>`;
-    } else if (p.url) {
-      // É PRESENTE NORMAL -> Botão "Abrir link"
-      botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>`;
-    }
-    // --- Fim da Lógica de Cota ---
-
-    // Monta o card
-    card.innerHTML = `
-      <div class="gift-image">
-        ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
-      </div>
-      <div class="gift-content">
-        <h3>${p.item || "Presente"}</h3>
-        ${valorHtml} 
-        <p class="gift-code">
-          Código do presente: <strong>${p.codigo}</strong>
-        </p>
-        <div class="gift-actions">
-          ${botaoHtml}
+      // Monta o card
+      card.innerHTML = `
+        <div class="gift-image">
+          ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
         </div>
-      </div>
-    `;
+        <div class="gift-content">
+          <h3>${p.item || "Presente"}</h3>
+          ${valorHtml} 
+          <p class="gift-code">
+            Código do presente: <strong>${p.codigo}</strong>
+          </p>
+          <div class="gift-actions">
+            ${botaoHtml}
+          </div>
+        </div>
+      `;
 
-    presentesContainer.appendChild(card);
-  });
-} catch (err) {
-  console.error(err);
-  presentesContainer.innerHTML =
-    "<p>Erro ao carregar a lista de presentes.</p>";
+      presentesContainer.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+    presentesContainer.innerHTML =
+      "<p>Erro ao carregar a lista de presentes.</p>";
+  }
 }
-/* === FIM DO CÓDIGO === */
 
 /**
  * Quando o convidado informa que JÁ COMPROU o presente
@@ -716,7 +714,7 @@ try {
 if (giftBtn) {
   giftBtn.addEventListener("click", async () => {
     const codigo = giftCodeInput.value.trim();
-    const pin    = giftPinInput.value.trim();
+    const pin = giftPinInput.value.trim();
 
     giftMsg.textContent = "";
 
@@ -738,14 +736,15 @@ if (giftBtn) {
         giftMsg.textContent = data.error || "Não foi possível registrar a compra.";
         return;
       }
-
-      giftMsg.textContent =
-        "Obrigados pelo carinho! Seu presente foi registrado com sucesso. 💝";
+      
+      // Mensagem de sucesso (normal ou a de "cota não precisa")
+      giftMsg.textContent = data.message || "Obrigados pelo carinho! Seu presente foi registrado com sucesso. 💝";
 
       giftCodeInput.value = "";
       giftPinInput.value = "";
 
       // Recarrega a lista para esconder o presente já escolhido
+      // (a trava de cota no GAS vai impedir que cotas sejam escondidas)
       carregarPresentes();
     } catch (err) {
       console.error(err);
@@ -753,12 +752,3 @@ if (giftBtn) {
     }
   });
 }
-
-
-
-
-
-
-
-
-
