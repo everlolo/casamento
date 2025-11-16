@@ -621,6 +621,7 @@ if (presentesContainer) {
  * (apenas os que ainda não têm PIN de comprador na coluna K)
  */
 async function carregarPresentes() {
+/* === CÓDIGO CORRETO PARA O script (7).js === */
 try {
   presentesContainer.innerHTML = "<p>Carregando presentes...</p>";
 
@@ -650,7 +651,7 @@ try {
     const card = document.createElement("article");
     card.className = "gift-card";
 
-    // --- Início da Lógica de Cota (CORRETA) ---
+    // --- Início da Lógica de Cota ---
     let valorHtml = '';
     if (p.cota_sim === 'Sim' && p.cota_valor) {
       // É COTA
@@ -705,6 +706,7 @@ try {
   presentesContainer.innerHTML =
     "<p>Erro ao carregar a lista de presentes.</p>";
 }
+/* === FIM DO CÓDIGO === */
 
 /**
  * Quando o convidado informa que JÁ COMPROU o presente
@@ -751,6 +753,7 @@ if (giftBtn) {
     }
   });
 }
+
 
 
 
