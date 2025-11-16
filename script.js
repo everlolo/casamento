@@ -93,9 +93,11 @@ document.querySelectorAll('.topbar a[href^="#"]').forEach(a => {
   const esq = wrap.querySelector('.seta.esquerda');
   const dir = wrap.querySelector('.seta.direita');
 
-  function step() { return Math.min(360, car.clientWidth * 0.9); }
-  esq.addEventListener('click', () => car.scrollBy({ left: -step(), behavior: 'smooth' }));
-  dir.addEventListener('click', () => car.scrollBy({ left: step(), behavior: 'smooth' }));
+  if (esq && dir) {
+    function step() { return Math.min(360, car.clientWidth * 0.9); }
+    esq.addEventListener('click', () => car.scrollBy({ left: -step(), behavior: 'smooth' }));
+    dir.addEventListener('click', () => car.scrollBy({ left: step(), behavior: 'smooth' }));
+  }
 })();
 
 /* ================== RSVP ANTIGO (COMENTADO) ================== */
@@ -289,15 +291,15 @@ if (checkNomeBtn) {
   const prev = document.querySelector('.gift-prev');
   const next = document.querySelector('.gift-next');
 
-  const step = () => Math.max(track.clientWidth * 0.9, 320);
-
-  prev?.addEventListener('click', () => {
-    track.scrollBy({ left: -step(), behavior: 'smooth' });
-  });
-
-  next?.addEventListener('click', () => {
-    track.scrollBy({ left: step(), behavior: 'smooth' });
-  });
+  if (prev && next) {
+    const step = () => Math.max(track.clientWidth * 0.9, 320);
+    prev.addEventListener('click', () => {
+      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    next.addEventListener('click', () => {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+  }
 })();
 
 
@@ -332,10 +334,11 @@ if (checkNomeBtn) {
   const prev = document.querySelector('#galeria .gallery-nav.prev');
   const next = document.querySelector('#galeria .gallery-nav.next');
 
-  const step = () => Math.max(280, Math.floor(wrap.clientWidth * 0.8));
-
-  prev?.addEventListener('click', () => wrap.scrollBy({ left: -step(), behavior: 'smooth' }));
-  next?.addEventListener('click', () => wrap.scrollBy({ left: step(), behavior: 'smooth' }));
+  if (prev && next) {
+    const step = () => Math.max(280, Math.floor(wrap.clientWidth * 0.8));
+    prev.addEventListener('click', () => wrap.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => wrap.scrollBy({ left: step(), behavior: 'smooth' }));
+  }
 
   // Arrastar com o dedo/mouse (drag-to-scroll)
   let isDown = false, startX = 0, startLeft = 0, pid = null;
@@ -367,8 +370,12 @@ if (checkNomeBtn) {
  * RSVP POR PIN – JSONP (sem CORS)
  ************************************************/
 
-// 1) COLOQUE AQUI a URL do SEU WebApp (termina em /exec)
-const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbx-s-Kk8iYwbm-r-x2mS5iE-kP_l08kUv-f2rXwzEw1l1t2tK2H_zH4_Qh9s-2dJqg7/exec";
+// 1) !!!!!!!!!!!!!!!! IMPORTANTE !!!!!!!!!!!!!!!!
+//    COLE AQUI A URL CORRETA DA SUA IMPLANTAÇÃO DO GOOGLE SCRIPT
+const URL_WEBAPP = "https://script.google.com/macros/s/AKfycbxRmKbjkSJwTy10q9UisfhZDjx3kde1BA8esnsiwiU1O1SnP54pNu0qSgvkYhkGRpcDnA/exec";
+//    (A que você gerou na "Nova Implantação" e que funcionou)
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 // 2) Pega os elementos da área de RSVP
 const pinInput = document.getElementById("pinInput");
@@ -391,10 +398,12 @@ function chamarJsonp(params) {
     const callbackName = "jsonp_cb_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
     params.callback = callbackName;
 
+    // Use a URL_WEBAPP correta
     const qs = new URLSearchParams(params).toString();
+    const scriptUrl = `${URL_WEBAPP}?${qs}`;
 
     const script = document.createElement("script");
-    script.src = `${URL_WEBAPP}?${qs}`;
+    script.src = scriptUrl;
 
     // callback chamado pelo Apps Script
     window[callbackName] = (data) => {
@@ -403,7 +412,8 @@ function chamarJsonp(params) {
       resolve(data);
     };
 
-    script.onerror = () => {
+    script.onerror = (err) => {
+      console.error("Erro no JSONP:", err, "URL:", scriptUrl);
       delete window[callbackName];
       script.remove();
       reject(new Error("Falha na requisição JSONP"));
@@ -589,16 +599,20 @@ if (recusarBtn) {
 }
 
 /* 1) fora do click, uma vez só:*/
-membrosContainer.addEventListener("change", (e) => {
-  if (!e.target.classList.contains("chk-membro")) return;
-  const item = e.target.closest(".membro-item");
-  if (!item) return;
-  if (e.target.checked) {
-    item.classList.add("confirmado");
-  } else {
-    item.classList.remove("confirmado");
-  }
-});
+// <<<--- ESTA É A CORREÇÃO DO 'TypeError' --- >>>
+// Só adiciona o listener se o container existir (na index.html)
+if (membrosContainer) {
+  membrosContainer.addEventListener("change", (e) => {
+    if (!e.target.classList.contains("chk-membro")) return;
+    const item = e.target.closest(".membro-item");
+    if (!item) return;
+    if (e.target.checked) {
+      item.classList.add("confirmado");
+    } else {
+      item.classList.remove("confirmado");
+    }
+  });
+}
 
 /* ============================================================
    LISTA DE PRESENTES (DINÂMICA + PIN DO CONVIDADO)
