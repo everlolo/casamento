@@ -621,128 +621,89 @@ if (presentesContainer) {
  * (apenas os que ainda não têm PIN de comprador na coluna K)
  */
 async function carregarPresentes() {
-  try {
-    presentesContainer.innerHTML = "<p>Carregando presentes...</p>";
+try {
+  presentesContainer.innerHTML = "<p>Carregando presentes...</p>";
 
-    const data = await chamarJsonp(
-      { acao: "presentesListar" },
-      "callbackPresentesListar"
-    );
+  const data = await chamarJsonp(
+    { acao: "presentesListar" },
+    "callbackPresentesListar"
+  );
 
-    if (!data.ok) {
-      presentesContainer.innerHTML =
-        "<p>Não foi possível carregar a lista de presentes.</p>";
-      console.error(data.error);
-      return;
-    }
-
-    const presentes = data.presentes || [];
-
-    if (!presentes.length) {
-      presentesContainer.innerHTML =
-        "<p>Todos os presentes já foram escolhidos! 💝</p>";
-      return;
-    }
-
-    presentesContainer.innerHTML = "";
-
-    presentes.forEach((p) => {
-      const card = document.createElement("article");
-      card.className = "gift-card";
-
-     // --- SUBSTITUA O BLOCO card.innerHTML EM script (7).js ---
-
-// Lógica para formatar o valor (seja cota ou valor cheio)
-let valorHtml = '';
-if (p.cota_sim === 'Sim' && p.cota_valor) {
-  // É COTA
-  const valorCotaNum = parseFloat(String(p.cota_valor).replace(',', '.'));
-  const valorCotaFmt = isNaN(valorCotaNum) ? p.cota_valor : valorCotaNum.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-  valorHtml = `<p class="gift-value">Valor da cota: <strong>R$ ${valorCotaFmt}</strong></p>`;
-  if (p.cota_desc) {
-    valorHtml += `<p class="gift-cota-desc">${p.cota_desc}</p>`;
-  }
-
-} else if (p.valor) {
-  // É PRESENTE NORMAL
-  const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
-  const valorFormatado = isNaN(valorNumerico) ? p.valor : valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-  valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
-}
-
-// Lógica para o botão (Muda o texto e o link se for cota)
-let botaoHtml = '';
-if (p.cota_sim === 'Sim' && p.url) {
-  // É COTA -> Botão "Comprar Cota" (usa o link do Mercado Pago da col. H)
-  botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Comprar Cota</a>`;
-} else if (p.url) {
-  // É PRESENTE NORMAL -> Botão "Abrir link"
-  botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>`;
-}
-
-// Monta o card
-card.innerHTML = `
-  <div class="gift-image">
-    ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
-  </div>
-  <div class="gift-content">
-    <h3>${p.item || "Presente"}</h3>
-    ${valorHtml} 
-    <p class="gift-code">
-      Código do presente: <strong>${p.codigo}</strong>
-    </p>
-    <div class="gift-actions">
-      ${botaoHtml}
-    </div>
-  </div>
-`;
-// --- FIM DA SUBSTITUIÇÃO ---
-        <div class="gift-content">
-          <h3>${p.item || "Presente"}</h3>
-          ${
-  p.valor
-    ? (() => {
-        // Tenta converter o valor para um número, aceitando "," como decimal
-        const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
-
-        if (isNaN(valorNumerico)) {
-          // Se não for um número, só troca o texto
-          return `<p class="gift-value">Valor aproximado: <strong>R$ ${p.valor}</strong></p>`;
-        }
-
-        // Formata o número para o padrão R$ (ex: 799,00 ou 749,90)
-        const valorFormatado = valorNumerico.toLocaleString('pt-BR', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        });
-
-        // Retorna o HTML com o texto novo e o valor formatado
-        return `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
-      })()
-    : ""
-}
-          <p class="gift-code">
-            Código do presente: <strong>${p.codigo}</strong>
-          </p>
-          <div class="gift-actions">
-            ${
-              p.url
-                ? `<a href="${p.url}" class="btn btn-light" target="_blank" rel="noopener">Abrir link</a>`
-                : ""
-            }
-          </div>
-        </div>
-      `;
-
-      presentesContainer.appendChild(card);
-    });
-  } catch (err) {
-    console.error(err);
+  if (!data.ok) {
     presentesContainer.innerHTML =
-      "<p>Erro ao carregar a lista de presentes.</p>";
+      "<p>Não foi possível carregar a lista de presentes.</p>";
+    console.error(data.error);
+    return;
   }
+
+  const presentes = data.presentes || [];
+
+  if (!presentes.length) {
+    presentesContainer.innerHTML =
+      "<p>Todos os presentes já foram escolhidos! 💝</p>";
+    return;
+  }
+
+  presentesContainer.innerHTML = "";
+
+  presentes.forEach((p) => {
+    const card = document.createElement("article");
+    card.className = "gift-card";
+
+    // --- Início da Lógica de Cota (CORRETA) ---
+    let valorHtml = '';
+    if (p.cota_sim === 'Sim' && p.cota_valor) {
+      // É COTA
+      const valorCotaNum = parseFloat(String(p.cota_valor).replace(',', '.'));
+      const valorCotaFmt = isNaN(valorCotaNum) ? p.cota_valor : valorCotaNum.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      
+      valorHtml = `<p class="gift-value">Valor da cota: <strong>R$ ${valorCotaFmt}</strong></p>`;
+      if (p.cota_desc) {
+        valorHtml += `<p class"gift-cota-desc" style="font-size: 0.85rem; opacity: 0.8; margin-top: -5px;">${p.cota_desc}</p>`;
+      }
+
+    } else if (p.valor) {
+      // É PRESENTE NORMAL
+      const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
+      const valorFormatado = isNaN(valorNumerico) ? p.valor : valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      
+      valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
+    }
+
+    // Lógica para o botão
+    let botaoHtml = '';
+    if (p.cota_sim === 'Sim' && p.url) {
+      // É COTA -> Botão "Comprar Cota"
+      botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Comprar Cota</a>`;
+    } else if (p.url) {
+      // É PRESENTE NORMAL -> Botão "Abrir link"
+      botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>`;
+    }
+    // --- Fim da Lógica de Cota ---
+
+    // Monta o card
+    card.innerHTML = `
+      <div class="gift-image">
+        ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
+      </div>
+      <div class="gift-content">
+        <h3>${p.item || "Presente"}</h3>
+        ${valorHtml} 
+        <p class="gift-code">
+          Código do presente: <strong>${p.codigo}</strong>
+        </p>
+        <div class="gift-actions">
+          ${botaoHtml}
+        </div>
+      </div>
+    `;
+
+    presentesContainer.appendChild(card);
+  });
+} catch (err) {
+  console.error(err);
+  presentesContainer.innerHTML =
+    "<p>Erro ao carregar a lista de presentes.</p>";
 }
 
 /**
@@ -790,6 +751,7 @@ if (giftBtn) {
     }
   });
 }
+
 
 
 
