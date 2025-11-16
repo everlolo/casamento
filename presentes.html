@@ -1,117 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lista de Presentes - Caroline & Everton</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-  /* Reusa o .gifts-wrapper mas força um layout de grid */
-  .gifts-wrapper {
-    display: grid !important; /* Força o grid */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px !important;
-    overflow-x: hidden !important; /* Tira o scroll horizontal */
-    padding-bottom: 20px !important;
-    align-items: stretch !important; /* alturas iguais */
-  }
+    /* Reusa o .gifts-wrapper mas força um layout de grid */
+    .gifts-wrapper {
+      display: grid !important; /* Força o grid */
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px !important;
+      overflow-x: hidden !important; /* Tira o scroll horizontal */
+      padding-bottom: 20px !important;
+      align-items: stretch !important; /* alturas iguais */
+    }
 
-  /* Esconde as setas de navegação nesta página */
-  .gift-nav {
-    display: none;
-  }
+    /* Esconde as setas de navegação nesta página */
+    .gift-nav {
+      display: none;
+    }
 
-  /* --- A CORREÇÃO DE ALINHAMENTO --- */
+    /* --- A CORREÇÃO DE ALINHAMENTO --- */
 
-  /* Cartão de presente */
-  #presentes .gift-card, .gift-card {
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 420px !important; /* altura consistente */
-    background: #fff;
-    border: 1px solid #eee4d6;
-    border-radius: 14px;
-    box-shadow: 0 6px 22px rgba(0,0,0,.05);
-    padding: 14px;
-  }
+    /* Cartão de presente */
+    #presentes .gift-card, .gift-card {
+      display: flex !important;
+      flex-direction: column !important;
+      min-height: 420px !important; /* altura consistente */
+      background: #fff;
+      border: 1px solid #eee4d6;
+      border-radius: 14px;
+      box-shadow: 0 6px 22px rgba(0,0,0,.05);
+      padding: 14px;
+    }
 
-  /* Container da Imagem padronizado (para alinhar) */
-  #presentes .gift-card .gift-image, .gift-card .gift-image {
-    width: 100%;
-    height: 200px; /* Força a altura do container */
-    background: #faf8f5; /* Cor de fundo para espaços vazios */
-    border: 1px dashed #e7dccb; /* Linha sutil para caixas vazias */
-    border-radius: 10px;
-    margin-bottom: 12px;
-    display: block;
-    position: relative;
-  }
+    /* Container da Imagem padronizado (para alinhar) */
+    #presentes .gift-card .gift-image, .gift-card .gift-image {
+      width: 100%;
+      height: 200px; /* Força a altura do container */
+      background: #faf8f5; /* Cor de fundo para espaços vazios */
+      border: 1px dashed #e7dccb; /* Linha sutil para caixas vazias */
+      border-radius: 10px;
+      margin-bottom: 12px;
+      display: block;
+      position: relative;
+    }
 
-  /* Texto de placeholder para caixas vazias */
-  #presentes .gift-card .gift-image:empty::before, .gift-card .gift-image:empty::before {
-    content: "Foto não disponível";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #b0a89d;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
+    /* Texto de placeholder para caixas vazias */
+    #presentes .gift-card .gift-image:empty::before, .gift-card .gift-image:empty::before {
+      content: "Foto não disponível";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #b0a89d;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
 
-  /* Imagem (se existir) preenche o container */
-  #presentes .gift-card .gift-image img, .gift-card .gift-image img {
-    width: 100%;
-    height: 100%; /* Preenche os 200px do pai */
-    object-fit: cover !important;
-    border-radius: 10px;
-    display: block;
-    border: none; /* Remove a borda pontilhada se a img existir */
-  }
+    /* Imagem (se existir) preenche o container */
+    #presentes .gift-card .gift-image img, .gift-card .gift-image img {
+      width: 100%;
+      height: 100%; /* Preenche os 200px do pai */
+      object-fit: cover !important;
+      border-radius: 10px;
+      display: block;
+      border: none; /* Remove a borda pontilhada se a img existir */
+    }
 
-  /* Botão sempre no rodapé do cartão */
-  #presentes .gift-card .btn, .gift-card .btn {
-    margin-top: auto !important;
-    align-self: stretch;
-    text-align: center;
-  }
+    /* Botão sempre no rodapé do cartão */
+    #presentes .gift-card .btn, .gift-card .btn {
+      margin-top: auto !important;
+      align-self: stretch;
+      text-align: center;
+    }
 
-  /* Títulos e valores */
-  #presentes .gift-card h4, .gift-card h4 { margin:6px 0 4px; font-size:1.05rem; }
-  #presentes .gift-card .valor, .gift-card .valor { color:#6b6b6b; font-size:.95rem; }
-
-/* --- Adiciona o ESTILO DE BOTÃO + HOVER LARANJA --- */
-
-/* 1. Força o visual de botão verde (a base) */
-#presentes-grid-container .btn-principal {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: .5rem !important;
-  min-height: 48px !important;
-  padding: 0 18px !important;
-  border: 0 !important;
-  border-radius: 14px !important;
-  text-decoration: none !important;
-  font-weight: 700 !important;
-  letter-spacing: .2px !important;
-
-  /* Cores do botão verde */
-  background: linear-gradient(180deg, #2e7d32, #3e8d42) !important;
-  color: #fff !important;
-  box-shadow: 0 10px 18px rgba(0,0,0,.08) !important;
-  transition: all .2s ease !important;
-}
-
-/* 2. Adiciona o hover laranja */
-#presentes-grid-container .btn-principal:hover {
-  background-color: #f27d3d !important; /* laranja */
-  background-image: none !important;
-  color: #ffffff !important;
-  border-color: transparent !important;
-  filter: none !important;
-  transform: translateY(-1px) !important;
-}
-
-
+    /* Títulos e valores */
+    #presentes .gift-card h4, .gift-card h4 { margin:6px 0 4px; font-size:1.05rem; }
+    #presentes .gift-card .valor, .gift-card .valor { color:#6b6b6b; font-size:.95rem; }
     
-</style>
+    /* --- Adiciona o ESTILO DE BOTÃO + HOVER LARANJA --- */
+
+    /* 1. Força o visual de botão verde (a base) */
+    #presentes-grid-container .btn-principal {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: .5rem !important;
+      min-height: 48px !important;
+      padding: 0 18px !important;
+      border: 0 !important;
+      border-radius: 14px !important;
+      text-decoration: none !important;
+      font-weight: 700 !important;
+      letter-spacing: .2px !important;
+
+      /* Cores do botão verde */
+      background: linear-gradient(180deg, #2e7d32, #3e8d42) !important;
+      color: #fff !important;
+      box-shadow: 0 10px 18px rgba(0,0,0,.08) !important;
+      transition: all .2s ease !important;
+    }
+
+    /* 2. Adiciona o hover laranja */
+    #presentes-grid-container .btn-principal:hover {
+      background-color: #f27d3d !important; /* laranja */
+      background-image: none !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      filter: none !important;
+      transform: translateY(-1px) !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -136,89 +140,88 @@
 
       // Função adaptada da 'carregarPresentes' do seu script.js
       async function carregarPresentesGrid() {
-        /* === CÓDIGO CORRETO PARA O presentes.html === */
-try {
-  gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Carregando presentes...</p>";
+        try {
+          gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Carregando presentes...</p>";
 
-  const data = await chamarJsonp(
-    { acao: "presentesListar" },
-    "callbackPresentesGrid"
-  );
+          const data = await chamarJsonp(
+            { acao: "presentesListar" },
+            "callbackPresentesGrid" // Usa um callback diferente para não conflitar
+          );
 
-  if (!data.ok) {
-    gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Não foi possível carregar a lista de presentes.</p>";
-    console.error(data.error);
-    return;
-  }
+          if (!data.ok) {
+            gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Não foi possível carregar a lista de presentes.</p>";
+            console.error(data.error);
+            return;
+          }
 
-  const presentes = data.presentes || [];
+          const presentes = data.presentes || [];
 
-  if (!presentes.length) {
-    gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Todos os presentes já foram escolhidos! 💝</p>";
-    return;
-  }
+          if (!presentes.length) {
+            gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Todos os presentes já foram escolhidos! 💝</p>";
+            return;
+          }
 
-  gridContainer.innerHTML = ""; 
+          gridContainer.innerHTML = ""; // Limpa o "Carregando..."
 
-  presentes.forEach((p) => {
-    const card = document.createElement("article");
-    card.className = "gift-card"; 
+          presentes.forEach((p) => {
+            const card = document.createElement("article");
+            card.className = "gift-card"; // Reusa a classe .gift-card
 
-    // --- Início da Lógica de Cota ---
-    let valorHtml = '';
-    if (p.cota_sim === 'Sim' && p.cota_valor) {
-      // É COTA
-      const valorCotaNum = parseFloat(String(p.cota_valor).replace(',', '.'));
-      const valorCotaFmt = isNaN(valorCotaNum) ? p.cota_valor : valorCotaNum.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      
-      valorHtml = `<p class="gift-value">Valor da cota: <strong>R$ ${valorCotaFmt}</strong></p>`;
-      if (p.cota_desc) {
-        valorHtml += `<p class"gift-cota-desc" style="font-size: 0.85rem; opacity: 0.8; margin-top: -5px;">${p.cota_desc}</p>`;
+            // --- Início da Lógica de Cota ---
+            let valorHtml = '';
+            if (p.cota_sim === 'Sim' && p.cota_valor) {
+              // É COTA
+              const valorCotaNum = parseFloat(String(p.cota_valor).replace(',', '.'));
+              const valorCotaFmt = isNaN(valorCotaNum) ? p.cota_valor : valorCotaNum.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+              
+              valorHtml = `<p class="gift-value">Valor da cota: <strong>R$ ${valorCotaFmt}</strong></p>`;
+              if (p.cota_desc) {
+                valorHtml += `<p class"gift-cota-desc" style="font-size: 0.85rem; opacity: 0.8; margin-top: -5px;">${p.cota_desc}</p>`;
+              }
+
+            } else if (p.valor) {
+              // É PRESENTE NORMAL
+              const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
+              const valorFormatado = isNaN(valorNumerico) ? p.valor : valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+              
+              valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
+            }
+
+            // Lógica para o botão
+            let botaoHtml = '';
+            if (p.cota_sim === 'Sim' && p.url) {
+              // É COTA -> Botão "Comprar Cota"
+              botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Comprar Cota</a>`;
+            } else if (p.url) {
+              // É PRESENTE NORMAL -> Botão "Abrir link"
+              botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>`;
+            }
+            // --- Fim da Lógica de Cota ---
+
+            // Monta o card
+            card.innerHTML = `
+              <div class="gift-image">
+                ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
+              </div>
+              <div class="gift-content">
+                <h3>${p.item || "Presente"}</h3>
+                ${valorHtml} 
+                <p class="gift-code">
+                  Código do presente: <strong>${p.codigo}</strong>
+                </p>
+                <div class="gift-actions">
+                  ${botaoHtml}
+                </div>
+              </div>
+            `;
+            gridContainer.appendChild(card);
+          });
+
+        } catch (err) {
+          console.error(err);
+          gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Erro ao carregar a lista de presentes.</p>";
+        }
       }
-
-    } else if (p.valor) {
-      // É PRESENTE NORMAL
-      const valorNumerico = parseFloat(String(p.valor).replace(',', '.'));
-      const valorFormatado = isNaN(valorNumerico) ? p.valor : valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      
-      valorHtml = `<p class="gift-value">Valor aproximado: <strong>R$ ${valorFormatado}</strong></p>`;
-    }
-
-    // Lógica para o botão
-    let botaoHtml = '';
-    if (p.cota_sim === 'Sim' && p.url) {
-      // É COTA -> Botão "Comprar Cota"
-      botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Comprar Cota</a>`;
-    } else if (p.url) {
-      // É PRESENTE NORMAL -> Botão "Abrir link"
-      botaoHtml = `<a href="${p.url}" class="btn btn-principal" target="_blank" rel="noopener">Abrir link</a>`;
-    }
-    // --- Fim da Lógica de Cota ---
-
-    card.innerHTML = `
-      <div class="gift-image">
-        ${p.foto ? `<img src="${p.foto}" alt="${p.item || "Presente"}" loading="lazy">` : ""}
-      </div>
-      <div class="gift-content">
-        <h3>${p.item || "Presente"}</h3>
-        ${valorHtml} 
-        <p class="gift-code">
-          Código do presente: <strong>${p.codigo}</strong>
-        </p>
-        <div class="gift-actions">
-          ${botaoHtml}
-        </div>
-      </div>
-    `;
-    gridContainer.appendChild(card);
-  });
-
-} catch (err) {
-  console.error(err);
-  gridContainer.innerHTML = "<p style='grid-column: 1 / -1;'>Erro ao carregar a lista de presentes.</p>";
-}
-/* === FIM DO CÓDIGO === */
-        
 
       // Executa a função
       carregarPresentesGrid();
